@@ -19,6 +19,7 @@
   const requestedChapter = Number(params.get('capitulo'));
   let chapter = Number.isInteger(requestedChapter) ? Math.max(1, Math.min(books[book][1], requestedChapter)) : 1;
   let text = null;
+  let loadError = false;
 
   function select(nextBook, nextChapter, focusReader) {
     book = nextBook; chapter = nextChapter;
@@ -50,17 +51,28 @@
   }
   function renderPassage() {
     const passage = $('bible-passage'); passage.replaceChildren();
-    const verses = text?.books?.[book]?.chapters?.[chapter - 1];
-    if (!Array.isArray(verses) || !verses.length) {
+    const reading = text?.books?.[book]?.chapters?.[chapter - 1];
+    if (!reading?.text) {
       const note = document.createElement('div'); note.className = 'bible-empty';
-      const heading = document.createElement('strong'); heading.textContent = 'Texto en preparación';
-      const body = document.createElement('span'); body.textContent = 'Podés explorar los libros y capítulos. La lectura completa estará disponible cuando se incorpore la edición digital autorizada.';
+      const heading = document.createElement('strong'); heading.textContent = loadError ? 'No se pudo cargar la lectura' : 'Cargando lectura…';
+      const body = document.createElement('span'); body.textContent = loadError ? 'Revisá tu conexión y actualizá esta página para intentar de nuevo.' : 'Un momento, estamos preparando el capítulo.';
       note.append(heading, body); passage.append(note); return;
     }
-    for (const [index, verse] of verses.entries()) {
+    // El PDF ubica números de versículo en márgenes y a veces agrupa dos.
+    // Se conserva cada capítulo íntegro, sin atribuir cortes inciertos.
+    let remaining = reading.text;
+    while (remaining) {
+      let cut = remaining.length;
+      if (cut > 650) {
+        const window = remaining.slice(300, 650);
+        const boundaries = [...window.matchAll(/[.!?;][”»'\")\]]?\s+/g)];
+        cut = boundaries.length ? 300 + boundaries[boundaries.length - 1].index + boundaries[boundaries.length - 1][0].length : remaining.lastIndexOf(' ', 650);
+        if (cut < 300) cut = 650;
+      }
       const paragraph = document.createElement('p');
-      const number = document.createElement('sup'); number.textContent = String(index + 1);
-      paragraph.append(number, document.createTextNode(verse)); passage.append(paragraph);
+      paragraph.textContent = remaining.slice(0, cut).trim();
+      passage.append(paragraph);
+      remaining = remaining.slice(cut).trim();
     }
   }
   function render() {
@@ -97,10 +109,12 @@
   $('bible-next').addEventListener('click', () => select(chapter < books[book][1] ? book : book + 1, chapter < books[book][1] ? chapter + 1 : 1, true));
   window.addEventListener('popstate', () => { const current = new URLSearchParams(location.search); const requested = Number(current.get('libro')) - 1; book = Number.isInteger(requested) && requested >= 0 && requested < books.length ? requested : 0; chapter = Math.max(1, Math.min(books[book][1], Number(current.get('capitulo')) || 1)); render(); });
   render();
-  fetch('datos/biblia-rv1960.json').then(response => response.ok ? response.json() : null).then(data => {
-    if (!data) return;
+  fetch('datos/biblia-rv1960.json').then(response => {
+    if (!response.ok) throw new Error('Texto no disponible');
+    return response.json();
+  }).then(data => {
     if (data.edition !== 'RVR1960' || !Array.isArray(data.books) || data.books.length !== 66 ||
-        !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(verses => Array.isArray(verses) && verses.every(verse => typeof verse === 'string')))) return;
+        !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(reading => typeof reading.text === 'string' && reading.text.length > 30))) throw new Error('Texto incompleto');
     text = data; renderPassage();
-  }).catch(() => {});
+  }).catch(() => { loadError = true; renderPassage(); });
 })();
