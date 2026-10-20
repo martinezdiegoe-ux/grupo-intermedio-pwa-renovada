@@ -37,6 +37,22 @@
       'Escaneá el código QR para abrir el sitio.': 'Escaneie o código QR para abrir o site.',
       'Código QR para abrir Voz Juvenil': 'Código QR para abrir Voz Juvenil',
       'Enviar por WhatsApp ↗': 'Enviar pelo WhatsApp ↗', 'Cerrar': 'Fechar',
+      'Audio': 'Áudio', 'Abrir reproductor de audio': 'Abrir reprodutor de áudio',
+      'Escuchar radio': 'Ouvir rádio', 'Escuchar meditación': 'Ouvir meditação',
+      '▶ Escuchar radio': '▶ Ouvir rádio', '▶ Escuchar meditación': '▶ Ouvir meditação',
+      'Escuchá la radio de la Asamblea Cristiana mientras recorrés Voz Juvenil.': 'Ouça a rádio da Assembleia Cristã enquanto navega pelo Voz Juvenil.',
+      'La radio se abre en un reproductor independiente para que sigas escuchando al cambiar de página.': 'A rádio abre em um reprodutor separado para continuar tocando quando você mudar de página.',
+      'Reproductor · Voz Juvenil': 'Reprodutor · Voz Juvenil', 'REPRODUCTOR': 'REPRODUTOR',
+      'Radio y audio de meditación de Voz Juvenil.': 'Rádio e áudio de meditação do Voz Juvenil.',
+      'Abrir Voz Juvenil': 'Abrir Voz Juvenil', 'Escuchá sin interrupciones': 'Ouça sem interrupções',
+      'Dejá abierto este reproductor para seguir escuchando mientras recorrés el sitio.': 'Mantenha este reprodutor aberto para continuar ouvindo enquanto navega pelo site.',
+      'Elegir audio': 'Escolher áudio', 'Audio de meditación': 'Áudio de meditação',
+      'Reproductor de audio': 'Reprodutor de áudio', 'EN VIVO': 'AO VIVO', 'MEDITACIÓN': 'MEDITAÇÃO',
+      'No se pudo reproducir el audio. Intentá nuevamente.': 'Não foi possível reproduzir o áudio. Tente novamente.',
+      'Reproductor alternativo ↗': 'Reprodutor alternativo ↗', 'Flotar sobre otras ventanas': 'Flutuar sobre outras janelas',
+      'En el celular, podés usar los controles multimedia del sistema al abrir otras apps.': 'No celular, você pode usar os controles de mídia do sistema ao abrir outros aplicativos.',
+      'Pausar audio': 'Pausar áudio', 'Reanudar audio': 'Retomar áudio',
+      'Tocá reproducir para comenzar.': 'Toque em reproduzir para começar.',
       'Conocé al Grupo Intermedio': 'Conheça o Grupo Intermedio',
       '01 / CAMINEMOS JUNTOS': '01 / CAMINHEMOS JUNTOS',
       'Cronograma': 'Programação', 'Filial': 'Filial',
@@ -61,6 +77,22 @@
       'Escaneá el código QR para abrir el sitio.': 'Inquadra il codice QR per aprire il sito.',
       'Código QR para abrir Voz Juvenil': 'Codice QR per aprire Voz Juvenil',
       'Enviar por WhatsApp ↗': 'Invia con WhatsApp ↗', 'Cerrar': 'Chiudi',
+      'Audio': 'Audio', 'Abrir reproductor de audio': 'Apri il lettore audio',
+      'Escuchar radio': 'Ascolta la radio', 'Escuchar meditación': 'Ascolta la meditazione',
+      '▶ Escuchar radio': '▶ Ascolta la radio', '▶ Escuchar meditación': '▶ Ascolta la meditazione',
+      'Escuchá la radio de la Asamblea Cristiana mientras recorrés Voz Juvenil.': 'Ascolta la radio dell’Assemblea Cristiana mentre navighi in Voz Juvenil.',
+      'La radio se abre en un reproductor independiente para que sigas escuchando al cambiar de página.': 'La radio si apre in un lettore separato per continuare ad ascoltare quando cambi pagina.',
+      'Reproductor · Voz Juvenil': 'Lettore · Voz Juvenil', 'REPRODUCTOR': 'LETTORE',
+      'Radio y audio de meditación de Voz Juvenil.': 'Radio e audio delle meditazioni di Voz Juvenil.',
+      'Abrir Voz Juvenil': 'Apri Voz Juvenil', 'Escuchá sin interrupciones': 'Ascolta senza interruzioni',
+      'Dejá abierto este reproductor para seguir escuchando mientras recorrés el sitio.': 'Lascia aperto questo lettore per continuare ad ascoltare mentre navighi nel sito.',
+      'Elegir audio': 'Scegli l’audio', 'Audio de meditación': 'Audio della meditazione',
+      'Reproductor de audio': 'Lettore audio', 'EN VIVO': 'IN DIRETTA', 'MEDITACIÓN': 'MEDITAZIONE',
+      'No se pudo reproducir el audio. Intentá nuevamente.': 'Impossibile riprodurre l’audio. Riprova.',
+      'Reproductor alternativo ↗': 'Lettore alternativo ↗', 'Flotar sobre otras ventanas': 'Mostra sopra le altre finestre',
+      'En el celular, podés usar los controles multimedia del sistema al abrir otras apps.': 'Sul telefono puoi usare i controlli multimediali del sistema quando apri altre app.',
+      'Pausar audio': 'Metti in pausa l’audio', 'Reanudar audio': 'Riprendi l’audio',
+      'Tocá reproducir para comenzar.': 'Tocca riproduci per iniziare.',
       'Conocé al Grupo Intermedio': 'Conosci il Grupo Intermedio',
       '01 / CAMINEMOS JUNTOS': '01 / CAMMINIAMO INSIEME',
       'Filial': 'Sede', 'Meditar': 'Meditare',
@@ -83,6 +115,22 @@
       'Escaneá el código QR para abrir el sitio.': 'Відскануйте QR-код, щоб відкрити сайт.',
       'Código QR para abrir Voz Juvenil': 'QR-код для відкриття Voz Juvenil',
       'Enviar por WhatsApp ↗': 'Надіслати через WhatsApp ↗', 'Cerrar': 'Закрити',
+      'Audio': 'Аудіо', 'Abrir reproductor de audio': 'Відкрити аудіопрогравач',
+      'Escuchar radio': 'Слухати радіо', 'Escuchar meditación': 'Слухати роздуми',
+      '▶ Escuchar radio': '▶ Слухати радіо', '▶ Escuchar meditación': '▶ Слухати роздуми',
+      'Escuchá la radio de la Asamblea Cristiana mientras recorrés Voz Juvenil.': 'Слухайте радіо Християнської Асамблеї під час перегляду Voz Juvenil.',
+      'La radio se abre en un reproductor independiente para que sigas escuchando al cambiar de página.': 'Радіо відкриється в окремому програвачі й продовжить звучати після переходу на іншу сторінку.',
+      'Reproductor · Voz Juvenil': 'Програвач · Voz Juvenil', 'REPRODUCTOR': 'ПРОГРАВАЧ',
+      'Radio y audio de meditación de Voz Juvenil.': 'Радіо та аудіороздуми Voz Juvenil.',
+      'Abrir Voz Juvenil': 'Відкрити Voz Juvenil', 'Escuchá sin interrupciones': 'Слухайте без перерв',
+      'Dejá abierto este reproductor para seguir escuchando mientras recorrés el sitio.': 'Залиште цей програвач відкритим, щоб слухати під час перегляду сайту.',
+      'Elegir audio': 'Вибрати аудіо', 'Audio de meditación': 'Аудіороздуми',
+      'Reproductor de audio': 'Аудіопрогравач', 'EN VIVO': 'НАЖИВО', 'MEDITACIÓN': 'РОЗДУМИ',
+      'No se pudo reproducir el audio. Intentá nuevamente.': 'Не вдалося відтворити аудіо. Спробуйте ще раз.',
+      'Reproductor alternativo ↗': 'Інший програвач ↗', 'Flotar sobre otras ventanas': 'Показати поверх інших вікон',
+      'En el celular, podés usar los controles multimedia del sistema al abrir otras apps.': 'На телефоні можна керувати аудіо через системні елементи керування, відкриваючи інші застосунки.',
+      'Pausar audio': 'Призупинити аудіо', 'Reanudar audio': 'Відновити аудіо',
+      'Tocá reproducir para comenzar.': 'Натисніть відтворення, щоб почати.',
       'Conocé al Grupo Intermedio': 'Познайомтеся з Grupo Intermedio',
       '01 / CAMINEMOS JUNTOS': '01 / ХОДІМО РАЗОМ',
       'Cronograma': 'Розклад', 'Estudios bíblicos': 'Біблійні заняття',
@@ -413,6 +461,12 @@
       </div>
     </nav>`;
   header.append(menu);
+  if (location.pathname.endsWith('/reproductor.html')) {
+    for (const link of menu.querySelectorAll('a[href]')) {
+      link.target = '_blank';
+      link.rel = 'noopener';
+    }
+  }
   const shareDialog = document.createElement('dialog');
   shareDialog.className = 'site-share-dialog';
   shareDialog.setAttribute('aria-labelledby', 'site-share-title');
@@ -496,6 +550,70 @@
     try { localStorage.setItem(languageKey, next); } catch (_) {}
     renderLanguage();
     closeMenu();
+  }
+
+  if (!location.pathname.endsWith('/reproductor.html')) {
+    const audioButton = document.createElement('button');
+    audioButton.type = 'button';
+    audioButton.className = 'audio-fab';
+    audioButton.setAttribute('aria-label', 'Abrir reproductor de audio');
+    audioButton.innerHTML = '<span aria-hidden="true">♫</span><span>Audio</span><span class="audio-fab-dot" aria-hidden="true"></span>';
+    document.body.append(audioButton);
+    const audioToggle = document.createElement('button');
+    audioToggle.type = 'button';
+    audioToggle.className = 'audio-fab-toggle';
+    audioToggle.hidden = true;
+    audioToggle.setAttribute('aria-label', 'Pausar audio');
+    audioToggle.textContent = '⏸';
+    document.body.append(audioToggle);
+
+    function openPlayer(source) {
+      const playerUrl = new URL('reproductor.html', location.href);
+      if (source === 'radio' || source === 'meditation') {
+        playerUrl.searchParams.set('source', source);
+        playerUrl.searchParams.set('autoplay', '1');
+      }
+      const playerWindow = window.open('', 'voz-juvenil-audio', 'popup=yes,width=430,height=650');
+      if (!playerWindow) { location.href = playerUrl.href; return; }
+      try {
+        const current = playerWindow.location.href;
+        if (current === 'about:blank' || !current.endsWith('/reproductor.html') && !current.includes('/reproductor.html?')) {
+          playerWindow.location.replace(playerUrl.href);
+        } else if (source === 'radio' || source === 'meditation') {
+          playerWindow.postMessage({ type: 'select-audio', source }, location.origin);
+        }
+      } catch (_) {
+        playerWindow.location.href = playerUrl.href;
+      }
+      playerWindow.focus();
+    }
+
+    audioButton.addEventListener('click', () => openPlayer());
+    document.addEventListener('click', event => {
+      const launcher = event.target.closest('[data-player-source]');
+      if (!launcher) return;
+      event.preventDefault();
+      openPlayer(launcher.dataset.playerSource);
+    });
+    if ('BroadcastChannel' in window) {
+      const audioChannel = new BroadcastChannel('voz-juvenil-audio');
+      audioToggle.addEventListener('click', () => audioChannel.postMessage({ type: 'toggle' }));
+      audioChannel.onmessage = event => {
+        if (event.data?.type === 'state') {
+          const playing = Boolean(event.data.playing);
+          audioButton.classList.toggle('is-playing', playing);
+          audioToggle.hidden = false;
+          audioToggle.textContent = playing ? '⏸' : '▶';
+          audioToggle.setAttribute('aria-label', playing ? 'Pausar audio' : 'Reanudar audio');
+        }
+        if (event.data?.type === 'closed') {
+          audioButton.classList.remove('is-playing');
+          audioToggle.hidden = true;
+        }
+      };
+      audioChannel.postMessage({ type: 'status-request' });
+      window.addEventListener('pagehide', () => audioChannel.close());
+    }
   }
 
   const observer = new MutationObserver(mutations => {
