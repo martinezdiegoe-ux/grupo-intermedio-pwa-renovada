@@ -34,18 +34,20 @@ Subir cada libro autorizado a `pdf/libros/` y agregarlo a `js/biblioteca-data.js
 
 ## Biblia Reina-Valera 1960
 
-`biblia.html` y `js/biblia.js` implementan selector de los 66 libros, filtro de títulos, referencia escrita (por ejemplo, `Juan 3`), selector de capítulos, navegación anterior/siguiente y enlaces directos mediante `?libro=43&capitulo=3`. El texto completo de 1.189 capítulos se almacena en `datos/biblia-rv1960.json` con este formato:
+`biblia.html` y `js/biblia.js` implementan selector de los 66 libros, filtro de títulos, referencia escrita (por ejemplo, `Juan 3`), selector de capítulos, navegación anterior/siguiente y enlaces directos mediante `?libro=43&capitulo=3`. Cada capítulo se almacena en `datos/biblia-rv1960.json` con `intro` opcional y un arreglo `verses`:
 
 ```json
 {
   "edition": "RVR1960",
   "books": [
-    { "name": "Génesis", "chapters": [{ "text": "Texto íntegro del capítulo", "page": 5 }] }
+    { "name": "Génesis", "chapters": [{ "intro": "", "verses": ["En el principio creó Dios…", "Y la tierra estaba…"] }] }
   ]
 }
 ```
 
-El archivo real contiene los 66 libros en orden canónico y 1.189 capítulos. El lector valida nombres, cantidad de capítulos y presencia del texto antes de mostrarlo. `page` indica la página física del PDF original (desde 1) donde empieza el capítulo. El lector ofrece texto por capítulo sin números de versículo: el PDF de origen tiene esos números en los márgenes y en algunas líneas reúne dos, por lo que atribuirles cortes automáticos podría falsear el texto. La división visual en párrafos no modifica el orden de las palabras. La extracción se realizó con PyMuPDF, identificando los 1.189 inicios de capítulo por su tipografía, eliminando números marginales y encabezados y uniendo palabras cortadas por saltos de línea. No se publica el PDF de origen.
+El archivo contiene los 66 libros, 1.189 capítulos y 31.104 versículos. El lector valida el orden de los libros, la cantidad de capítulos y la presencia de cada versículo. La interfaz muestra cada número a la izquierda de su texto, en una fila propia. `intro` conserva títulos introductorios de algunos salmos.
+
+La numeración del PDF nuevo se cotejó capítulo por capítulo con los números marginales del PDF anterior: coincidieron 1.189 de 1.189 conteos. Se corrigieron tres anomalías puntuales de la copia nueva: faltaban los textos de Génesis 30:7–8, Salmos 39:11 contenía un código de formato y 1 Corintios 1:31 aparecía rotulado como 32. El contenido completo por capítulo ya revisado se usó para cotejar y conservar la redacción, mientras los límites y números se tomaron del PDF nuevo. No se publica ninguno de los PDF de origen.
 
 El titular del proyecto informó que obtuvo autorización escrita de la Sociedad Bíblica Argentina y suministró el PDF usado para la extracción. Conservar la autorización fuera del repositorio público y respetar sus condiciones de uso. Una PWA estática y un repositorio público permiten descargar/copiar el archivo completo. La interfaz mantiene la leyenda de derechos.
 
