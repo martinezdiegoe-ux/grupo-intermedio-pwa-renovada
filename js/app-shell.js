@@ -8,6 +8,12 @@
   const languages = ['es', 'pt', 'it', 'uk'];
   const languageNames = { es: 'Español', pt: 'Português', it: 'Italiano', uk: 'Українська' };
   const languageKey = 'voz-juvenil-idioma';
+  const themeKey = 'voz-juvenil-modo';
+  let theme = 'light';
+  try {
+    if (localStorage.getItem(themeKey) === 'dark') theme = 'dark';
+  } catch (_) { /* The theme still works for this visit. */ }
+  document.documentElement.dataset.theme = theme;
   let language = 'es';
   try {
     const saved = localStorage.getItem(languageKey);
@@ -28,6 +34,7 @@
       '01 / CAMINEMOS JUNTOS': '01 / CAMINHEMOS JUNTOS',
       'Cronograma': 'Programação', 'Filial': 'Filial',
       'Menú principal': 'Menu principal',
+      'Modo': 'Modo', 'Claro': 'Claro', 'Oscuro': 'Escuro',
       'MÚSICA Y MEMORIA': 'MÚSICA E MEMÓRIA',
       'Explorar la meditación': 'Explorar a meditação',
       'Las respuestas del crucigrama se escriben en español.': 'As respostas das palavras cruzadas devem ser escritas em espanhol.'
@@ -44,6 +51,7 @@
       '01 / CAMINEMOS JUNTOS': '01 / CAMMINIAMO INSIEME',
       'Filial': 'Sede', 'Meditar': 'Meditare',
       'Menú principal': 'Menu principale',
+      'Modo': 'Modalità', 'Claro': 'Chiaro', 'Oscuro': 'Scuro',
       'Las respuestas del crucigrama se escriben en español.': 'Le risposte del cruciverba vanno scritte in spagnolo.'
     },
     uk: {
@@ -59,6 +67,7 @@
       'Cronograma': 'Розклад', 'Estudios bíblicos': 'Біблійні заняття',
       'Filial': 'Філія', 'Meditar': 'Роздуми', 'Meditación': 'Роздуми',
       'Menú principal': 'Головне меню',
+      'Modo': 'Режим', 'Claro': 'Світлий', 'Oscuro': 'Темний',
       'Música': 'Музика', 'Explorar la meditación': 'Перейти до роздумів',
       'Las respuestas del crucigrama se escriben en español.': 'Відповіді на кросворд потрібно писати іспанською.'
     }
@@ -339,6 +348,10 @@
   menuStyles.rel = 'stylesheet';
   menuStyles.href = 'css/site-menu.css';
   document.head.append(menuStyles);
+  const themeStyles = document.createElement('link');
+  themeStyles.rel = 'stylesheet';
+  themeStyles.href = 'css/theme.css';
+  document.head.append(themeStyles);
   if (!header.classList.contains('topbar')) {
     document.body.classList.add('legacy-page');
     header.className = 'topbar app-header';
@@ -371,11 +384,17 @@
       <a class="site-menu-link" href="acerca.html">Conócenos</a>
       <div class="site-menu-language-title">Idioma</div>
       <div class="site-menu-languages"></div>
+      <div id="site-menu-theme-title" class="site-menu-theme-title">Modo</div>
+      <div class="site-menu-themes" role="group" aria-labelledby="site-menu-theme-title">
+        <button type="button" class="site-menu-theme" data-theme-choice="light">Claro</button>
+        <button type="button" class="site-menu-theme" data-theme-choice="dark">Oscuro</button>
+      </div>
     </nav>`;
   header.append(menu);
   const toggle = menu.querySelector('.menu-toggle');
   const panel = menu.querySelector('.site-menu-panel');
   const languageButtons = menu.querySelector('.site-menu-languages');
+  const themeButtons = menu.querySelectorAll('.site-menu-theme');
   for (const code of languages) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -384,6 +403,22 @@
     button.textContent = languageNames[code];
     button.addEventListener('click', () => setLanguage(code));
     languageButtons.append(button);
+  }
+  for (const button of themeButtons) button.addEventListener('click', () => setTheme(button.dataset.themeChoice));
+
+  function renderTheme() {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    for (const button of themeButtons) button.setAttribute('aria-pressed', String(button.dataset.themeChoice === theme));
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+    if (themeColor) themeColor.setAttribute('content', theme === 'dark' ? '#0d1527' : '#101b38');
+  }
+  function setTheme(next) {
+    if (next !== 'light' && next !== 'dark') return;
+    theme = next;
+    try { localStorage.setItem(themeKey, next); } catch (_) {}
+    renderTheme();
+    closeMenu();
   }
 
   function closeMenu() {
@@ -433,5 +468,6 @@
     childList: true, subtree: true, characterData: true,
     attributes: true, attributeFilter: translatableAttributes.concat('content')
   });
+  renderTheme();
   setLanguage(language);
 })();

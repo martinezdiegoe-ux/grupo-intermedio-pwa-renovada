@@ -1,0 +1,91 @@
+:root[data-theme="dark"] {
+  --ink: #edf1fb;
+  --muted: #aab6d0;
+  --bg: #0d1527;
+  --line: #34425e;
+  --violet: #b6a4ff;
+  --navy: #192643;
+  --surface: #18243a;
+  --surface-raised: #20304c;
+}
+
+[data-theme="dark"] body { background: var(--bg) !important; color: var(--ink); }
+[data-theme="dark"] .topbar,
+[data-theme="dark"] .bottom-nav,
+[data-theme="dark"] .site-menu-panel,
+[data-theme="dark"] .menu-toggle,
+[data-theme="dark"] .module,
+[data-theme="dark"] .panel,
+[data-theme="dark"] .resource-card,
+[data-theme="dark"] .directory-card,
+[data-theme="dark"] .reading-card,
+[data-theme="dark"] .pill-button,
+[data-theme="dark"] .action-link {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+[data-theme="dark"] .menu-toggle:hover,
+[data-theme="dark"] .menu-toggle[aria-expanded="true"],
+[data-theme="dark"] .site-menu-panel :is(a, button):hover,
+[data-theme="dark"] .site-menu-panel [aria-pressed="true"],
+[data-theme="dark"] .reading-card.is-complete {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+[data-theme="dark"] .brand-mark { background: #354674; }
+[data-theme="dark"] .feature-card.meditation { background: #332b58; }
+[data-theme="dark"] .feature-card.worship { background: #4d342f; }
+[data-theme="dark"] .feature-copy > span { color: var(--muted); }
+[data-theme="dark"] .feature-icon { background: #6551bd; }
+[data-theme="dark"] .worship .feature-icon { background: #a86142; }
+[data-theme="dark"] .module-icon.lilac { background: #3b315c; color: #cbbfff; }
+[data-theme="dark"] .module-icon.peach { background: #51362f; color: #ffd0af; }
+[data-theme="dark"] .module-icon.blue { background: #293d62; color: #b5caff; }
+[data-theme="dark"] .module-icon.mint { background: #254f48; color: #a9e8cf; }
+[data-theme="dark"] .module-arrow { color: var(--muted); }
+[data-theme="dark"] .hero-cta { background: var(--surface); color: var(--ink); }
+[data-theme="dark"] .reading-stats > div { background: var(--surface-raised); }
+[data-theme="dark"] .reading-progress-track { background: #35415e; }
+[data-theme="dark"] .reading-card.is-complete { border-color: #695ba6; }
+[data-theme="dark"] .reading-card.is-complete .reading-status { color: #a7dec4; }
+[data-theme="dark"] .action-link.primary,
+[data-theme="dark"] .pill-button.active,
+[data-theme="dark"] .reading-resume { background: #6650c3; color: #fff; border-color: #6650c3; }
+[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: #162238;
+  color: var(--ink);
+  border-color: var(--line);
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder { color: #aab6d0; }
+[data-theme="dark"] .legacy-page .recuadro,
+[data-theme="dark"] .legacy-page .letra,
+[data-theme="dark"] .legacy-page .card,
+[data-theme="dark"] .legacy-page .agenda-item,
+[data-theme="dark"] .legacy-page .categoria,
+[data-theme="dark"] .legacy-page .alabanza-item {
+  background: var(--surface) !important;
+  color: var(--ink);
+  border-color: var(--line);
+}
+[data-theme="dark"] .legacy-page .pregunta,
+[data-theme="dark"] .legacy-page .evento,
+[data-theme="dark"] .legacy-page .mensaje,
+[data-theme="dark"] .legacy-page .celda.blanca {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+[data-theme="dark"] .legacy-page .pregunta.ok { background: #183c35; border-color: #50a786; }
+[data-theme="dark"] .legacy-page .pregunta.error { background: #472b35; border-color: #d47789; }
+[data-theme="dark"] .legacy-page .celda.negra { background: #08101f; }
+[data-theme="dark"] .legacy-page .numero,
+[data-theme="dark"] .legacy-page .evento-hora,
+[data-theme="dark"] .legacy-page .evento-comentario,
+[data-theme="dark"] .legacy-page .fecha,
+[data-theme="dark"] .legacy-page .player-header { color: var(--muted); }
+[data-theme="dark"] .legacy-page .contenedor > button,
+[data-theme="dark"] .legacy-page .pista button { background: var(--surface-raised); color: var(--ink); }

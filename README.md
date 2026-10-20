@@ -15,6 +15,7 @@ PWA pública y estática de contenidos para el Grupo Intermedio de la Asamblea C
 - Radio: el mismo reproductor externo de la versión original.
 - Presentación institucional.
 - Idiomas: español, portugués, italiano y ucraniano desde el menú del encabezado. La selección se guarda en este navegador y se aplica a los textos de las páginas; PDF, audio y video conservan su idioma original. El crucigrama mantiene respuestas en español.
+- Modo claro u oscuro desde el mismo menú. La elección se guarda en este navegador y se aplica a todas las páginas.
 
 ## Publicar contenido
 

@@ -19,6 +19,8 @@
   right: 0;
   z-index: 30;
   width: min(270px, calc(100vw - 32px));
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -26,7 +28,7 @@
   box-shadow: 0 16px 40px rgba(16,27,56,.18);
 }
 .site-menu-panel[hidden] { display: none; }
-.site-menu-link, .site-menu-language {
+.site-menu-link, .site-menu-language, .site-menu-theme {
   display: block;
   width: 100%;
   padding: 11px 13px;
@@ -39,8 +41,8 @@
   font-size: 14px;
   font-weight: 700;
 }
-.site-menu-link:hover, .site-menu-language:hover { background: #f5f3ff; }
-.site-menu-language-title {
+.site-menu-link:hover, .site-menu-language:hover, .site-menu-theme:hover { background: #f5f3ff; }
+.site-menu-language-title, .site-menu-theme-title {
   margin: 8px 13px 4px;
   padding-top: 12px;
   border-top: 1px solid var(--line);
@@ -50,6 +52,6 @@
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.site-menu-language[aria-pressed="true"] { background: #eee9ff; color: var(--violet); }
-.site-menu-language[aria-pressed="true"]::after { content: '✓'; float: right; }
+.site-menu-language[aria-pressed="true"], .site-menu-theme[aria-pressed="true"] { background: #eee9ff; color: var(--violet); }
+.site-menu-language[aria-pressed="true"]::after, .site-menu-theme[aria-pressed="true"]::after { content: '✓'; float: right; }
 .menu-toggle:focus-visible, .site-menu-panel :focus-visible { outline: 3px solid #a99cf6; outline-offset: 2px; }
