@@ -1,4 +1,4 @@
-const CACHE_NAME='voz-juvenil-v17';
+const CACHE_NAME='voz-juvenil-v18';
 const STATIC_ASSETS=[
   './','index.html','home.html','manifest.json','css/app.css','css/hero-bible.css','css/site-menu.css','css/theme.css','js/app-shell.js','js/i18n-data.js',
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas.js','js/alabanza.js',
@@ -6,7 +6,7 @@ const STATIC_ASSETS=[
   'cronograma.html','novedades.html','comunicados.html','mensajes.html',
   'lectura.html','js/plan-365.js','js/lectura.js','recursos.html','js/estudios-i18n.js','biblia.html','js/biblia.js','datos/biblia-rv1960.json','meditaciones.html','js/meditaciones.js','js/meditaciones-data.js','biblioteca.html','js/biblioteca.js','js/biblioteca-data.js','oracion.html','js/oracion.js','radio.html',
   'acerca.html','quienes.html','creemos.html','vision.html','donde.html','css/donde.css','js/filiales-data.js','js/donde.js',
-  'assets/icon-192.png','assets/icon-512.png','assets/hero-biblia-abierta.png'
+  'assets/icon-192.png','assets/icon-512.png','assets/hero-biblia-abierta.png','assets/compartir-qr.svg'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(STATIC_ASSETS.map(path=>new Request(path,{cache:'reload'})))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});

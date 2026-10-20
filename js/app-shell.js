@@ -33,6 +33,10 @@
       'ASAMBLEA CRISTIANA · UN ESPACIO PARA CRECER': 'ASAMBLEA CRISTIANA · UM ESPAÇO PARA CRESCER',
       'Inicio': 'Início', 'Alabanzas': 'Louvores', 'Encontranos': 'Encontre-nos',
       'Nosotros': 'Quem somos', 'DESCUBRÍ': 'DESCUBRA',
+      'Compartir': 'Compartilhar', 'Compartí Voz Juvenil': 'Compartilhe Voz Juvenil',
+      'Escaneá el código QR para abrir el sitio.': 'Escaneie o código QR para abrir o site.',
+      'Código QR para abrir Voz Juvenil': 'Código QR para abrir Voz Juvenil',
+      'Enviar por WhatsApp ↗': 'Enviar pelo WhatsApp ↗', 'Cerrar': 'Fechar',
       'Conocé al Grupo Intermedio': 'Conheça o Grupo Intermedio',
       '01 / CAMINEMOS JUNTOS': '01 / CAMINHEMOS JUNTOS',
       'Cronograma': 'Programação', 'Filial': 'Filial',
@@ -53,6 +57,10 @@
       'ASAMBLEA CRISTIANA · UN ESPACIO PARA CRECER': 'ASAMBLEA CRISTIANA · UNO SPAZIO PER CRESCERE',
       'Inicio': 'Home', 'Alabanzas': 'Canti di lode', 'Encontranos': 'Dove trovarci',
       'Nosotros': 'Chi siamo', 'DESCUBRÍ': 'SCOPRI',
+      'Compartir': 'Condividi', 'Compartí Voz Juvenil': 'Condividi Voz Juvenil',
+      'Escaneá el código QR para abrir el sitio.': 'Inquadra il codice QR per aprire il sito.',
+      'Código QR para abrir Voz Juvenil': 'Codice QR per aprire Voz Juvenil',
+      'Enviar por WhatsApp ↗': 'Invia con WhatsApp ↗', 'Cerrar': 'Chiudi',
       'Conocé al Grupo Intermedio': 'Conosci il Grupo Intermedio',
       '01 / CAMINEMOS JUNTOS': '01 / CAMMINIAMO INSIEME',
       'Filial': 'Sede', 'Meditar': 'Meditare',
@@ -71,6 +79,10 @@
       'ASAMBLEA CRISTIANA · UN ESPACIO PARA CRECER': 'ASAMBLEA CRISTIANA · ПРОСТІР ДЛЯ ЗРОСТАННЯ',
       'Inicio': 'Головна', 'Alabanzas': 'Пісні прославлення', 'Encontranos': 'Де нас знайти',
       'Nosotros': 'Про нас', 'DESCUBRÍ': 'ВІДКРИЙТЕ',
+      'Compartir': 'Поділитися', 'Compartí Voz Juvenil': 'Поділіться Voz Juvenil',
+      'Escaneá el código QR para abrir el sitio.': 'Відскануйте QR-код, щоб відкрити сайт.',
+      'Código QR para abrir Voz Juvenil': 'QR-код для відкриття Voz Juvenil',
+      'Enviar por WhatsApp ↗': 'Надіслати через WhatsApp ↗', 'Cerrar': 'Закрити',
       'Conocé al Grupo Intermedio': 'Познайомтеся з Grupo Intermedio',
       '01 / CAMINEMOS JUNTOS': '01 / ХОДІМО РАЗОМ',
       'Cronograma': 'Розклад', 'Estudios bíblicos': 'Біблійні заняття',
@@ -391,6 +403,7 @@
     <nav id="site-menu-panel" class="site-menu-panel" aria-label="Menú principal" hidden>
       <a class="site-menu-link" href="index.html">Inicio</a>
       <a class="site-menu-link" href="acerca.html">Conócenos</a>
+      <button type="button" class="site-menu-link site-menu-share-trigger">Compartir</button>
       <div class="site-menu-language-title">Idioma</div>
       <div class="site-menu-languages"></div>
       <div id="site-menu-theme-title" class="site-menu-theme-title">Modo</div>
@@ -400,6 +413,25 @@
       </div>
     </nav>`;
   header.append(menu);
+  const shareDialog = document.createElement('dialog');
+  shareDialog.className = 'site-share-dialog';
+  shareDialog.setAttribute('aria-labelledby', 'site-share-title');
+  shareDialog.innerHTML = `
+    <div class="site-share-content">
+      <button type="button" class="site-share-close" aria-label="Cerrar">×</button>
+      <h2 id="site-share-title">Compartí Voz Juvenil</h2>
+      <img class="site-share-qr" src="assets/compartir-qr.svg" width="240" height="240" alt="Código QR para abrir Voz Juvenil">
+      <p class="site-share-hint">Escaneá el código QR para abrir el sitio.</p>
+      <a class="site-share-whatsapp" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp ↗</a>
+    </div>`;
+  document.body.append(shareDialog);
+  const shareTrigger = menu.querySelector('.site-menu-share-trigger');
+  const shareClose = shareDialog.querySelector('.site-share-close');
+  const shareWhatsApp = shareDialog.querySelector('.site-share-whatsapp');
+  shareWhatsApp.href = 'https://wa.me/?text=' + encodeURIComponent(new URL('./', location.href).href);
+  shareTrigger.addEventListener('click', () => { closeMenu(); shareDialog.showModal(); });
+  shareClose.addEventListener('click', () => shareDialog.close());
+  shareDialog.addEventListener('click', event => { if (event.target === shareDialog) shareDialog.close(); });
   const toggle = menu.querySelector('.menu-toggle');
   const panel = menu.querySelector('.site-menu-panel');
   const languageButtons = menu.querySelector('.site-menu-languages');
