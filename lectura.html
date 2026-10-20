@@ -67,6 +67,13 @@
           dict[name] = translated.charAt(0).toUpperCase()+translated.slice(1);
         });
         window.PLAN_365.forEach(day => {
+          day.readings.forEach(reading => {
+            const match = reading.reference.match(/^((?:[123] )?[^0-9]+?)(\s+\d.*)?$/);
+            const name = match[1].trim();
+            const translatedName = name === 'Juan' ? {pt:'João',it:'Giovanni',uk:'Івана'}[language] : (dict[name] || name);
+            dict[reading.reference] = translatedName + (match[2] || '');
+          });
+          dict[day.passage] = day.readings.map(reading => dict[reading.reference]).join(' · ');
           dict[day.theme] = new Intl.DateTimeFormat(locale,{day:'numeric',month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(2001,day.month-1,day.date)));
         });
       }
