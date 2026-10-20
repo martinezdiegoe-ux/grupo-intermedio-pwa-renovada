@@ -18,12 +18,15 @@
   let book = Number.isInteger(requestedBook) && requestedBook >= 1 && requestedBook <= books.length ? requestedBook - 1 : 0;
   const requestedChapter = Number(params.get('capitulo'));
   let chapter = Number.isInteger(requestedChapter) ? Math.max(1, Math.min(books[book][1], requestedChapter)) : 1;
+  const requestedVerse = Number(new URLSearchParams(location.search).get('versiculo'));
+  const targetVerse = Number.isInteger(requestedVerse) && requestedVerse > 0 ? requestedVerse : null;
   let text = null;
   let loadError = false;
 
   function select(nextBook, nextChapter, focusReader) {
     book = nextBook; chapter = nextChapter;
     const url = new URL(location.href); url.searchParams.set('libro', String(book + 1)); url.searchParams.set('capitulo', String(chapter));
+    url.searchParams.delete('versiculo');
     history.pushState(null, '', url);
     render();
     if (focusReader) $('bible-title').focus({preventScroll:true});
@@ -64,6 +67,8 @@
     }
     reading.verses.forEach((content, index) => {
       const row = document.createElement('div'); row.className = 'bible-verse';
+      row.id = `bible-verse-${index + 1}`;
+      if (book === Number(new URLSearchParams(location.search).get('libro')) - 1 && chapter === Number(new URLSearchParams(location.search).get('capitulo')) && index + 1 === targetVerse) row.classList.add('is-target');
       const number = document.createElement('span'); number.className = 'bible-verse-number';
       number.textContent = String(index + 1); number.setAttribute('aria-label', `Versículo ${index + 1}`);
       const verse = document.createElement('p'); verse.className = 'bible-verse-text'; verse.textContent = content;
@@ -111,5 +116,6 @@
     if (data.edition !== 'RVR1960' || !Array.isArray(data.books) || data.books.length !== 66 ||
         !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(reading => Array.isArray(reading.verses) && reading.verses.length > 0 && reading.verses.every(verse => typeof verse === 'string' && verse.trim().length > 0)))) throw new Error('Texto incompleto');
     text = data; renderPassage();
+    if (targetVerse && book === requestedBook - 1 && chapter === requestedChapter) document.getElementById(`bible-verse-${targetVerse}`)?.scrollIntoView({behavior:'smooth', block:'center'});
   }).catch(() => { loadError = true; renderPassage(); });
 })();
