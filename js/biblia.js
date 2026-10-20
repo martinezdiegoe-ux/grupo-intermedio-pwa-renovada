@@ -52,28 +52,23 @@
   function renderPassage() {
     const passage = $('bible-passage'); passage.replaceChildren();
     const reading = text?.books?.[book]?.chapters?.[chapter - 1];
-    if (!reading?.text) {
+    if (!Array.isArray(reading?.verses) || !reading.verses.length) {
       const note = document.createElement('div'); note.className = 'bible-empty';
       const heading = document.createElement('strong'); heading.textContent = loadError ? 'No se pudo cargar la lectura' : 'Cargando lectura…';
       const body = document.createElement('span'); body.textContent = loadError ? 'Revisá tu conexión y actualizá esta página para intentar de nuevo.' : 'Un momento, estamos preparando el capítulo.';
       note.append(heading, body); passage.append(note); return;
     }
-    // El PDF ubica números de versículo en márgenes y a veces agrupa dos.
-    // Se conserva cada capítulo íntegro, sin atribuir cortes inciertos.
-    let remaining = reading.text;
-    while (remaining) {
-      let cut = remaining.length;
-      if (cut > 650) {
-        const window = remaining.slice(300, 650);
-        const boundaries = [...window.matchAll(/[.!?;][”»'\")\]]?\s+/g)];
-        cut = boundaries.length ? 300 + boundaries[boundaries.length - 1].index + boundaries[boundaries.length - 1][0].length : remaining.lastIndexOf(' ', 650);
-        if (cut < 300) cut = 650;
-      }
-      const paragraph = document.createElement('p');
-      paragraph.textContent = remaining.slice(0, cut).trim();
-      passage.append(paragraph);
-      remaining = remaining.slice(cut).trim();
+    if (reading.intro) {
+      const intro = document.createElement('p'); intro.className = 'bible-intro';
+      intro.textContent = reading.intro; passage.append(intro);
     }
+    reading.verses.forEach((content, index) => {
+      const row = document.createElement('div'); row.className = 'bible-verse';
+      const number = document.createElement('span'); number.className = 'bible-verse-number';
+      number.textContent = String(index + 1); number.setAttribute('aria-label', `Versículo ${index + 1}`);
+      const verse = document.createElement('p'); verse.className = 'bible-verse-text'; verse.textContent = content;
+      row.append(number, verse); passage.append(row);
+    });
   }
   function render() {
     const [name, count] = books[book];
@@ -114,7 +109,7 @@
     return response.json();
   }).then(data => {
     if (data.edition !== 'RVR1960' || !Array.isArray(data.books) || data.books.length !== 66 ||
-        !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(reading => typeof reading.text === 'string' && reading.text.length > 30))) throw new Error('Texto incompleto');
+        !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(reading => Array.isArray(reading.verses) && reading.verses.length > 0 && reading.verses.every(verse => typeof verse === 'string' && verse.trim().length > 0)))) throw new Error('Texto incompleto');
     text = data; renderPassage();
   }).catch(() => { loadError = true; renderPassage(); });
 })();
