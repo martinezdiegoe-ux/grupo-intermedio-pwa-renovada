@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  background: url("../assets/fondo-claro.png") center / cover no-repeat fixed;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+.contenedor {
+  max-width: 720px;
+  margin: auto;
+}
+
+.letra {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+  text-align: left;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  padding: 14px;
+  border-radius: 25px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}

@@ -1,0 +1,107 @@
+body{
+font-family:Arial, sans-serif;
+margin:0;
+padding:20px;
+background:url("../assets/fondo-claro.png") center/cover no-repeat fixed;
+text-align:center;
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.contenedor{
+max-width:720px;
+margin:auto;
+}
+
+.recuadro{
+background:white;
+padding:16px;
+border-radius:14px;
+margin-bottom:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.recuadro p{
+font-size:16px;
+line-height:1.6;
+}
+
+/* TEXTO SCROLL */
+
+.recuadro.scroll{
+max-height:260px;
+overflow-y:auto;
+text-align:left;
+}
+
+.recuadro.scroll::-webkit-scrollbar{
+width:6px;
+}
+
+.recuadro.scroll::-webkit-scrollbar-thumb{
+background:#aaa;
+border-radius:4px;
+}
+
+/* =========================
+   REPRODUCTOR
+=========================*/
+
+.reproductor{
+text-align:left;
+}
+
+.player-header{
+font-weight:bold;
+margin-bottom:10px;
+color:#1F3F7A;
+}
+
+/* CONTROLES */
+
+.player-controls{
+display:flex;
+justify-content:center;
+gap:20px;
+margin:15px 0;
+}
+
+.player-controls button{
+
+width:48px;
+height:48px;
+
+border-radius:50%;
+border:none;
+
+background:#1F3F7A;
+color:white;
+
+font-size:18px;
+cursor:pointer;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+
+}
+
+#play{
+width:60px;
+height:60px;
+font-size:22px;
+}
+
+/* TIEMPO */
+
+.time{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:14px;
+}
+
+#progress{
+flex:1;
+cursor:pointer;
+}

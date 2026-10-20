@@ -1,0 +1,21 @@
+body {
+margin:0;
+font-family: Inter, sans-serif;
+}
+
+.inicio{
+height:100vh;
+background:url("../assets/fondo-principal.png") center/cover no-repeat;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.btn-menu{
+padding:18px 40px;
+font-size:22px;
+border:none;
+border-radius:18px;
+background:rgba(0,0,0,0.75);
+color:white;
+}

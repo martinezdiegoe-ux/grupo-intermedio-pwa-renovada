@@ -1,0 +1,27 @@
+body{
+margin:0;
+height:100vh;
+background:url("../assets/fondo-principal.png") center/cover no-repeat;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial, sans-serif;
+}
+
+/* BOTON INGRESAR */
+
+.btn-ingresar{
+padding:16px 60px;
+border:none;
+border-radius:40px;
+font-size:20px;
+background:#1F3F7A;
+color:white;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(0,0,0,0.25);
+transition:all 0.3s ease;
+}
+
+.btn-ingresar:hover{
+transform:scale(1.05);
+}

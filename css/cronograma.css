@@ -1,0 +1,55 @@
+body {
+  font-family: Arial, sans-serif;
+  background: url("../assets/fondo-claro.png") center / cover no-repeat fixed;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.contenedor {
+  max-width: 720px;
+  margin: auto;
+}
+
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Hoja de agenda */
+.evento {
+  background: #fffef8;
+  border-left: 6px solid #c9a44c;
+  padding: 14px 16px;
+  border-radius: 8px;
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.evento-fecha {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.evento-hora {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.evento-titulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.evento-comentario {
+  font-size: 15px;
+  color: #333;
+}
