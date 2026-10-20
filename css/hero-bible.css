@@ -1,5 +1,7 @@
 .hero-symbol { display: none; }
 .hero::after { opacity: .35; }
+.hero h1 { font-size: clamp(35px, 4.6vw, 60px); }
+.hero h1 em { display: block; }
 .hero::before {
   content: '';
   position: absolute;
