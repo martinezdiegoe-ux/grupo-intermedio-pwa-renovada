@@ -14,10 +14,13 @@ PWA pública y estática de contenidos para el Grupo Intermedio de la Asamblea C
 - Motivos de oración: notas privadas guardadas únicamente en el navegador.
 - Radio: el mismo reproductor externo de la versión original.
 - Presentación institucional.
+- Idiomas: español, portugués, italiano y ucraniano desde el menú del encabezado. La selección se guarda en este navegador y se aplica a los textos de las páginas; PDF, audio y video conservan su idioma original. El crucigrama mantiene respuestas en español.
 
 ## Publicar contenido
 
 Editar js/alabanzas.js para las alabanzas y agregar los PDF propios en pdf/. El índice de títulos y temas del himnario permanece en js/himnario-catalogo.js para una posible restauración, pero no se carga en la página. Editar js/cronograma.js (arreglo proximos) y js/comunicados.js (arreglo comunicados) para novedades vigentes. Al publicar una actualización importante, cambiar CACHE_NAME en service-worker.js.
+
+Las traducciones de los textos visibles están en `js/i18n-data.js`; `js/app-shell.js` aplica el idioma elegido al navegar y a los resultados que aparecen dinámicamente. Al agregar contenido en español, incorporar sus traducciones a ese archivo. Los nombres, direcciones de las filiales y archivos multimedia originales no se alteran.
 
 El directorio usa una copia local de [`datos/filiales.js` del Himnario](https://github.com/prog-collab/Himnario/blob/26e535873197637b05ecf79d9d8688cba3a9751b/datos/filiales.js) en `js/filiales-data.js` (commit `26e5358`, 23 de agosto de 2026). La copia permite buscar sin conexión. Para actualizarla, reemplazar ese archivo con una versión revisada de la fuente, comprobar cantidad y campos, y cambiar `CACHE_NAME` en `service-worker.js`. Los enlaces a Maps hacen una búsqueda; algunas direcciones de la fuente son aproximadas.
 
