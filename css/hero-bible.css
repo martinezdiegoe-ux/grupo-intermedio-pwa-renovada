@@ -1,0 +1,29 @@
+.hero-symbol { display: none; }
+.hero::after { opacity: .35; }
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: url('../assets/hero-biblia-abierta.png') center / contain no-repeat;
+  opacity: .54;
+  pointer-events: none;
+}
+
+@media (max-width: 850px) {
+  .hero { min-height: 520px; align-items: flex-start; }
+  .hero::before {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    width: 66%;
+    height: 45%;
+    opacity: .45;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero::before { right: -3%; width: 82%; height: 38%; opacity: .48; }
+}
