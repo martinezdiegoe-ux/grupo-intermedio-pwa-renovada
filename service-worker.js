@@ -4,7 +4,7 @@ const STATIC_ASSETS=[
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas.js','js/alabanza.js',
   'juegos.html','crucigramas.html','verdadero-falso.html','opcion-multiple.html',
   'cronograma.html','novedades.html','comunicados.html','mensajes.html',
-  'lectura.html','js/plan-365.js','js/lectura.js','recursos.html','js/estudios-i18n.js','biblia.html','js/biblia.js','meditaciones.html','js/meditaciones.js','js/meditaciones-data.js','biblioteca.html','js/biblioteca.js','js/biblioteca-data.js','oracion.html','js/oracion.js','radio.html',
+  'lectura.html','js/plan-365.js','js/lectura.js','recursos.html','js/estudios-i18n.js','biblia.html','js/biblia.js','datos/biblia-rv1960.json','meditaciones.html','js/meditaciones.js','js/meditaciones-data.js','biblioteca.html','js/biblioteca.js','js/biblioteca-data.js','oracion.html','js/oracion.js','radio.html',
   'acerca.html','quienes.html','creemos.html','vision.html','donde.html','css/donde.css','js/filiales-data.js','js/donde.js',
   'assets/icon-192.png','assets/icon-512.png','assets/hero-biblia-abierta.png'
 ];
