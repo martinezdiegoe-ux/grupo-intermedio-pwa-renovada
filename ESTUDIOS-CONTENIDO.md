@@ -34,20 +34,20 @@ Subir cada libro autorizado a `pdf/libros/` y agregarlo a `js/biblioteca-data.js
 
 ## Biblia Reina-Valera 1960
 
-`biblia.html` y `js/biblia.js` implementan selector de los 66 libros, filtro de títulos, referencia escrita (por ejemplo, `Juan 3`), selector de capítulos, navegación anterior/siguiente y enlaces directos mediante `?libro=43&capitulo=3`. El texto solo se presenta cuando se incorpore una edición digital autorizada en `datos/biblia-rv1960.json` con este formato:
+`biblia.html` y `js/biblia.js` implementan selector de los 66 libros, filtro de títulos, referencia escrita (por ejemplo, `Juan 3`), selector de capítulos, navegación anterior/siguiente y enlaces directos mediante `?libro=43&capitulo=3`. El texto completo de 1.189 capítulos se almacena en `datos/biblia-rv1960.json` con este formato:
 
 ```json
 {
   "edition": "RVR1960",
   "books": [
-    { "name": "Génesis", "chapters": [["Texto del versículo 1", "Texto del versículo 2"]] }
+    { "name": "Génesis", "chapters": [{ "text": "Texto íntegro del capítulo", "page": 5 }] }
   ]
 }
 ```
 
-El archivo real debe contener los 66 libros en el orden canónico, con la cantidad exacta de capítulos; cada capítulo es un arreglo de versículos en orden. El lector valida estas condiciones antes de mostrarlo. El ejemplo de arriba solo ilustra el formato: no es un archivo listo para publicar.
+El archivo real contiene los 66 libros en orden canónico y 1.189 capítulos. El lector valida nombres, cantidad de capítulos y presencia del texto antes de mostrarlo. `page` indica la página física del PDF original (desde 1) donde empieza el capítulo. El lector ofrece texto por capítulo sin números de versículo: el PDF de origen tiene esos números en los márgenes y en algunas líneas reúne dos, por lo que atribuirles cortes automáticos podría falsear el texto. La división visual en párrafos no modifica el orden de las palabras. `scripts/extraer_biblia_pdf.py` permite repetir la extracción desde `upload/biblia-reina-valera-1960.pdf` en una copia local; no se publica el PDF de origen. Requiere PyMuPDF (`fitz`).
 
-Antes de agregar el texto completo a GitHub Pages, revisar la autorización escrita y obtener el archivo digital de la edición aprobada. Una PWA estática y un repositorio público permiten descargar/copiar el archivo completo. Si el permiso exige otro método de distribución, adaptar el alojamiento y la carga del texto a esas condiciones. Conservar la leyenda de derechos requerida en la interfaz. No subir la carta de autorización al repositorio público si contiene datos privados.
+El titular del proyecto informó que obtuvo autorización escrita de la Sociedad Bíblica Argentina y suministró el PDF usado para la extracción. Conservar la autorización fuera del repositorio público y respetar sus condiciones de uso. Una PWA estática y un repositorio público permiten descargar/copiar el archivo completo. La interfaz mantiene la leyenda de derechos.
 
 ## Publicación
 
