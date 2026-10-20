@@ -1,4 +1,5 @@
 .hero-symbol { display: none; }
+.hero { min-height: 365px; padding: 48px 6% 54px; align-items: flex-start; }
 .hero::after { opacity: .35; }
 .hero h1 { font-size: clamp(35px, 4.6vw, 60px); }
 .hero h1 em { display: block; }
@@ -15,17 +16,24 @@
 }
 
 @media (max-width: 850px) {
-  .hero { min-height: 520px; align-items: flex-start; }
+  .hero { min-height: 390px; padding: 45px 6% 55px; }
   .hero::before {
     top: auto;
     right: 0;
-    bottom: 0;
-    width: 66%;
-    height: 45%;
+    bottom: 12px;
+    width: 56%;
+    height: 49%;
     opacity: .45;
   }
 }
 
 @media (max-width: 640px) {
-  .hero::before { right: -3%; width: 82%; height: 38%; opacity: .48; }
+  .hero { min-height: 380px; padding: 38px 25px 45px; }
+  .hero::before { right: -3%; bottom: 0; width: 82%; height: 36%; opacity: .48; }
+}
+
+@media (max-width: 380px) {
+  .hero { min-height: 420px; }
+  .hero h1 { font-size: 32px; }
+  .hero::before { height: 32%; }
 }
