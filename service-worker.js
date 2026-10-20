@@ -1,11 +1,11 @@
-const CACHE_NAME='voz-juvenil-v6';
+const CACHE_NAME='voz-juvenil-v7';
 const STATIC_ASSETS=[
   './','index.html','home.html','manifest.json','css/app.css','js/app-shell.js',
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas.js','js/himnario-catalogo.js','js/alabanza.js',
   'juegos.html','crucigramas.html','verdadero-falso.html','opcion-multiple.html',
   'cronograma.html','novedades.html','comunicados.html','mensajes.html',
   'lectura.html','js/plan-365.js','js/lectura.js','recursos.html','oracion.html','js/oracion.js','radio.html',
-  'acerca.html','quienes.html','creemos.html','vision.html','donde.html','js/donde.js',
+  'acerca.html','quienes.html','creemos.html','vision.html','donde.html','css/donde.css','js/filiales-data.js','js/donde.js',
   'assets/icon-192.png','assets/icon-512.png'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(STATIC_ASSETS)).then(()=>self.skipWaiting()))});

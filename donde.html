@@ -1,28 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dónde nos encontramos</title>
-
-<link rel="stylesheet" href="css/donde.css">
-<link rel="stylesheet" href="css/app.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b38">
+  <meta name="description" content="Buscá filiales de la Asamblea Cristiana por provincia, ciudad o dirección.">
+  <title>Encontranos · Voz Juvenil</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/donde.css">
 </head>
-
 <body>
+  <main class="page-main directory-page">
+    <section class="page-hero directory-hero">
+      <p class="eyebrow">ASAMBLEA CRISTIANA EN ARGENTINA</p>
+      <h1>Encontranos</h1>
+      <p>Buscá una filial por provincia, ciudad, nombre o dirección.</p>
+    </section>
 
-<h1>Encontranos</h1><p class="empty-note" style="max-width:880px;margin:0 auto;padding:0 24px">Direcciones confirmadas de la Asamblea Cristiana. Podés buscar por provincia o ciudad.</p>
+    <section class="panel directory-feature" aria-labelledby="sede-central">
+      <div>
+        <p class="eyebrow">PUNTO DE REFERENCIA</p>
+        <h2 id="sede-central">Sede central · Santa Fe</h2>
+        <p>1º de Mayo 3623, Santa Fe</p>
+      </div>
+      <a class="action-link primary" href="https://www.google.com/maps/search/?api=1&amp;query=1%C2%BA%20de%20Mayo%203623%2C%20Santa%20Fe%2C%20Argentina" target="_blank" rel="noopener noreferrer">Buscar en Maps ↗</a>
+    </section>
 
-<div class="buscador">
-<input type="text" id="provincia" placeholder="Provincia">
-<input type="text" id="ciudad" placeholder="Ciudad">
-<button onclick="buscar()">Buscar</button>
-</div>
+    <section class="panel directory-panel" aria-labelledby="directorio-titulo">
+      <div class="directory-heading">
+        <div>
+          <p class="eyebrow">DIRECTORIO</p>
+          <h2 id="directorio-titulo">Filiales</h2>
+        </div>
+        <p id="total-filiales" class="directory-total"></p>
+      </div>
 
-<div id="resultados"></div>
+      <div class="directory-filters">
+        <div>
+          <label for="provincia">Provincia o jurisdicción</label>
+          <select id="provincia" class="field">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div>
+          <label for="busqueda-filial">Buscar</label>
+          <input id="busqueda-filial" class="field" type="search" autocomplete="off" placeholder="Ciudad, filial o dirección">
+        </div>
+      </div>
 
-<script src="js/donde.js"></script>
+      <p id="resumen-filiales" class="directory-summary" role="status" aria-live="polite"></p>
+      <div id="resultados" class="directory-results"></div>
+      <button id="mostrar-mas" class="pill-button directory-more" type="button" hidden>Mostrar más</button>
+    </section>
 
-<script src="js/app-shell.js"></script>
+    <p class="directory-source">Fuente: <a href="https://github.com/prog-collab/Himnario/blob/26e535873197637b05ecf79d9d8688cba3a9751b/datos/filiales.js" target="_blank" rel="noopener noreferrer">listado público de filiales del Himnario ↗</a>. Los enlaces a Maps realizan una búsqueda; algunas direcciones son aproximadas.</p>
+  </main>
+  <script src="js/filiales-data.js"></script>
+  <script src="js/donde.js"></script>
+  <script src="js/app-shell.js"></script>
 </body>
 </html>

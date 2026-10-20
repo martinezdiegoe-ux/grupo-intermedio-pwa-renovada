@@ -1,35 +1,129 @@
-body{
-font-family:Arial,sans-serif;
-padding:20px;
-background:url("../assets/fondo-claro.png") center/cover no-repeat;
-text-align:center;
+.directory-hero {
+  background: radial-gradient(circle at 84% 18%, #444a90, #172448 58%, #101b38);
 }
-
-.buscador{
-display:flex;
-flex-direction:column;
-gap:10px;
-margin-bottom:20px;
+.directory-feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
 }
-
-input{
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
+.directory-feature .eyebrow,
+.directory-heading .eyebrow {
+  margin-bottom: 8px;
 }
-
-button{
-padding:12px;
-border:none;
-border-radius:10px;
-background:#2E5E2E;
-color:white;
+.directory-feature h2,
+.directory-heading h2 {
+  margin: 0;
 }
-
-.card-filial{
-background:white;
-padding:15px;
-margin-bottom:15px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
+.directory-feature p:last-child {
+  margin: 9px 0 0;
+  color: var(--muted);
+}
+.directory-feature .action-link {
+  flex: none;
+}
+.directory-panel {
+  padding: 30px;
+}
+.directory-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+}
+.directory-total {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.directory-filters {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(260px, 2fr);
+  gap: 14px;
+  margin-top: 25px;
+}
+.directory-filters label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.directory-summary {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 24px 0 15px;
+}
+.directory-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+.directory-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #fff;
+}
+.directory-locality {
+  color: var(--violet);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  margin: 0 0 9px;
+}
+.directory-card h3 {
+  font-family: Manrope, sans-serif;
+  font-size: 17px;
+  line-height: 1.35;
+  margin: 0;
+}
+.directory-address {
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 13px;
+  margin: 10px 0 18px;
+  overflow-wrap: anywhere;
+}
+.directory-card .action-link {
+  align-self: flex-start;
+  margin-top: auto;
+}
+.directory-more {
+  display: flex;
+  margin: 22px auto 0;
+}
+.directory-more[hidden] {
+  display: none;
+}
+.directory-source {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 4px 25px;
+}
+.directory-source a {
+  color: var(--violet);
+  font-weight: 800;
+  text-decoration: underline;
+}
+.directory-page :is(a, button, input, select):focus-visible {
+  outline: 3px solid #a99cf6;
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  .directory-feature,
+  .directory-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .directory-panel {
+    padding: 22px;
+  }
+  .directory-filters,
+  .directory-results {
+    grid-template-columns: 1fr;
+  }
 }
