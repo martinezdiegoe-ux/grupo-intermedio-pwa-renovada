@@ -1,9 +1,10 @@
 (function () {
   'use strict';
   const days = window.PLAN_365;
-  const key = 'voz-juvenil-plan-365-v1';
-  const blockSize = 30;
-  const blocks = Math.ceil(days.length / blockSize);
+  const key = 'voz-juvenil-plan-anual-pdf-v1';
+  const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const groups = months.map((name, index) => days.filter(day => day.month === index + 1));
+  const blocks = groups.length;
   const $ = id => document.getElementById(id);
   let completed = {};
   try {
@@ -32,14 +33,13 @@
   }
   const selector = $('selector-bloque');
   for (let block = 0; block < blocks; block++) {
-    const from = block * blockSize + 1, to = Math.min(days.length, from + blockSize - 1);
     const option = document.createElement('option');
     option.value = String(block);
-    option.textContent = `Días ${from}–${to}`;
+    option.textContent = months[block];
     selector.append(option);
   }
   const firstPending = () => days.find(day => !completed[day.day]);
-  let currentBlock = Math.floor(((firstPending() || days[days.length - 1]).day - 1) / blockSize);
+  let currentBlock = (firstPending() || days[days.length - 1]).month - 1;
 
   function updateSummary() {
     const count = Object.keys(completed).length;
@@ -57,12 +57,12 @@
     selector.value = String(currentBlock);
     $('bloque-anterior').disabled = currentBlock === 0;
     $('bloque-siguiente').disabled = currentBlock === blocks - 1;
-    const slice = days.slice(currentBlock * blockSize, (currentBlock + 1) * blockSize);
+    const slice = groups[currentBlock];
     const count = slice.filter(day => completed[day.day]).length;
     $('bloque-resumen').textContent = `Días ${slice[0].day}–${slice[slice.length - 1].day} · ${count} de ${slice.length} completados`;
     const fragment = document.createDocumentFragment();
     for (const day of slice) {
-      const card = document.createElement('label');
+      const card = document.createElement('article');
       card.className = 'reading-card' + (completed[day.day] ? ' is-complete' : '');
       const top = document.createElement('span'); top.className = 'reading-card-top';
       const number = document.createElement('span'); number.className = 'reading-day'; number.textContent = `DÍA ${day.day}`;
@@ -71,13 +71,27 @@
       check.addEventListener('change', () => {
         if (check.checked) completed[day.day] = dateKey(new Date()); else delete completed[day.day];
         save(); updateSummary(); render();
-        $('dias-lectura').children[(day.day - 1) % blockSize]?.querySelector('input')?.focus();
+        $('dias-lectura').querySelector(`[data-day="${day.day}"] input`)?.focus();
         $('progreso-lectura').textContent = `Día ${day.day} ${check.checked ? 'completado' : 'pendiente'}. ${Object.keys(completed).length} de 365 días completados.`;
       });
-      const passage = document.createElement('strong'); passage.textContent = day.passage;
+      card.dataset.day = String(day.day);
+      const passage = document.createElement('div'); passage.className = 'reading-passages';
+      for (const reading of day.readings) {
+        const reference = document.createElement('strong'); reference.textContent = reading.reference;
+        const chapters = document.createElement('div'); chapters.className = 'reading-chapter-links';
+        for (let chapter = reading.chapter; chapter <= reading.endChapter; chapter++) {
+          const link = document.createElement('a');
+          link.href = `biblia.html?libro=${reading.book}&capitulo=${chapter}`;
+          const prefix = document.createElement('span'); prefix.textContent = 'Capítulo';
+          link.append(prefix, document.createTextNode(` ${chapter} ↗`));
+          chapters.append(link);
+        }
+        passage.append(reference, chapters);
+      }
       const theme = document.createElement('small'); theme.textContent = day.theme;
       const status = document.createElement('span'); status.className = 'reading-status'; status.textContent = completed[day.day] ? '✓ Completado' : 'Marcar como leído';
-      top.append(number, check); card.append(top, passage, theme, status); fragment.append(card);
+      const toggle = document.createElement('label'); toggle.className = 'reading-toggle'; toggle.append(check, status);
+      top.append(number); card.append(top, theme, passage, toggle); fragment.append(card);
     }
     $('dias-lectura').replaceChildren(fragment);
   }
@@ -86,10 +100,11 @@
   $('bloque-siguiente').addEventListener('click', () => { currentBlock++; render(); });
   $('ir-pendiente').addEventListener('click', () => {
     const pending = firstPending(); if (!pending) return;
-    currentBlock = Math.floor((pending.day - 1) / blockSize); render();
-    const card = $('dias-lectura').children[(pending.day - 1) % blockSize];
+    currentBlock = pending.month - 1; render();
+    const card = $('dias-lectura').querySelector(`[data-day="${pending.day}"]`);
     card?.querySelector('input')?.focus();
     card?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
   updateSummary(); render();
 })();
+
