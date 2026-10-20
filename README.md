@@ -5,7 +5,7 @@ PWA pública y estática de contenidos para el Grupo Intermedio de la Asamblea C
 ## Secciones
 
 - Meditación: texto y audio existente.
-- Alabanzas: tres canciones existentes, con PDF y video. El índice local permite buscar los 400 himnos por número, título y los 33 temas del proyecto [prog-collab/Himnario](https://github.com/prog-collab/Himnario). Cada resultado abre la letra y las herramientas en el [himnario original](https://prog-collab.github.io/Himnario/); dos historias editoriales tienen fuentes separadas.
+- Alabanzas: tres canciones del grupo, con letra, PDF y video. La sección de himnos y sus historias está oculta de la interfaz.
 - Juegos: crucigramas, verdadero o falso y opción múltiple originales.
 - Plan de lectura de 365 días: recorrido canónico de los 66 libros, de Génesis a Apocalipsis. Son 1.189 capítulos distribuidos en 365 lecturas de 3 o 4 capítulos, con tema orientativo por libro, bloques de 30 días y último bloque de 5.
 - Novedades, cronograma y comunicados: archivos históricos separados de publicaciones nuevas.
@@ -17,11 +17,11 @@ PWA pública y estática de contenidos para el Grupo Intermedio de la Asamblea C
 
 ## Publicar contenido
 
-Editar js/alabanzas.js para las alabanzas y agregar los PDF propios en pdf/. El índice de títulos y temas del himnario se conserva en js/himnario-catalogo.js; no contiene las letras. Editar js/cronograma.js (arreglo proximos) y js/comunicados.js (arreglo comunicados) para novedades vigentes. Al publicar una actualización importante, cambiar CACHE_NAME en service-worker.js.
+Editar js/alabanzas.js para las alabanzas y agregar los PDF propios en pdf/. El índice de títulos y temas del himnario permanece en js/himnario-catalogo.js para una posible restauración, pero no se carga en la página. Editar js/cronograma.js (arreglo proximos) y js/comunicados.js (arreglo comunicados) para novedades vigentes. Al publicar una actualización importante, cambiar CACHE_NAME en service-worker.js.
 
 El directorio usa una copia local de [`datos/filiales.js` del Himnario](https://github.com/prog-collab/Himnario/blob/26e535873197637b05ecf79d9d8688cba3a9751b/datos/filiales.js) en `js/filiales-data.js` (commit `26e5358`, 23 de agosto de 2026). La copia permite buscar sin conexión. Para actualizarla, reemplazar ese archivo con una versión revisada de la fuente, comprobar cantidad y campos, y cambiar `CACHE_NAME` en `service-worker.js`. Los enlaces a Maps hacen una búsqueda; algunas direcciones de la fuente son aproximadas.
 
-El proyecto de referencia no declara una licencia de reutilización en su repositorio. Por eso esta PWA conserva solo el índice de número, título y temas, atribuye la fuente y enlaza al contenido completo en la aplicación de origen. Las historias no provienen de ese repositorio y están atribuidas a sus fuentes en cada ficha.
+El proyecto de referencia no declara una licencia de reutilización en su repositorio. El índice conservado contiene solo número, título y temas, sin letras completas.
 
 La radio y los videos requieren conexión. El audio de la meditación está alojado en un dominio externo ya utilizado por la app. Los datos de lectura y oración quedan en localStorage y no se sincronizan entre dispositivos.
 

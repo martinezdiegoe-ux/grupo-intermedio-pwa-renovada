@@ -1,7 +1,27 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101b38"><title>Alabanzas e himnos · Voz Juvenil</title><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="css/app.css"></head><body>
-<main class="page-main"><section class="page-hero"><p class="eyebrow">MÚSICA PARA EL CAMINO</p><h1>Alabanzas e himnos</h1><p>Las alabanzas del grupo, sus partituras y videos. También un espacio para conocer la historia de los himnos.</p></section>
-<div class="tabs" role="tablist" aria-label="Contenido musical"><button class="tab" role="tab" id="tab-alabanzas" aria-selected="true" aria-controls="panel-alabanzas">Alabanzas</button><button class="tab" role="tab" id="tab-himnos" aria-selected="false" aria-controls="panel-himnos">Himnos</button><button class="tab" role="tab" id="tab-historias" aria-selected="false" aria-controls="panel-historias">Sus historias</button></div>
-<section id="panel-alabanzas" role="tabpanel" aria-labelledby="tab-alabanzas"><div class="panel"><h2>Alabanzas del grupo</h2><p class="empty-note">Abrí cada alabanza para ver su letra, descargar el PDF y escucharla en video.</p><div id="lista-alabanzas" class="resource-grid"></div></div></section>
-<section id="panel-himnos" role="tabpanel" aria-labelledby="tab-himnos" hidden><div class="panel"><h2>Los 400 himnos de la Asamblea</h2><p class="empty-note">Buscá por número, título o tema. Cada resultado abre su letra y sus herramientas en el <a href="https://prog-collab.github.io/Himnario/" target="_blank" rel="noopener noreferrer" class="text-inline">himnario original ↗</a>.</p><div class="catalog-filters"><div><label for="buscar-himno">Número o título</label><input id="buscar-himno" class="field" type="search" placeholder="Por ejemplo: 3 o Santo" autocomplete="off"></div><div><label for="tema-himno">Tema</label><select id="tema-himno" class="field"><option value="">Todos los temas</option></select></div></div><p class="empty-note" id="cantidad-himnos" role="status"></p></div><div id="lista-himnos" class="resource-grid"></div><div class="panel" style="margin-top:18px"><button id="mas-himnos" class="pill-button" type="button" hidden>Mostrar más himnos</button><p class="empty-note">Índice de títulos y temas: <a href="https://github.com/prog-collab/Himnario" target="_blank" rel="noopener noreferrer" class="text-inline">prog-collab/Himnario ↗</a>. La letra completa permanece en el proyecto original.</p></div></section>
-<section id="panel-historias" role="tabpanel" aria-labelledby="tab-historias" hidden><div class="panel"><h2>Detrás de cada himno</h2><p class="empty-note">Historias breves de algunos cantos del himnario. Cada entrada incluye su fuente y el enlace al número correspondiente.</p></div><div id="historias-himnos" class="resource-grid"></div></section>
-</main><script src="js/himnario-catalogo.js"></script><script src="js/alabanzas.js"></script><script src="js/app-shell.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b38">
+  <title>Alabanzas · Voz Juvenil</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main class="page-main">
+    <section class="page-hero">
+      <p class="eyebrow">MÚSICA PARA EL CAMINO</p>
+      <h1>Alabanzas</h1>
+      <p>Las alabanzas del grupo, sus letras, PDF y videos.</p>
+    </section>
+    <section class="panel" aria-labelledby="alabanzas-titulo">
+      <h2 id="alabanzas-titulo">Alabanzas del grupo</h2>
+      <p class="empty-note">Abrí cada alabanza para ver su letra, descargar el PDF y escucharla en video.</p>
+      <div id="lista-alabanzas" class="resource-grid"></div>
+    </section>
+  </main>
+  <script src="js/alabanzas.js"></script>
+  <script src="js/app-shell.js"></script>
+</body>
+</html>

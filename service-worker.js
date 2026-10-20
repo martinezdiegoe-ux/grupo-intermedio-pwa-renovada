@@ -1,7 +1,7 @@
-const CACHE_NAME='voz-juvenil-v7';
+const CACHE_NAME='voz-juvenil-v8';
 const STATIC_ASSETS=[
   './','index.html','home.html','manifest.json','css/app.css','js/app-shell.js',
-  'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas.js','js/himnario-catalogo.js','js/alabanza.js',
+  'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas.js','js/alabanza.js',
   'juegos.html','crucigramas.html','verdadero-falso.html','opcion-multiple.html',
   'cronograma.html','novedades.html','comunicados.html','mensajes.html',
   'lectura.html','js/plan-365.js','js/lectura.js','recursos.html','oracion.html','js/oracion.js','radio.html',
