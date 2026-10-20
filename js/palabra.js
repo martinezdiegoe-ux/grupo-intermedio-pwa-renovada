@@ -3,7 +3,7 @@ const dailyMeditations = (window.VOZ_MEDITACIONES || []).slice().sort((a,b) => (
 const currentMeditation = dailyMeditations[0];
 if (currentMeditation) {
   document.getElementById('titulo-meditacion').textContent = currentMeditation.title;
-  document.getElementById('versiculo').textContent = currentMeditation.verse + (currentMeditation.verse.includes(currentMeditation.reference) ? '' : ' · ' + currentMeditation.reference);
+  document.getElementById('versiculo').textContent = currentMeditation.verse;
   document.getElementById('texto-meditacion').textContent = currentMeditation.text;
   const player = document.getElementById('audio');
   if (currentMeditation.audio) player.src = currentMeditation.audio;
