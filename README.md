@@ -7,7 +7,7 @@ PWA pública y estática de contenidos para el Grupo Intermedio de la Asamblea C
 - Meditación: texto y audio existente.
 - Alabanzas: tres canciones del grupo, con letra, PDF y video. La sección de himnos y sus historias está oculta de la interfaz.
 - Juegos: crucigramas, verdadero o falso y opción múltiple originales.
-- Plan de lectura de 365 días: recorrido canónico de los 66 libros, de Génesis a Apocalipsis. Son 1.189 capítulos distribuidos en 365 lecturas de 3 o 4 capítulos, con tema orientativo por libro, bloques de 30 días y último bloque de 5.
+- Plan de lectura de 365 días: plan del PDF suministrado, con tres pasajes diarios y navegación por los doce meses. Incluye acceso a los capítulos de la Biblia y seguimiento de progreso.
 - Novedades, cronograma y comunicados: archivos históricos separados de publicaciones nuevas.
 - Encontranos: directorio de 857 filiales con filtro por provincia o jurisdicción, búsqueda por ciudad, nombre y dirección, y resultados en bloques de 30. La sede central se muestra en 1º de Mayo 3623, Santa Fe.
 - Estudios bíblicos y recursos.
@@ -31,4 +31,6 @@ La radio y los videos requieren conexión. El audio de la meditación está aloj
 
 ### Seguimiento del plan anual
 
-`js/plan-365.js` contiene el orden y la cantidad de capítulos de los 66 libros; genera las 365 referencias diarias sin incluir texto bíblico. `js/lectura.js` guarda en `localStorage`, bajo `voz-juvenil-plan-365-v1`, un objeto que asocia el número de día con la fecha local en que se marcó como completado. Se puede desmarcar un día. El porcentaje y el total salen de los días completados; la racha cuenta fechas consecutivas con al menos una lectura, comenzando hoy o ayer. La navegación abre inicialmente el bloque del primer día pendiente y permite ir a cualquiera de los 13 bloques. El plan anterior de Marcos usaba `voz-juvenil-lecturas`; su dato queda intacto, pero no se equipara con días del nuevo plan porque son lecturas diferentes. No hay sincronización, cuentas ni servidor de datos.
+`js/plan-365.js` contiene las 365 fechas y 1.095 referencias del PDF `pdf/plan-biblia-un-ano.pdf`. Se respetan el orden de meses y los rangos de pasajes del documento. Los puntos entre capítulo y versículo se presentan como dos puntos; se corrigieron las erratas tipográficas de Mateo 23.13.39 (29 de marzo), Marcos 4 1-20 (18 de junio) y Daniel 11 21-45 (25 de junio). La interfaz ofrece únicamente este plan. Cada pasaje enlaza todos sus capítulos a la Biblia integrada; el lector muestra capítulos completos, por lo que se indican los versículos asignados en la tarjeta.
+
+`js/lectura.js` guarda el avance del nuevo plan en `localStorage`, bajo `voz-juvenil-plan-anual-pdf-v1`. No se trasladan automáticamente los días completados del plan sustituido porque sus lecturas eran distintas. Los datos antiguos no se borran, pero no se muestran como un plan alternativo. El porcentaje cuenta fechas completadas y la racha cuenta fechas consecutivas con al menos una lectura, comenzando hoy o ayer. Se puede marcar y desmarcar cada día y retomar el primero pendiente. El almacenamiento es local, sin sincronización entre dispositivos.

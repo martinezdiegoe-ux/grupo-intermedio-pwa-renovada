@@ -45,10 +45,14 @@ Subir cada libro autorizado a `pdf/libros/` y agregarlo a `js/biblioteca-data.js
 }
 ```
 
-El archivo real contiene los 66 libros en orden canónico y 1.189 capítulos. El lector valida nombres, cantidad de capítulos y presencia del texto antes de mostrarlo. `page` indica la página física del PDF original (desde 1) donde empieza el capítulo. El lector ofrece texto por capítulo sin números de versículo: el PDF de origen tiene esos números en los márgenes y en algunas líneas reúne dos, por lo que atribuirles cortes automáticos podría falsear el texto. La división visual en párrafos no modifica el orden de las palabras. `scripts/extraer_biblia_pdf.py` permite repetir la extracción desde `upload/biblia-reina-valera-1960.pdf` en una copia local; no se publica el PDF de origen. Requiere PyMuPDF (`fitz`).
+El archivo real contiene los 66 libros en orden canónico y 1.189 capítulos. El lector valida nombres, cantidad de capítulos y presencia del texto antes de mostrarlo. `page` indica la página física del PDF original (desde 1) donde empieza el capítulo. El lector ofrece texto por capítulo sin números de versículo: el PDF de origen tiene esos números en los márgenes y en algunas líneas reúne dos, por lo que atribuirles cortes automáticos podría falsear el texto. La división visual en párrafos no modifica el orden de las palabras. La extracción se realizó con PyMuPDF, identificando los 1.189 inicios de capítulo por su tipografía, eliminando números marginales y encabezados y uniendo palabras cortadas por saltos de línea. No se publica el PDF de origen.
 
 El titular del proyecto informó que obtuvo autorización escrita de la Sociedad Bíblica Argentina y suministró el PDF usado para la extracción. Conservar la autorización fuera del repositorio público y respetar sus condiciones de uso. Una PWA estática y un repositorio público permiten descargar/copiar el archivo completo. La interfaz mantiene la leyenda de derechos.
 
 ## Publicación
 
 Después de cambios en páginas, datos o PDFs, actualizar `CACHE_NAME` en `service-worker.js` para renovar los archivos sin conexión. Verificar enlaces, búsqueda, contenido y el menú de idiomas en la URL pública.
+
+## Plan anual
+
+`lectura.html` muestra únicamente el plan de `pdf/plan-biblia-un-ano.pdf`: 365 fechas, tres pasajes por día y navegación mensual. Los registros están en `js/plan-365.js`. El progreso se guarda bajo `voz-juvenil-plan-anual-pdf-v1`; no reutiliza los días completados del plan sustituido. Consultar README.md para el formato, referencias corregidas y funcionamiento del seguimiento.

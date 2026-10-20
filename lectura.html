@@ -8,13 +8,16 @@
   <title>Plan de lectura 365 días · Voz Juvenil</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/app.css">
+  <style>
+    .reading-card{cursor:default;min-height:0}.reading-card small{margin-top:7px}.reading-passages{margin:12px 0 18px;display:grid;gap:7px}.reading-passages strong{font-size:16px;margin:5px 0 0}.reading-chapter-links{display:flex;flex-wrap:wrap;gap:7px}.reading-chapter-links a{border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:11px;font-weight:700;color:var(--violet);text-decoration:none}.reading-chapter-links a:hover{background:var(--bg)}.reading-toggle{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line);cursor:pointer}.reading-toggle .reading-status{margin:0;padding:0}.reading-card .reading-toggle input{margin:0;flex:0 0 21px}.reading-instructions{margin:0 0 20px;line-height:1.6}
+  </style>
 </head>
 <body>
   <main class="page-main reading-page">
     <section class="page-hero reading-hero">
       <p class="eyebrow">UN AÑO EN LA PALABRA</p>
       <h1>La Biblia en 365 días</h1>
-      <p>Un recorrido de Génesis a Apocalipsis. Leé el pasaje en tu Biblia y marcá cada día al terminar. Avanzá a tu ritmo: podés retomar donde lo dejaste.</p>
+      <p>Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.</p>
     </section>
     <section class="reading-overview panel" aria-labelledby="avance-titulo">
       <div class="reading-overview-head">
@@ -34,18 +37,43 @@
         <div><p class="eyebrow">PLAN ANUAL</p><h2 id="plan-titulo">Lecturas diarias</h2><p id="bloque-resumen" class="empty-note"></p></div>
         <button type="button" class="pill-button reading-resume" id="ir-pendiente">Ir al próximo día</button>
       </div>
-      <label class="reading-select-label" for="selector-bloque">Elegí un bloque de lectura</label>
+      <label class="reading-select-label" for="selector-bloque">Elegí un mes</label>
       <div class="reading-block-controls">
-        <button type="button" class="pill-button reading-step" id="bloque-anterior" aria-label="Bloque anterior">←</button>
+        <button type="button" class="pill-button reading-step" id="bloque-anterior" aria-label="Mes anterior">←</button>
         <select id="selector-bloque" class="field"></select>
-        <button type="button" class="pill-button reading-step" id="bloque-siguiente" aria-label="Bloque siguiente">→</button>
+        <button type="button" class="pill-button reading-step" id="bloque-siguiente" aria-label="Mes siguiente">→</button>
       </div>
+      <p class="reading-local-note reading-instructions">Los enlaces abren capítulos completos. Seguí los versículos indicados en cada pasaje.</p>
       <div id="dias-lectura" class="reading-grid"></div>
       <p id="progreso-lectura" class="sr-only" role="status" aria-live="polite"></p>
+    <p class="reading-local-note"><a href="pdf/plan-biblia-un-ano.pdf" target="_blank" rel="noopener">Ver plan original en PDF ↗</a></p>
     </section>
   </main>
-  <script src="js/plan-365.js"></script>
-  <script src="js/lectura.js"></script>
+  <script src="js/i18n-data.js"></script>
+  <script src="js/plan-365.js?v=20"></script>
+  <script>
+    (() => {
+      const sourceMonths = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+      const extras = {
+        pt: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Três passagens por dia, organizadas de janeiro a dezembro conforme o plano anual. Leia e marque cada dia ao terminar. Avance no seu ritmo.','Elegí un mes':'Escolha um mês','Mes anterior':'Mês anterior','Mes siguiente':'Próximo mês','Los enlaces abren capítulos completos. Seguí los versículos indicados en cada pasaje.':'Os links abrem capítulos completos. Siga os versículos indicados em cada passagem.','Ver plan original en PDF ↗':'Ver plano original em PDF ↗','Capítulo':'Capítulo'},
+        it: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Tre brani al giorno, organizzati da gennaio a dicembre secondo il piano annuale. Leggi e segna ogni giorno completato. Procedi al tuo ritmo.','Elegí un mes':'Scegli un mese','Mes anterior':'Mese precedente','Mes siguiente':'Mese successivo','Los enlaces abren capítulos completos. Seguí los versículos indicados en cada pasaje.':'I collegamenti aprono capitoli completi. Segui i versetti indicati in ogni brano.','Ver plan original en PDF ↗':'Vedi piano originale in PDF ↗','Capítulo':'Capitolo'},
+        uk: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Три уривки на день із січня до грудня за річним планом. Читайте й позначайте завершені дні. Рухайтеся у власному темпі.','Elegí un mes':'Оберіть місяць','Mes anterior':'Попередній місяць','Mes siguiente':'Наступний місяць','Los enlaces abren capítulos completos. Seguí los versículos indicados en cada pasaje.':'Посилання відкривають повні розділи. Читайте вірші, зазначені в кожному уривку.','Ver plan original en PDF ↗':'Переглянути оригінальний план у PDF ↗','Capítulo':'Розділ'}
+      };
+      for (const [language, locale] of Object.entries({pt:'pt-BR',it:'it-IT',uk:'uk-UA'})) {
+        const dict = window.VOZ_TRANSLATIONS[language];
+        Object.assign(dict, extras[language]);
+        sourceMonths.forEach((name, index) => {
+          const translated = new Intl.DateTimeFormat(locale,{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(2001,index,1)));
+          dict[name] = translated.charAt(0).toUpperCase()+translated.slice(1);
+        });
+        window.PLAN_365.forEach(day => {
+          dict[day.theme] = new Intl.DateTimeFormat(locale,{day:'numeric',month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(2001,day.month-1,day.date)));
+        });
+      }
+    })();
+  </script>
+  <script src="js/lectura.js?v=20"></script>
   <script src="js/app-shell.js"></script>
 </body>
 </html>
+
