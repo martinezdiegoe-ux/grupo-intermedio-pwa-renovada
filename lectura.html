@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b38">
+  <meta name="description" content="Plan de lectura bíblica de 365 días con seguimiento de progreso en Voz Juvenil.">
+  <title>Plan de lectura 365 días · Voz Juvenil</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main class="page-main reading-page">
+    <section class="page-hero reading-hero">
+      <p class="eyebrow">UN AÑO EN LA PALABRA</p>
+      <h1>La Biblia en 365 días</h1>
+      <p>Un recorrido de Génesis a Apocalipsis. Leé el pasaje en tu Biblia y marcá cada día al terminar. Avanzá a tu ritmo: podés retomar donde lo dejaste.</p>
+    </section>
+    <section class="reading-overview panel" aria-labelledby="avance-titulo">
+      <div class="reading-overview-head">
+        <div><p class="eyebrow">TU RECORRIDO</p><h2 id="avance-titulo">Tu progreso</h2></div>
+        <span id="porcentaje-lectura" class="reading-percent">0%</span>
+      </div>
+      <div class="reading-progress-track" role="progressbar" aria-label="Progreso del plan" aria-valuemin="0" aria-valuemax="365" aria-valuenow="0" id="barra-progreso"><span id="relleno-progreso"></span></div>
+      <div class="reading-stats">
+        <div><strong id="dias-completados">0</strong><span>días completados</span></div>
+        <div><strong id="racha-lectura">0</strong><span>racha de días</span></div>
+        <div><strong id="dias-pendientes">365</strong><span>por leer</span></div>
+      </div>
+      <p class="reading-local-note">El avance se guarda solo en este dispositivo. No requiere iniciar sesión.</p>
+    </section>
+    <section class="panel reading-plan" aria-labelledby="plan-titulo">
+      <div class="reading-section-head">
+        <div><p class="eyebrow">PLAN ANUAL</p><h2 id="plan-titulo">Lecturas diarias</h2><p id="bloque-resumen" class="empty-note"></p></div>
+        <button type="button" class="pill-button reading-resume" id="ir-pendiente">Ir al próximo día</button>
+      </div>
+      <label class="reading-select-label" for="selector-bloque">Elegí un bloque de lectura</label>
+      <div class="reading-block-controls">
+        <button type="button" class="pill-button reading-step" id="bloque-anterior" aria-label="Bloque anterior">←</button>
+        <select id="selector-bloque" class="field"></select>
+        <button type="button" class="pill-button reading-step" id="bloque-siguiente" aria-label="Bloque siguiente">→</button>
+      </div>
+      <div id="dias-lectura" class="reading-grid"></div>
+      <p id="progreso-lectura" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="js/plan-365.js"></script>
+  <script src="js/lectura.js"></script>
+  <script src="js/app-shell.js"></script>
+</body>
+</html>

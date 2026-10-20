@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opción Múltiple – Biblia</title>
+
+  <link rel="stylesheet" href="css/opcion-multiple.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+
+  <h1>📖 Opción Múltiple – Biblia</h1>
+
+  <div class="contenedor">
+
+    <form id="quiz">
+
+      <div class="pregunta">
+        <p>1. ¿Quién construyó el arca?</p>
+        <label><input type="radio" name="q1" value="A"> Moisés</label>
+        <label><input type="radio" name="q1" value="B"> Abraham</label>
+        <label><input type="radio" name="q1" value="C"> Noé</label>
+        <label><input type="radio" name="q1" value="D"> David</label>
+      </div>
+
+      <div class="pregunta">
+        <p>2. ¿Dónde nació Jesús?</p>
+        <label><input type="radio" name="q2" value="A"> Nazaret</label>
+        <label><input type="radio" name="q2" value="B"> Jerusalén</label>
+        <label><input type="radio" name="q2" value="C"> Belén</label>
+        <label><input type="radio" name="q2" value="D"> Galilea</label>
+      </div>
+
+      <div class="pregunta">
+        <p>3. ¿Cuántos discípulos eligió Jesús?</p>
+        <label><input type="radio" name="q3" value="A"> 10</label>
+        <label><input type="radio" name="q3" value="B"> 11</label>
+        <label><input type="radio" name="q3" value="C"> 12</label>
+        <label><input type="radio" name="q3" value="D"> 13</label>
+      </div>
+
+      <div class="pregunta">
+        <p>4. ¿Quién derrotó a Goliat?</p>
+        <label><input type="radio" name="q4" value="A"> Saúl</label>
+        <label><input type="radio" name="q4" value="B"> Sansón</label>
+        <label><input type="radio" name="q4" value="C"> David</label>
+        <label><input type="radio" name="q4" value="D"> Samuel</label>
+      </div>
+
+      <div class="pregunta">
+        <p>5. ¿Qué mar se abrió para que Israel cruzara?</p>
+        <label><input type="radio" name="q5" value="A"> Mar Muerto</label>
+        <label><input type="radio" name="q5" value="B"> Mar Mediterráneo</label>
+        <label><input type="radio" name="q5" value="C"> Mar Rojo</label>
+        <label><input type="radio" name="q5" value="D"> Río Jordán</label>
+      </div>
+
+      <div class="pregunta">
+        <p>6. ¿Quién fue tragado por un gran pez?</p>
+        <label><input type="radio" name="q6" value="A"> Job</label>
+        <label><input type="radio" name="q6" value="B"> Jonás</label>
+        <label><input type="radio" name="q6" value="C"> Pedro</label>
+        <label><input type="radio" name="q6" value="D"> Pablo</label>
+      </div>
+
+      <div class="pregunta">
+        <p>7. ¿Qué libro habla del amor?</p>
+        <label><input type="radio" name="q7" value="A"> Proverbios</label>
+        <label><input type="radio" name="q7" value="B"> Eclesiastés</label>
+        <label><input type="radio" name="q7" value="C"> Cantares</label>
+        <label><input type="radio" name="q7" value="D"> Job</label>
+      </div>
+
+      <div class="pregunta">
+        <p>8. ¿Quién escribió muchas cartas del NT?</p>
+        <label><input type="radio" name="q8" value="A"> Pedro</label>
+        <label><input type="radio" name="q8" value="B"> Juan</label>
+        <label><input type="radio" name="q8" value="C"> Pablo</label>
+        <label><input type="radio" name="q8" value="D"> Lucas</label>
+      </div>
+
+      <div class="pregunta">
+        <p>9. ¿Cuál es el primer libro de la Biblia?</p>
+        <label><input type="radio" name="q9" value="A"> Éxodo</label>
+        <label><input type="radio" name="q9" value="B"> Génesis</label>
+        <label><input type="radio" name="q9" value="C"> Levítico</label>
+        <label><input type="radio" name="q9" value="D"> Salmos</label>
+      </div>
+
+      <div class="pregunta">
+        <p>10. ¿Qué es Dios según 1 Juan 4:8?</p>
+        <label><input type="radio" name="q10" value="A"> Juez</label>
+        <label><input type="radio" name="q10" value="B"> Fuego</label>
+        <label><input type="radio" name="q10" value="C"> Amor</label>
+        <label><input type="radio" name="q10" value="D"> Rey</label>
+      </div>
+
+      <button type="button" class="btn-validar" onclick="validar()">
+        Validar respuestas
+      </button>
+
+      <div id="resultado" class="resultado">
+        <strong>Resultado final</strong>
+        <div id="texto-resultado">
+          Presioná “Validar respuestas” para ver tu resultado.
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <script src="js/opcion-multiple.js"></script>
+<script src="js/app-shell.js"></script>
+</body>
+</html>
