@@ -104,7 +104,7 @@
   $('bible-next').addEventListener('click', () => select(chapter < books[book][1] ? book : book + 1, chapter < books[book][1] ? chapter + 1 : 1, true));
   window.addEventListener('popstate', () => { const current = new URLSearchParams(location.search); const requested = Number(current.get('libro')) - 1; book = Number.isInteger(requested) && requested >= 0 && requested < books.length ? requested : 0; chapter = Math.max(1, Math.min(books[book][1], Number(current.get('capitulo')) || 1)); render(); });
   render();
-  fetch('datos/biblia-rv1960.json').then(response => {
+  fetch('datos/biblia-rv1960.json?v=23').then(response => {
     if (!response.ok) throw new Error('Texto no disponible');
     return response.json();
   }).then(data => {
