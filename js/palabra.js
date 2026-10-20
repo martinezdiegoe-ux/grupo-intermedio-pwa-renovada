@@ -1,3 +1,15 @@
+/* La entrada más reciente también permanece en el archivo de meditaciones. */
+const dailyMeditations = (window.VOZ_MEDITACIONES || []).slice().sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+const currentMeditation = dailyMeditations[0];
+if (currentMeditation) {
+  document.getElementById('titulo-meditacion').textContent = currentMeditation.title;
+  document.getElementById('versiculo').textContent = currentMeditation.verse + (currentMeditation.verse.includes(currentMeditation.reference) ? '' : ' · ' + currentMeditation.reference);
+  document.getElementById('texto-meditacion').textContent = currentMeditation.text;
+  const player = document.getElementById('audio');
+  if (currentMeditation.audio) player.src = currentMeditation.audio;
+  else document.querySelector('.reproductor').hidden = true;
+}
+
 const audio = document.getElementById("audio")
 
 const playBtn = document.getElementById("play")
