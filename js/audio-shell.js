@@ -8,6 +8,7 @@
   const toggle = document.getElementById('audio-toggle');
   const close = document.getElementById('audio-close');
   const audio = document.getElementById('persistent-audio');
+  const liveNote = document.getElementById('audio-live-note');
   const title = document.getElementById('audio-title');
   const kind = document.getElementById('audio-kind');
   const startHint = document.getElementById('audio-start-hint');
@@ -21,10 +22,10 @@
     meditation: { title: meditation?.title || 'Meditación', url: meditation?.audio || '' }
   };
   const labels = {
-    es: { panel: 'Audio de Voz Juvenil', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio' },
-    pt: { panel: 'Áudio do Voz Juvenil', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', alternative: 'Reprodutor alternativo ↗', choose: 'Escolher áudio' },
-    it: { panel: 'Audio di Voz Juvenil', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio' },
-    uk: { panel: 'Аудіо Voz Juvenil', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо' }
+    es: { panel: 'Audio de Voz Juvenil', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
+    pt: { panel: 'Áudio do Voz Juvenil', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', alternative: 'Reprodutor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
+    it: { panel: 'Audio di Voz Juvenil', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
+    uk: { panel: 'Аудіо Voz Juvenil', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
   };
   let language = 'es';
   let currentSource = 'radio';
@@ -79,6 +80,7 @@
     startHint.textContent = copy.start;
     error.textContent = copy.error;
     alternative.textContent = copy.alternative;
+    liveNote.textContent = copy.liveNote;
   }
 
   function updateMediaSession() {
@@ -99,7 +101,7 @@
   function renderPlayback() {
     const playing = !audio.paused && !audio.ended;
     fab.classList.toggle('is-playing', playing);
-    toggle.hidden = !started;
+    toggle.hidden = currentSource !== 'radio' && !started;
     toggle.textContent = playing ? '⏸' : '▶';
     toggle.setAttribute('aria-label', playing ? labels[language].pause : labels[language].resume);
     updateMediaSession();
@@ -118,12 +120,27 @@
     });
   }
 
+  function updateSeekActions() {
+    if (!('mediaSession' in navigator)) return;
+    try {
+      navigator.mediaSession.setActionHandler('seekbackward', currentSource === 'meditation' ? details => {
+        audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
+      } : null);
+      navigator.mediaSession.setActionHandler('seekforward', currentSource === 'meditation' ? details => {
+        audio.currentTime = Math.min(Number.isFinite(audio.duration) ? audio.duration : Infinity, audio.currentTime + (details.seekOffset || 10));
+      } : null);
+    } catch (_) { /* Some browsers do not expose these media actions. */ }
+  }
+
   function selectSource(next, playNow = false) {
     if (!sources[next]?.url) return;
     if (next !== currentSource || !audio.src) {
       const wasPlaying = !audio.paused && !audio.ended;
       audio.pause();
       currentSource = next;
+      audio.controls = next === 'meditation';
+      audio.hidden = next !== 'meditation';
+      liveNote.hidden = next !== 'radio';
       audio.src = sources[next].url;
       audio.load();
       sourceButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.audioSource === next)));
@@ -133,6 +150,7 @@
       alternative.hidden = true;
       renderLanguage();
       renderPlayback();
+      updateSeekActions();
       if (playNow || wasPlaying) play();
     } else if (playNow) play();
   }
@@ -174,17 +192,12 @@
   if ('mediaSession' in navigator) {
     const actions = {
       play,
-      pause: () => audio.pause(),
-      seekbackward: details => {
-        if (currentSource === 'meditation') audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
-      },
-      seekforward: details => {
-        if (currentSource === 'meditation') audio.currentTime = Math.min(Number.isFinite(audio.duration) ? audio.duration : Infinity, audio.currentTime + (details.seekOffset || 10));
-      }
+      pause: () => audio.pause()
     };
     for (const [action, handler] of Object.entries(actions)) {
       try { navigator.mediaSession.setActionHandler(action, handler); } catch (_) {}
     }
+    updateSeekActions();
   }
 
   fetch('https://public-player-widget.webradiosite.com/app/player/info/170874?hash=8c0bafb49b404f60df1b8095c255ddda1fcedcb0', { cache: 'no-store' })
