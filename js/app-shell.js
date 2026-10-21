@@ -1,6 +1,14 @@
 (() => {
   'use strict';
 
+  if (window.parent === window || window.frameElement?.id !== 'site-frame') {
+    const shellUrl = new URL('app.html', location.href);
+    const page = location.pathname.split('/').pop() || 'index.html';
+    shellUrl.searchParams.set('page', page === 'reproductor.html' ? 'index.html' : page + location.search + location.hash);
+    location.replace(shellUrl.href);
+    return;
+  }
+
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(() => {}));
   }
@@ -461,12 +469,6 @@
       </div>
     </nav>`;
   header.append(menu);
-  if (location.pathname.endsWith('/reproductor.html')) {
-    for (const link of menu.querySelectorAll('a[href]')) {
-      link.target = '_blank';
-      link.rel = 'noopener';
-    }
-  }
   const shareDialog = document.createElement('dialog');
   shareDialog.className = 'site-share-dialog';
   shareDialog.setAttribute('aria-labelledby', 'site-share-title');
@@ -552,69 +554,12 @@
     closeMenu();
   }
 
-  if (!location.pathname.endsWith('/reproductor.html')) {
-    const audioButton = document.createElement('button');
-    audioButton.type = 'button';
-    audioButton.className = 'audio-fab';
-    audioButton.setAttribute('aria-label', 'Abrir reproductor de audio');
-    audioButton.innerHTML = '<span aria-hidden="true">♫</span><span>Audio</span><span class="audio-fab-dot" aria-hidden="true"></span>';
-    document.body.append(audioButton);
-    const audioToggle = document.createElement('button');
-    audioToggle.type = 'button';
-    audioToggle.className = 'audio-fab-toggle';
-    audioToggle.hidden = true;
-    audioToggle.setAttribute('aria-label', 'Pausar audio');
-    audioToggle.textContent = '⏸';
-    document.body.append(audioToggle);
-
-    function openPlayer(source) {
-      const playerUrl = new URL('reproductor.html', location.href);
-      if (source === 'radio' || source === 'meditation') {
-        playerUrl.searchParams.set('source', source);
-        playerUrl.searchParams.set('autoplay', '1');
-      }
-      const playerWindow = window.open('', 'voz-juvenil-audio', 'popup=yes,width=430,height=650');
-      if (!playerWindow) { location.href = playerUrl.href; return; }
-      try {
-        const current = playerWindow.location.href;
-        if (current === 'about:blank' || !current.endsWith('/reproductor.html') && !current.includes('/reproductor.html?')) {
-          playerWindow.location.replace(playerUrl.href);
-        } else if (source === 'radio' || source === 'meditation') {
-          playerWindow.postMessage({ type: 'select-audio', source }, location.origin);
-        }
-      } catch (_) {
-        playerWindow.location.href = playerUrl.href;
-      }
-      playerWindow.focus();
-    }
-
-    audioButton.addEventListener('click', () => openPlayer());
-    document.addEventListener('click', event => {
-      const launcher = event.target.closest('[data-player-source]');
-      if (!launcher) return;
-      event.preventDefault();
-      openPlayer(launcher.dataset.playerSource);
-    });
-    if ('BroadcastChannel' in window) {
-      const audioChannel = new BroadcastChannel('voz-juvenil-audio');
-      audioToggle.addEventListener('click', () => audioChannel.postMessage({ type: 'toggle' }));
-      audioChannel.onmessage = event => {
-        if (event.data?.type === 'state') {
-          const playing = Boolean(event.data.playing);
-          audioButton.classList.toggle('is-playing', playing);
-          audioToggle.hidden = false;
-          audioToggle.textContent = playing ? '⏸' : '▶';
-          audioToggle.setAttribute('aria-label', playing ? 'Pausar audio' : 'Reanudar audio');
-        }
-        if (event.data?.type === 'closed') {
-          audioButton.classList.remove('is-playing');
-          audioToggle.hidden = true;
-        }
-      };
-      audioChannel.postMessage({ type: 'status-request' });
-      window.addEventListener('pagehide', () => audioChannel.close());
-    }
-  }
+  document.addEventListener('click', event => {
+    const launcher = event.target.closest('[data-player-source]');
+    if (!launcher) return;
+    event.preventDefault();
+    window.parent.postMessage({ type: 'voz-audio-select', source: launcher.dataset.playerSource }, location.origin);
+  });
 
   const observer = new MutationObserver(mutations => {
     for (const mutation of mutations) {

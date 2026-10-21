@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b38">
+  <meta name="description" content="Meditaciones, alabanzas y recursos del Grupo Intermedio de la Asamblea Cristiana.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="css/audio-shell.css">
+  <title>Voz Juvenil · Grupo Intermedio</title>
+</head>
+<body>
+  <iframe id="site-frame" title="Voz Juvenil" allow="autoplay; fullscreen"></iframe>
+  <div class="audio-dock">
+    <section id="audio-panel" class="audio-panel" aria-label="Reproductor de audio" hidden>
+      <div class="audio-panel-head">
+        <strong id="audio-panel-label">Audio de Voz Juvenil</strong>
+        <button id="audio-close" type="button" aria-label="Cerrar reproductor">×</button>
+      </div>
+      <div class="audio-source-tabs" role="group" aria-label="Elegir audio">
+        <button type="button" data-audio-source="radio">Radio en vivo</button>
+        <button type="button" data-audio-source="meditation">Audio de meditación</button>
+      </div>
+      <p id="audio-kind" class="audio-kind">EN VIVO</p>
+      <h2 id="audio-title">Radio de la Asamblea Cristiana</h2>
+      <audio id="persistent-audio" controls preload="none"></audio>
+      <p id="audio-start-hint" class="audio-message" hidden>Tocá reproducir para comenzar.</p>
+      <p id="audio-error" class="audio-message audio-error" role="alert" hidden>No se pudo reproducir el audio. Intentá nuevamente.</p>
+      <a id="audio-alternative" href="https://public-player-widget.webradiosite.com/?source=2648" target="_blank" rel="noopener noreferrer" hidden>Reproductor alternativo ↗</a>
+    </section>
+    <div class="audio-actions">
+      <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Pausar audio" hidden>⏸</button>
+      <button id="audio-fab" class="audio-fab" type="button" aria-label="Abrir reproductor de audio" aria-expanded="false" aria-controls="audio-panel"><span aria-hidden="true">♫</span><span id="audio-fab-label">Audio</span><span class="audio-fab-dot" aria-hidden="true"></span></button>
+    </div>
+  </div>
+  <script src="js/meditaciones-data.js"></script>
+  <script src="js/i18n-data.js"></script>
+  <script src="js/audio-shell.js"></script>
+</body>
+</html>

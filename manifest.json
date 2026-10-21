@@ -2,7 +2,7 @@
   "name":"Voz Juvenil · Grupo Intermedio",
   "short_name":"Voz Juvenil",
   "description":"Meditaciones, alabanzas y recursos del Grupo Intermedio",
-  "start_url":"./index.html",
+  "start_url":"./app.html?page=index.html",
   "scope":"./",
   "display":"standalone",
   "background_color":"#f7f8fb",

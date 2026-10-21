@@ -2,44 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#101b38">
-  <meta name="description" content="Radio y audio de meditación de Voz Juvenil.">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/audio-player.css">
-  <title>Reproductor · Voz Juvenil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0; url=app.html?page=index.html">
+  <title>Voz Juvenil</title>
 </head>
-<body class="audio-player-page">
-  <header class="topbar">
-    <a class="brand" href="index.html" target="_blank" rel="noopener" aria-label="Abrir Voz Juvenil">
-      <span class="brand-mark">✦</span><span><strong>VOZ JUVENIL</strong><small>GRUPO INTERMEDIO</small></span>
-    </a>
-  </header>
-  <main class="audio-player-main">
-    <p class="eyebrow">REPRODUCTOR</p>
-    <h1>Escuchá sin interrupciones</h1>
-    <p class="audio-player-intro">Dejá abierto este reproductor para seguir escuchando mientras recorrés el sitio.</p>
-    <div class="audio-source-tabs" role="group" aria-label="Elegir audio">
-      <button type="button" data-audio-source="radio">Radio en vivo</button>
-      <button type="button" data-audio-source="meditation">Audio de meditación</button>
-    </div>
-    <section class="audio-player-card" aria-label="Reproductor de audio">
-      <div class="audio-player-art" aria-hidden="true">♫</div>
-      <p id="audio-kind" class="audio-player-kind">EN VIVO</p>
-      <h2 id="audio-title">Radio de la Asamblea Cristiana</h2>
-      <audio id="persistent-audio" controls preload="none"></audio>
-      <p id="audio-start-hint" class="audio-player-help" hidden>Tocá reproducir para comenzar.</p>
-      <p id="audio-error" class="audio-player-error" role="alert" hidden>No se pudo reproducir el audio. Intentá nuevamente.</p>
-      <a id="audio-alternative" class="audio-player-alternative" href="https://public-player-widget.webradiosite.com/?source=2648" target="_blank" rel="noopener noreferrer" hidden>Reproductor alternativo ↗</a>
-    </section>
-    <button id="audio-pip" class="audio-pip-button" type="button" hidden>Flotar sobre otras ventanas</button>
-    <p class="audio-player-help">En el celular, podés usar los controles multimedia del sistema al abrir otras apps.</p>
-  </main>
-  <script src="js/meditaciones-data.js"></script>
-  <script src="js/audio-player.js"></script>
-  <script src="js/i18n-data.js"></script>
-  <script src="js/app-shell.js"></script>
+<body>
+  <p><a href="app.html?page=index.html">Abrir Voz Juvenil</a></p>
 </body>
 </html>
