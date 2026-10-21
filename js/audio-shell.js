@@ -200,5 +200,45 @@
   try { initialSource = localStorage.getItem('voz-juvenil-audio-source') || 'radio'; } catch (_) {}
   selectSource(sources[initialSource]?.url ? initialSource : 'radio');
   renderLanguage();
-  if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(() => {}));
+  if ('serviceWorker' in navigator) {
+    const serviceWorkers = navigator.serviceWorker;
+    const hadController = Boolean(serviceWorkers.controller);
+    let updateReady = false;
+    let reloadTimer;
+
+    function reloadWhenAudioStops() {
+      clearTimeout(reloadTimer);
+      if (!updateReady || (!audio.paused && !audio.ended)) return;
+      // Changing sources briefly pauses the player; wait for playback to resume.
+      reloadTimer = setTimeout(() => {
+        if (updateReady && (audio.paused || audio.ended)) location.reload();
+      }, 1000);
+    }
+
+    audio.addEventListener('play', () => clearTimeout(reloadTimer));
+    audio.addEventListener('pause', reloadWhenAudioStops);
+    audio.addEventListener('ended', reloadWhenAudioStops);
+    serviceWorkers.addEventListener('controllerchange', () => {
+      if (!hadController) return; // The first offline installation needs no refresh.
+      updateReady = true;
+      reloadWhenAudioStops();
+    });
+
+    window.addEventListener('load', async () => {
+      try {
+        const registration = await serviceWorkers.register('service-worker.js', { updateViaCache: 'none' });
+        let lastCheck = Date.now(); // Registration already checks the worker script.
+        function checkForUpdates() {
+          if (document.visibilityState !== 'visible' || !navigator.onLine || Date.now() - lastCheck < 60000) return;
+          lastCheck = Date.now();
+          registration.update().catch(() => {});
+        }
+        document.addEventListener('visibilitychange', checkForUpdates);
+        window.addEventListener('online', checkForUpdates);
+        window.addEventListener('pageshow', checkForUpdates);
+        frame.addEventListener('load', checkForUpdates);
+        setInterval(checkForUpdates, 15 * 60 * 1000);
+      } catch (_) { /* The site remains usable when offline or unsupported. */ }
+    });
+  }
 })();
