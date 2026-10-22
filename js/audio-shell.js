@@ -174,12 +174,17 @@
     if (button.dataset.audioSource === 'meditation' && !sources.meditation.url) button.disabled = true;
     button.addEventListener('click', () => selectSource(button.dataset.audioSource, true));
   }
-  audio.addEventListener('play', () => { started = true; error.hidden = true; startHint.hidden = true; renderPlayback(); });
+  audio.addEventListener('play', () => {
+    frame.contentWindow?.postMessage({ type: 'voz-bible-reading-stop' }, location.origin);
+    started = true; error.hidden = true; startHint.hidden = true; renderPlayback();
+  });
   audio.addEventListener('pause', renderPlayback);
   audio.addEventListener('ended', renderPlayback);
   audio.addEventListener('error', showError);
   window.addEventListener('message', event => {
-    if (event.origin !== location.origin || event.source !== frame.contentWindow || event.data?.type !== 'voz-audio-select') return;
+    if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
+    if (event.data?.type === 'voz-bible-reading-start') { audio.pause(); return; }
+    if (event.data?.type !== 'voz-audio-select') return;
     openPanel();
     selectSource(event.data.source, true);
   });

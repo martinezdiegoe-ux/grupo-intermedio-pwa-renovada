@@ -6,6 +6,98 @@
   const groups = months.map((name, index) => days.filter(day => day.month === index + 1));
   const blocks = groups.length;
   const $ = id => document.getElementById(id);
+  const synthesis = window.speechSynthesis;
+  let biblePromise;
+  let audio = null;
+  let audioGeneration = 0;
+  const audioStatus = $('lectura-audio-estado');
+
+  function announceAudio(message) { audioStatus.textContent = message; }
+  function updateAudioButtons() {
+    document.querySelectorAll('[data-reading-audio]').forEach(button => {
+      const active = audio?.key === button.dataset.readingAudio;
+      button.textContent = active ? (audio.paused ? '▶ Continuar' : '⏸ Pausar') : '▶ Escuchar';
+      button.setAttribute('aria-label', `${active ? (audio.paused ? 'Continuar' : 'Pausar') : 'Escuchar'} ${button.dataset.reference}`);
+    });
+    document.querySelectorAll('[data-reading-stop]').forEach(button => {
+      button.hidden = audio?.key !== button.dataset.readingStop;
+    });
+  }
+  function stopAudio(message = '') {
+    audioGeneration++;
+    audio = null;
+    synthesis?.cancel();
+    announceAudio(message);
+    updateAudioButtons();
+  }
+  function speakNext(generation) {
+    if (generation !== audioGeneration || !audio || audio.paused) return;
+    if (audio.index >= audio.verses.length) {
+      stopAudio(`Terminó la lectura de ${audio.reference}.`);
+      return;
+    }
+    const { chapter, verse, text } = audio.verses[audio.index++];
+    const utterance = new SpeechSynthesisUtterance(`Versículo ${verse}. ${text}`);
+    utterance.lang = 'es-AR';
+    const voices = synthesis.getVoices();
+    utterance.voice = voices.find(voice => voice.lang.toLowerCase() === 'es-ar')
+      || voices.find(voice => voice.lang.toLowerCase().startsWith('es')) || null;
+    utterance.onend = () => {
+      if (generation === audioGeneration) {
+        announceAudio(`Leyendo ${audio.reference}: capítulo ${chapter}, versículo ${verse}. ${audio.index} de ${audio.verses.length} versículos.`);
+        speakNext(generation);
+      }
+    };
+    utterance.onerror = event => {
+      if (generation === audioGeneration && event.error !== 'interrupted' && event.error !== 'canceled') {
+        stopAudio('No se pudo continuar la lectura en voz alta. Probá nuevamente.');
+      }
+    };
+    synthesis.speak(utterance);
+  }
+  async function toggleAudio(reading, key) {
+    if (!synthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+      announceAudio('Este navegador no ofrece lectura en voz alta.');
+      return;
+    }
+    if (audio?.key === key) {
+      if (audio.paused) {
+        audio.paused = false;
+        synthesis.resume();
+        if (!synthesis.speaking) speakNext(audioGeneration);
+        announceAudio(`Continuando ${audio.reference}.`);
+      } else {
+        audio.paused = true;
+        synthesis.pause();
+        announceAudio(`Lectura de ${audio.reference} en pausa.`);
+      }
+      updateAudioButtons();
+      return;
+    }
+    stopAudio();
+    const generation = audioGeneration;
+    announceAudio(`Preparando ${reading.reference}…`);
+    try {
+      biblePromise ||= fetch('datos/biblia-rv1960.json?v=23').then(response => {
+        if (!response.ok) throw new Error('No se pudo cargar la Biblia');
+        return response.json();
+      }).catch(error => { biblePromise = null; throw error; });
+      const bible = await biblePromise;
+      if (generation !== audioGeneration) return;
+      const verses = window.VOZ_LECTURA_AUDIO.versesForReading(reading, bible);
+      window.parent?.postMessage({ type: 'voz-bible-reading-start' }, location.origin);
+      audio = { key, reference: reading.reference, verses, index: 0, paused: false };
+      updateAudioButtons();
+      announceAudio(`Leyendo ${reading.reference}, ${verses.length} versículos. Texto Reina Valera 1960.`);
+      speakNext(generation);
+    } catch (_) {
+      if (generation === audioGeneration) announceAudio(`No se pudo preparar ${reading.reference}. Comprobá la conexión e intentá otra vez.`);
+    }
+  }
+  window.addEventListener('pagehide', () => stopAudio());
+  window.addEventListener('message', event => {
+    if (event.origin === location.origin && event.source === window.parent && event.data?.type === 'voz-bible-reading-stop') stopAudio('Lectura detenida al iniciar otro audio.');
+  });
   let completed = {};
   try {
     const parsed = JSON.parse(localStorage.getItem(key) || '{}');
@@ -90,7 +182,7 @@
       });
       card.dataset.day = String(day.day);
       const passage = document.createElement('div'); passage.className = 'reading-passages';
-      for (const reading of day.readings) {
+      day.readings.forEach((reading, index) => {
         const reference = document.createElement('strong'); reference.textContent = reading.reference;
         const chapters = document.createElement('div'); chapters.className = 'reading-chapter-links';
         const separator = reading.reference.search(/[–-]/);
@@ -107,14 +199,24 @@
           link.append(prefix, document.createTextNode(` ${chapter}:${targetVerse} ↗`));
           chapters.append(link);
         }
-        passage.append(reference, chapters);
-      }
+        const key = `${day.day}-${index}`;
+        const actions = document.createElement('div'); actions.className = 'reading-audio-actions';
+        const listen = document.createElement('button'); listen.type = 'button'; listen.className = 'reading-audio-button';
+        listen.dataset.readingAudio = key; listen.dataset.reference = reading.reference;
+        listen.addEventListener('click', () => toggleAudio(reading, key));
+        const stop = document.createElement('button'); stop.type = 'button'; stop.className = 'reading-audio-button';
+        stop.dataset.readingStop = key; stop.textContent = '■ Detener'; stop.hidden = true;
+        stop.addEventListener('click', () => stopAudio(`Lectura de ${reading.reference} detenida.`));
+        actions.append(listen, stop);
+        passage.append(reference, chapters, actions);
+      });
       const theme = document.createElement('small'); theme.textContent = day.theme;
       const status = document.createElement('span'); status.className = 'reading-status'; status.textContent = completed[day.day] ? '✓ Completado' : 'Marcar como leído';
       const toggle = document.createElement('label'); toggle.className = 'reading-toggle'; toggle.append(check, status);
       card.append(top, theme, passage, toggle); fragment.append(card);
     }
     $('dias-lectura').replaceChildren(fragment);
+    updateAudioButtons();
   }
   selector.addEventListener('change', () => { currentBlock = Number(selector.value); render(); });
   $('bloque-anterior').addEventListener('click', () => { currentBlock--; render(); });
