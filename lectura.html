@@ -62,9 +62,14 @@
         it: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Tre brani al giorno, organizzati da gennaio a dicembre secondo il piano annuale. Leggi e segna ogni giorno completato. Procedi al tuo ritmo.','Elegí un mes':'Scegli un mese','Mes anterior':'Mese precedente','Mes siguiente':'Mese successivo','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'I collegamenti portano al primo versetto di ogni lettura. Segui i versetti indicati nel piano.','Ver plan original en PDF ↗':'Vedi piano originale in PDF ↗','Capítulo':'Capitolo'},
         uk: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Три уривки на день із січня до грудня за річним планом. Читайте й позначайте завершені дні. Рухайтеся у власному темпі.','Elegí un mes':'Оберіть місяць','Mes anterior':'Попередній місяць','Mes siguiente':'Наступний місяць','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'Посилання ведуть до першого вірша кожного читання. Дотримуйтесь віршів, указаних у плані.','Ver plan original en PDF ↗':'Переглянути оригінальний план у PDF ↗','Capítulo':'Розділ'}
       };
+      const audioLabels = {
+        pt: {'Podés escuchar cada pasaje con la voz de tu dispositivo.':'Você pode ouvir cada passagem com a voz do seu dispositivo.','▶ Escuchar':'▶ Ouvir','⏸ Pausar':'⏸ Pausar','▶ Continuar':'▶ Continuar','■ Detener':'■ Parar'},
+        it: {'Podés escuchar cada pasaje con la voz de tu dispositivo.':'Puoi ascoltare ogni brano con la voce del tuo dispositivo.','▶ Escuchar':'▶ Ascolta','⏸ Pausar':'⏸ Pausa','▶ Continuar':'▶ Riprendi','■ Detener':'■ Ferma'},
+        uk: {'Podés escuchar cada pasaje con la voz de tu dispositivo.':'Можна прослухати кожен уривок голосом вашого пристрою.','▶ Escuchar':'▶ Слухати','⏸ Pausar':'⏸ Пауза','▶ Continuar':'▶ Продовжити','■ Detener':'■ Зупинити'}
+      };
       for (const [language, locale] of Object.entries({pt:'pt-BR',it:'it-IT',uk:'uk-UA'})) {
         const dict = window.VOZ_TRANSLATIONS[language];
-        Object.assign(dict, extras[language]);
+        Object.assign(dict, extras[language], audioLabels[language]);
         sourceMonths.forEach((name, index) => {
           const translated = new Intl.DateTimeFormat(locale,{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(2001,index,1)));
           dict[name] = translated.charAt(0).toUpperCase()+translated.slice(1);
