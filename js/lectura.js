@@ -38,8 +38,13 @@
     option.textContent = months[block];
     selector.append(option);
   }
-  const firstPending = () => days.find(day => !completed[day.day]);
-  let currentBlock = (firstPending() || days[days.length - 1]).month - 1;
+  let calendarDate = new Date();
+  let currentBlock = calendarDate.getMonth();
+  const todayReading = () => groups[calendarDate.getMonth()].find(day => day.date === calendarDate.getDate());
+  const nextPending = () => {
+    const start = todayReading()?.day || groups[calendarDate.getMonth()][0].day;
+    return days.find(day => day.day >= start && !completed[day.day]) || days.find(day => !completed[day.day]);
+  };
 
   function updateSummary() {
     const count = Object.keys(completed).length;
@@ -50,22 +55,31 @@
     $('dias-pendientes').textContent = days.length - count;
     $('barra-progreso').setAttribute('aria-valuenow', String(count));
     $('relleno-progreso').style.width = `${percent}%`;
-    $('ir-pendiente').textContent = firstPending() ? `Ir al día ${firstPending().day}` : 'Plan completado';
-    $('ir-pendiente').disabled = !firstPending();
+    $('ir-pendiente').textContent = nextPending() ? `Ir al día ${nextPending().day}` : 'Plan completado';
+    $('ir-pendiente').disabled = !nextPending();
   }
   function render() {
     selector.value = String(currentBlock);
     $('bloque-anterior').disabled = currentBlock === 0;
     $('bloque-siguiente').disabled = currentBlock === blocks - 1;
+    const today = todayReading();
+    $('calendario-actual').textContent = today
+      ? `Mes en curso: ${months[calendarDate.getMonth()]}. Hoy, ${calendarDate.getDate()} de ${months[calendarDate.getMonth()].toLowerCase()}: día ${today.day} del plan.`
+      : `Mes en curso: ${months[calendarDate.getMonth()]}. El plan de 365 días no tiene una lectura nueva para el ${calendarDate.getDate()} de ${months[calendarDate.getMonth()].toLowerCase()}.`;
+    $('ir-hoy').textContent = today ? 'Ir a la lectura de hoy' : 'Ver el mes en curso';
     const slice = groups[currentBlock];
     const count = slice.filter(day => completed[day.day]).length;
     $('bloque-resumen').textContent = `Días ${slice[0].day}–${slice[slice.length - 1].day} · ${count} de ${slice.length} completados`;
     const fragment = document.createDocumentFragment();
     for (const day of slice) {
       const card = document.createElement('article');
-      card.className = 'reading-card' + (completed[day.day] ? ' is-complete' : '');
+      const isToday = day.day === today?.day;
+      card.className = 'reading-card' + (completed[day.day] ? ' is-complete' : '') + (isToday ? ' is-today' : '');
+      if (isToday) card.setAttribute('aria-current', 'date');
       const top = document.createElement('span'); top.className = 'reading-card-top';
       const number = document.createElement('span'); number.className = 'reading-day'; number.textContent = `DÍA ${day.day}`;
+      if (isToday) { const badge = document.createElement('span'); badge.className = 'reading-today-badge'; badge.textContent = 'HOY'; top.append(number, badge); }
+      else top.append(number);
       const check = document.createElement('input'); check.type = 'checkbox'; check.checked = Boolean(completed[day.day]);
       check.setAttribute('aria-label', `Día ${day.day}: ${day.passage}. Marcar lectura completada`);
       check.addEventListener('change', () => {
@@ -98,7 +112,7 @@
       const theme = document.createElement('small'); theme.textContent = day.theme;
       const status = document.createElement('span'); status.className = 'reading-status'; status.textContent = completed[day.day] ? '✓ Completado' : 'Marcar como leído';
       const toggle = document.createElement('label'); toggle.className = 'reading-toggle'; toggle.append(check, status);
-      top.append(number); card.append(top, theme, passage, toggle); fragment.append(card);
+      card.append(top, theme, passage, toggle); fragment.append(card);
     }
     $('dias-lectura').replaceChildren(fragment);
   }
@@ -106,12 +120,29 @@
   $('bloque-anterior').addEventListener('click', () => { currentBlock--; render(); });
   $('bloque-siguiente').addEventListener('click', () => { currentBlock++; render(); });
   $('ir-pendiente').addEventListener('click', () => {
-    const pending = firstPending(); if (!pending) return;
+    const pending = nextPending(); if (!pending) return;
     currentBlock = pending.month - 1; render();
     const card = $('dias-lectura').querySelector(`[data-day="${pending.day}"]`);
     card?.querySelector('input')?.focus();
     card?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
+  $('ir-hoy').addEventListener('click', () => {
+    refreshCalendar();
+    currentBlock = calendarDate.getMonth(); render();
+    const today = todayReading();
+    const target = today ? $('dias-lectura').querySelector(`[data-day="${today.day}"]`) : $('plan-titulo');
+    target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  function refreshCalendar() {
+    const now = new Date();
+    if (dateKey(now) === dateKey(calendarDate)) return;
+    const wasCurrentMonth = currentBlock === calendarDate.getMonth();
+    calendarDate = now;
+    if (wasCurrentMonth) currentBlock = calendarDate.getMonth();
+    updateSummary(); render();
+  }
+  setInterval(refreshCalendar, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshCalendar(); });
   updateSummary(); render();
 })();
 
