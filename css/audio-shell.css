@@ -6,6 +6,15 @@ body { margin: 0; }
 #site-frame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #f7f8fb; }
 .audio-dock { position: fixed; right: 22px; bottom: 22px; z-index: 100; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; pointer-events: none; }
 .audio-dock > * { pointer-events: auto; }
+.bible-audio-bar { display: flex; align-items: center; gap: 9px; width: min(420px, calc(100vw - 32px)); padding: 11px 13px; border: 1px solid #ddd7ff; border-radius: 15px; background: #fff; box-shadow: 0 12px 34px rgba(16,27,56,.22); color: #142342; }
+.bible-audio-bar div { min-width: 0; flex: 1; display: grid; gap: 2px; }
+.bible-audio-bar small { color: #604bc3; font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+.bible-audio-bar strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 800 13px Manrope,system-ui,sans-serif; }
+.bible-audio-bar span { color: #66718a; font-size: 11px; }
+.bible-audio-bar button { flex: 0 0 38px; width: 38px; height: 38px; border: 0; border-radius: 10px; background: #eee9ff; color: #4934ac; font-size: 17px; cursor: pointer; }
+.bible-audio-bar button:focus-visible { outline: 3px solid #a99cf6; outline-offset: 2px; }
+[data-theme="dark"] .bible-audio-bar { background: #17223a; border-color: #5c518c; color: #f4f5fa; }
+[data-theme="dark"] .bible-audio-bar span { color: #c7cee0; }
 .audio-actions { display: flex; gap: 10px; align-items: center; }
 .audio-fab, .audio-toggle { height: 50px; border: 0; color: #fff; box-shadow: 0 10px 28px rgba(16,27,56,.28); cursor: pointer; }
 .audio-fab { display: flex; align-items: center; gap: 9px; padding: 0 16px; border-radius: 999px; background: #101b38; font: 800 14px 'DM Sans', system-ui, sans-serif; }
