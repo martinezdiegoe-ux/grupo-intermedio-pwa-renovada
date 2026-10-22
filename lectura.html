@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/app.css?v=31">
   <style>
     .reading-card{cursor:default;min-height:0}.reading-card small{margin-top:7px}.reading-passages{margin:12px 0 18px;display:grid;gap:7px}.reading-passages strong{font-size:16px;margin:5px 0 0}.reading-chapter-links{display:flex;flex-wrap:wrap;gap:7px}.reading-chapter-links a{border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:11px;font-weight:700;color:var(--violet);text-decoration:none}.reading-chapter-links a:hover{background:var(--bg)}.reading-toggle{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line);cursor:pointer}.reading-toggle .reading-status{margin:0;padding:0}.reading-card .reading-toggle input{margin:0;flex:0 0 21px}.reading-instructions{margin:0 0 20px;line-height:1.6}.reading-calendar{display:flex;align-items:center;justify-content:space-between;gap:15px;background:#f1eeff;border:1px solid #ddd6ff;border-radius:13px;padding:14px 16px;margin:22px 0 0}.reading-calendar p{margin:0;color:var(--ink);font-size:13px;line-height:1.45}.reading-calendar button{white-space:nowrap}.reading-card.is-today{border:2px solid var(--violet);background:#f9f7ff}.reading-today-badge{background:var(--violet);color:#fff;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:.08em;padding:5px 9px}.reading-card.is-complete.is-today{background:#f2f0ff}[data-theme=dark] .reading-calendar{background:#302d52;border-color:#5c518c}[data-theme=dark] .reading-card.is-today,[data-theme=dark] .reading-card.is-complete.is-today{background:#292947;border:2px solid #a391ff}@media(max-width:640px){.reading-calendar{align-items:flex-start;flex-direction:column}.reading-calendar button{width:100%;justify-content:center}}
+    .reading-audio-actions{display:flex;flex-wrap:wrap;gap:7px;margin:1px 0 5px}.reading-audio-button{font:inherit;font-size:12px;font-weight:750;color:var(--violet);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:7px 11px;cursor:pointer}.reading-audio-button:hover,.reading-audio-button:focus-visible{border-color:var(--violet);outline-offset:2px}.reading-audio-button[hidden]{display:none}.reading-audio-note{min-height:1.3em;margin:0 0 12px;font-size:13px;color:var(--violet)}
   </style>
 </head>
 <body>
@@ -45,6 +46,7 @@
         <button type="button" class="pill-button reading-step" id="bloque-siguiente" aria-label="Mes siguiente">→</button>
       </div>
       <p class="reading-local-note reading-instructions">Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.</p>
+      <p class="reading-audio-note" id="lectura-audio-estado" role="status" aria-live="polite">Podés escuchar cada pasaje con la voz de tu dispositivo.</p>
       <div id="dias-lectura" class="reading-grid"></div>
       <p id="progreso-lectura" class="sr-only" role="status" aria-live="polite"></p>
     <p class="reading-local-note"><a href="pdf/plan-biblia-un-ano.pdf" target="_blank" rel="noopener">Ver plan original en PDF ↗</a></p>
@@ -80,7 +82,8 @@
       }
     })();
   </script>
-  <script src="js/lectura.js?v=33"></script>
+  <script src="js/lectura-audio.js?v=34"></script>
+  <script src="js/lectura.js?v=34"></script>
   <script src="js/app-shell.js?v=31"></script>
 </body>
 </html>
