@@ -83,15 +83,14 @@
         const firstColon = reading.reference.indexOf(':');
         const startPart = separator < 0 ? reading.reference : reading.reference.slice(0, separator);
         const startVerseMatch = (separator < 0 || (firstColon >= 0 && firstColon < separator)) ? startPart.match(/(\d+):(\d+)$/) : null;
-        const hasVerseDetail = /\d+:\d+/.test(reading.reference);
         for (let chapter = reading.chapter; chapter <= reading.endChapter; chapter++) {
           const link = document.createElement('a');
           const params = new URLSearchParams({libro:String(reading.book), capitulo:String(chapter)});
-          const targetVerse = startVerseMatch && chapter === reading.chapter ? Number(startVerseMatch[2]) : hasVerseDetail && chapter > reading.chapter ? 1 : null;
-          if (targetVerse) params.set('versiculo', String(targetVerse));
+          const targetVerse = startVerseMatch && chapter === reading.chapter ? Number(startVerseMatch[2]) : 1;
+          params.set('versiculo', String(targetVerse));
           link.href = `biblia.html?${params}`;
-          const prefix = document.createElement('span'); prefix.textContent = targetVerse ? 'Ir a' : 'Capítulo';
-          link.append(prefix, document.createTextNode(targetVerse ? ` ${chapter}:${targetVerse} ↗` : ` ${chapter} ↗`));
+          const prefix = document.createElement('span'); prefix.textContent = 'Ir a';
+          link.append(prefix, document.createTextNode(` ${chapter}:${targetVerse} ↗`));
           chapters.append(link);
         }
         passage.append(reference, chapters);

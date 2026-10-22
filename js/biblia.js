@@ -22,9 +22,12 @@
   const targetVerse = Number.isInteger(requestedVerse) && requestedVerse > 0 ? requestedVerse : null;
   let text = null;
   let loadError = false;
+  let openTestament = null;
+  let chaptersOpen = false;
 
   function select(nextBook, nextChapter, focusReader) {
     book = nextBook; chapter = nextChapter;
+    openTestament = null; chaptersOpen = false;
     const url = new URL(location.href); url.searchParams.set('libro', String(book + 1)); url.searchParams.set('capitulo', String(chapter));
     url.searchParams.delete('versiculo');
     history.pushState(null, '', url);
@@ -35,21 +38,36 @@
     const search = normalize($('bible-search').value).replace(/\s+\d+$/, '');
     const list = $('bible-book-list'); list.replaceChildren();
     let matches = 0;
-    books.forEach(([name, count], index) => {
-      if (search && !matchesName(name, search)) return;
-      if (!search && (index === 0 || index === 39)) {
-        const group = document.createElement('p'); group.className = 'bible-group-title';
-        group.textContent = index ? 'NUEVO TESTAMENTO' : 'ANTIGUO TESTAMENTO';
-        group.style.gridColumn = '1 / -1'; list.append(group);
-      }
+    function bookButton(index) {
+      const [name, count] = books[index];
       const button = document.createElement('button'); button.type = 'button'; button.className = 'bible-book';
       button.setAttribute('aria-current', index === book ? 'true' : 'false');
       const title = document.createElement('span'); title.textContent = name;
       const detail = document.createElement('small'); detail.textContent = `${count} cap.`;
       button.append(title, detail);
       button.addEventListener('click', () => { select(index, 1, false); $('bible-search').value = ''; renderBooks(); $('bible-title').scrollIntoView({behavior:'smooth',block:'start'}); });
-      list.append(button); matches++;
-    });
+      return button;
+    }
+    if (search) {
+      books.forEach(([name], index) => {
+        if (matchesName(name, search)) { list.append(bookButton(index)); matches++; }
+      });
+    } else {
+      [['Antiguo Testamento',0,39],['Nuevo Testamento',39,books.length]].forEach(([name,start,end], groupIndex) => {
+        const button = document.createElement('button'); button.type = 'button'; button.className = 'bible-testament-button';
+        button.setAttribute('aria-controls', `bible-testament-${groupIndex}`);
+        button.setAttribute('aria-expanded', String(openTestament === groupIndex));
+        const label = document.createElement('span'); label.textContent = localizedName(name);
+        const arrow = document.createElement('span'); arrow.setAttribute('aria-hidden','true'); arrow.textContent = openTestament === groupIndex ? '−' : '+';
+        button.append(label,arrow);
+        const content = document.createElement('div'); content.id = `bible-testament-${groupIndex}`;
+        content.className = 'bible-testament-list'; content.hidden = openTestament !== groupIndex;
+        for (let index = start; index < end; index++) content.append(bookButton(index));
+        button.addEventListener('click', () => { openTestament = openTestament === groupIndex ? null : groupIndex; renderBooks(); });
+        list.append(button, content);
+      });
+      matches = books.length;
+    }
     $('bible-no-results').hidden = matches > 0;
   }
   function renderPassage() {
@@ -79,16 +97,17 @@
     const [name, count] = books[book];
     $('bible-title').textContent = `${name} ${chapter}`;
     $('bible-title').tabIndex = -1;
-    const selectChapter = $('bible-chapter-select'); selectChapter.replaceChildren();
     const chips = $('bible-chapters'); chips.replaceChildren();
     for (let number = 1; number <= count; number++) {
-      const option = document.createElement('option'); option.value = String(number); option.textContent = String(number); selectChapter.append(option);
       const button = document.createElement('button'); button.type = 'button'; button.className = 'bible-chapter'; button.textContent = String(number);
       button.setAttribute('aria-label', `Capítulo ${number}`);
       button.setAttribute('aria-current', number === chapter ? 'true' : 'false');
       button.addEventListener('click', () => select(book, number, false)); chips.append(button);
     }
-    selectChapter.value = String(chapter);
+    chips.hidden = !chaptersOpen;
+    const chapterToggle = $('bible-chapter-toggle');
+    chapterToggle.textContent = `${localizedName('Capítulo')} ${chapter} ${chaptersOpen ? '▴' : '▾'}`;
+    chapterToggle.setAttribute('aria-expanded', String(chaptersOpen));
     $('bible-prev').disabled = book === 0 && chapter === 1;
     $('bible-next').disabled = book === books.length - 1 && chapter === count;
     renderBooks(); renderPassage();
@@ -104,10 +123,10 @@
     select(target, match ? Math.max(1, Math.min(books[target][1], Number(match[2]))) : 1, false);
     event.currentTarget.value = ''; renderBooks(); $('bible-title').scrollIntoView({behavior:'smooth',block:'start'});
   });
-  $('bible-chapter-select').addEventListener('change', event => select(book, Number(event.currentTarget.value), false));
+  $('bible-chapter-toggle').addEventListener('click', () => { chaptersOpen = !chaptersOpen; render(); });
   $('bible-prev').addEventListener('click', () => select(chapter > 1 ? book : book - 1, chapter > 1 ? chapter - 1 : books[book - 1][1], true));
   $('bible-next').addEventListener('click', () => select(chapter < books[book][1] ? book : book + 1, chapter < books[book][1] ? chapter + 1 : 1, true));
-  window.addEventListener('popstate', () => { const current = new URLSearchParams(location.search); const requested = Number(current.get('libro')) - 1; book = Number.isInteger(requested) && requested >= 0 && requested < books.length ? requested : 0; chapter = Math.max(1, Math.min(books[book][1], Number(current.get('capitulo')) || 1)); render(); });
+  window.addEventListener('popstate', () => { const current = new URLSearchParams(location.search); const requested = Number(current.get('libro')) - 1; book = Number.isInteger(requested) && requested >= 0 && requested < books.length ? requested : 0; chapter = Math.max(1, Math.min(books[book][1], Number(current.get('capitulo')) || 1)); chaptersOpen = false; openTestament = null; render(); });
   render();
   fetch('datos/biblia-rv1960.json?v=23').then(response => {
     if (!response.ok) throw new Error('Texto no disponible');
