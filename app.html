@@ -7,12 +7,17 @@
   <meta name="description" content="Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos.">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="css/audio-shell.css">
+  <link rel="stylesheet" href="css/audio-shell.css?v=36">
   <title>Conectados a Cristo · Asamblea Cristiana</title>
 </head>
 <body>
   <iframe id="site-frame" title="Conectados a Cristo" allow="autoplay; fullscreen"></iframe>
   <div class="audio-dock">
+    <section id="bible-audio-bar" class="bible-audio-bar" aria-label="Lectura bíblica en voz alta" hidden>
+      <div><small>LECTURA EN VOZ ALTA</small><strong id="bible-audio-title"></strong><span id="bible-audio-status" role="status"></span></div>
+      <button id="bible-audio-toggle" type="button" aria-label="Pausar lectura">⏸</button>
+      <button id="bible-audio-stop" type="button" aria-label="Detener lectura">■</button>
+    </section>
     <section id="audio-panel" class="audio-panel" aria-label="Reproductor de audio" hidden>
       <div class="audio-panel-head">
         <strong id="audio-panel-label">Audio de Conectados a Cristo</strong>
@@ -37,6 +42,6 @@
   </div>
   <script src="js/meditaciones-data.js?v=31"></script>
   <script src="js/i18n-data.js"></script>
-  <script src="js/audio-shell.js?v=34"></script>
+  <script src="js/audio-shell.js?v=36"></script>
 </body>
 </html>
