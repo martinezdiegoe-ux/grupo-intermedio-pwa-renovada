@@ -1,36 +1,27 @@
-# Voz Juvenil · Grupo Intermedio
+# Conectados a Cristo
 
-PWA pública y estática de contenidos para el Grupo Intermedio de la Asamblea Cristiana. No requiere ingreso ni Supabase. Abrir index.html mediante un servidor estático o GitHub Pages.
+PWA pública de contenidos de la Asamblea Cristiana. La identidad de la portada usa «Conectados a Cristo» como nombre de trabajo. «Voz Juvenil» queda reservado para el archivo de la revista.
 
 ## Secciones
 
-- Meditación: texto y audio existente.
-- Alabanzas: tres canciones del grupo, con letra, PDF y video. La sección de himnos y sus historias está oculta de la interfaz.
-- Juegos: crucigramas, verdadero o falso y opción múltiple originales.
-- Plan de lectura de 365 días: plan del PDF suministrado, con tres pasajes diarios y navegación por los doce meses. Incluye acceso a los capítulos de la Biblia y seguimiento de progreso.
-- Novedades, cronograma y comunicados: archivos históricos separados de publicaciones nuevas.
-- Encontranos: directorio de 857 filiales con filtro por provincia o jurisdicción, búsqueda por ciudad, nombre y dirección, y resultados en bloques de 30. La sede central se muestra en 1º de Mayo 3623, Santa Fe.
-- Estudios bíblicos y recursos.
-- Motivos de oración: notas privadas guardadas únicamente en el navegador.
-- Radio: el mismo reproductor externo de la versión original.
-- Presentación institucional.
-- Idiomas: español, portugués, italiano y ucraniano desde el menú del encabezado. La selección se guarda en este navegador y se aplica a los textos de las páginas; PDF, audio y video conservan su idioma original. El crucigrama mantiene respuestas en español.
-- Modo claro u oscuro desde el mismo menú. La elección se guarda en este navegador y se aplica a todas las páginas.
+- Meditación diaria, archivo de meditaciones con búsqueda, tema y fechas, y audio existente.
+- Alabanzas con tres PDF y videos, más una playlist personal de enlaces a esos videos. La selección se guarda en el navegador; no sincroniza con Spotify ni YouTube Music. El catálogo de himnos permanece en el código, oculto de la interfaz mientras se revisan permisos.
+- Plan de lectura de 365 días con PDF original, progreso local y enlaces a la Biblia RV1960, capítulo y versículo.
+- Estudios bíblicos: meditaciones, Biblia y biblioteca digital.
+- Comunicados y cronograma con filtros de filial y fecha. Un comunicado general se muestra bajo cualquier filial. La búsqueda a 100 km necesita coordenadas verificadas por evento; sin ellas informa que no hay datos suficientes. Maps aparece cuando el evento tenga dirección o enlace confirmado.
+- Mensajes al correo institucional, oración con notas locales, juegos, radio y directorio de filiales.
+- Iglesia perseguida: enlaces oficiales externos a Voice of the Martyrs y Puertas Abiertas. El contenido propio queda sujeto a revisión editorial.
+- Voz Juvenil: catálogo de revista con número, año y tema. La carga de PDF desde el Nº 50 está pendiente de recibir los archivos.
+- Nosotros: tres textos institucionales en construcción hasta la revisión de los ancianos; el directorio de filiales sigue operativo.
 
-## Publicar contenido
+## Publicación de contenido
 
-Editar js/alabanzas.js para las alabanzas y agregar los PDF propios en pdf/. El índice de títulos y temas del himnario permanece en js/himnario-catalogo.js para una posible restauración, pero no se carga en la página. Editar js/cronograma.js (arreglo proximos) y js/comunicados.js (arreglo comunicados) para novedades vigentes. Al publicar una actualización importante, cambiar CACHE_NAME en service-worker.js.
+Editar `js/comunicados.js` y `js/cronograma.js` para nuevas publicaciones con fecha ISO `YYYY-MM-DD` y filial. Para una actividad con mapa, agregar `direccion` o `mapUrl`; para filtro de 100 km, `lat` y `lon` verificadas. La app estática no tiene panel de administración.
 
-Las traducciones de los textos visibles están en `js/i18n-data.js`; `js/app-shell.js` aplica el idioma elegido al navegar y a los resultados que aparecen dinámicamente. Al agregar contenido en español, incorporar sus traducciones a ese archivo. Los nombres, direcciones de las filiales y archivos multimedia originales no se alteran.
+Agregar meditaciones a `js/meditaciones-data.js` con `date`, `topics`, texto y audio estable. El criterio editorial del proyecto es audio de hasta 2 minutos y 30 segundos, grabado por jóvenes y sin exponer su identidad en la interfaz. Un audio existente no se modifica automáticamente.
 
-El directorio usa una copia local de [`datos/filiales.js` del Himnario](https://github.com/prog-collab/Himnario/blob/26e535873197637b05ecf79d9d8688cba3a9751b/datos/filiales.js) en `js/filiales-data.js` (commit `26e5358`, 23 de agosto de 2026). La copia permite buscar sin conexión. Para actualizarla, reemplazar ese archivo con una versión revisada de la fuente, comprobar cantidad y campos, y cambiar `CACHE_NAME` en `service-worker.js`. Los enlaces a Maps hacen una búsqueda; algunas direcciones de la fuente son aproximadas.
+Agregar los PDF propios de la revista en `pdf/revista/` y sus registros en `js/revista-data.js` (`numero`, `anio`, `temas`, `pdf`). Los registros vacíos no se muestran como ediciones publicadas. Verificar derechos de himnos, CD, PDF y video antes de sumar material nuevo.
 
-El proyecto de referencia no declara una licencia de reutilización en su repositorio. El índice conservado contiene solo número, título y temas, sin letras completas.
+Actualizar las traducciones de los textos nuevos en `js/i18n-data.js` o `js/app-shell.js`. Los recursos PDF, video y audio conservan su idioma original. La elección de idioma y tema se guarda localmente. El avance de lectura, notas de oración y playlist se guardan solo en el navegador y no se sincronizan.
 
-La radio y los videos requieren conexión. El audio de la meditación está alojado en un dominio externo ya utilizado por la app. Los datos de lectura y oración quedan en localStorage y no se sincronizan entre dispositivos.
-
-### Seguimiento del plan anual
-
-`js/plan-365.js` contiene las 365 fechas y 1.095 referencias del PDF `pdf/plan-biblia-un-ano.pdf`. Se respetan el orden de meses y los rangos de pasajes del documento. Los puntos entre capítulo y versículo se presentan como dos puntos; se corrigieron las erratas tipográficas de Mateo 23.13.39 (29 de marzo), Marcos 4 1-20 (18 de junio) y Daniel 11 21-45 (25 de junio). La interfaz ofrece únicamente este plan. Cada pasaje enlaza con la Biblia integrada, donde los versículos aparecen separados y numerados.
-
-`js/lectura.js` guarda el avance del nuevo plan en `localStorage`, bajo `voz-juvenil-plan-anual-pdf-v1`. No se trasladan automáticamente los días completados del plan sustituido porque sus lecturas eran distintas. Los datos antiguos no se borran, pero no se muestran como un plan alternativo. El porcentaje cuenta fechas completadas y la racha cuenta fechas consecutivas con al menos una lectura, comenzando hoy o ayer. Se puede marcar y desmarcar cada día y retomar el primero pendiente. El almacenamiento es local, sin sincronización entre dispositivos.
+Al publicar cambios de contenido o diseño, incrementar `CACHE_NAME` en `service-worker.js`. GitHub Pages sirve la rama `main`. La app arranca en `app.html?page=index.html` para conservar el audio durante la navegación.
