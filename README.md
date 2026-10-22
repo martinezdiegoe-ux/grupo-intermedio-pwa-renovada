@@ -11,7 +11,7 @@ PWA pública de contenidos de la Asamblea Cristiana. La identidad de la portada 
 - Comunicados y cronograma con filtros de filial y fecha. Un comunicado general se muestra bajo cualquier filial. La búsqueda a 100 km necesita coordenadas verificadas por evento; sin ellas informa que no hay datos suficientes. Maps aparece cuando el evento tenga dirección o enlace confirmado.
 - Mensajes al correo institucional, oración con notas locales, juegos, radio y directorio de filiales.
 - Iglesia perseguida: enlaces oficiales externos a Voice of the Martyrs y Puertas Abiertas. El contenido propio queda sujeto a revisión editorial.
-- Voz Juvenil: catálogo de revista con número, año y tema. La carga de PDF desde el Nº 50 está pendiente de recibir los archivos.
+- Voz Juvenil: catálogo de revista con número, año, tema y portada. Están disponibles en PDF las ediciones Nº 59, 60 y 61, con búsqueda por palabras dentro de sus páginas.
 - Nosotros: tres textos institucionales en construcción hasta la revisión de los ancianos; el directorio de filiales sigue operativo.
 
 ## Publicación de contenido
@@ -20,7 +20,7 @@ Editar `js/comunicados.js` y `js/cronograma.js` para nuevas publicaciones con fe
 
 Agregar meditaciones a `js/meditaciones-data.js` con `date`, `topics`, texto y audio estable. El criterio editorial del proyecto es audio de hasta 2 minutos y 30 segundos, grabado por jóvenes y sin exponer su identidad en la interfaz. Un audio existente no se modifica automáticamente.
 
-Agregar los PDF propios de la revista en `pdf/revista/` y sus registros en `js/revista-data.js` (`numero`, `anio`, `temas`, `pdf`). Los registros vacíos no se muestran como ediciones publicadas. Verificar derechos de himnos, CD, PDF y video antes de sumar material nuevo.
+Agregar los PDF propios de la revista en `pdf/revista/`, sus tapas WebP en `assets/revista/` y sus registros en `js/revista-data.js` (`numero`, `anio`, `periodo`, `temas`, `articulos`, `portada`, `pdf`). El texto OCR para la búsqueda está en `js/revista-ocr.js`, con una entrada por página. Los PDF de las ediciones 59 a 61 tienen 24 páginas cada uno. Las tapas livianas y el índice de búsqueda se guardan sin conexión; los PDF se descargan al abrir una edición. Verificar derechos de himnos, CD, PDF y video antes de sumar material nuevo.
 
 Actualizar las traducciones de los textos nuevos en `js/i18n-data.js` o `js/app-shell.js`. Los recursos PDF, video y audio conservan su idioma original. La elección de idioma y tema se guarda localmente. El avance de lectura, notas de oración y playlist se guardan solo en el navegador y no se sincronizan.
 

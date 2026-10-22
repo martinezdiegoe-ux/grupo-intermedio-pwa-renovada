@@ -1,1 +1,57 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101b38"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="css/app.css?v=31"><title>Revista Voz Juvenil · Conectados a Cristo</title></head><body><main class="page-main"><section class="page-hero"><p class="eyebrow">ARCHIVO DE REVISTAS</p><h1>Voz Juvenil</h1><p>Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.</p></section><section class="panel"><h2>Buscar ediciones</h2><div class="filter-grid"><label>Número<input id="revista-numero" class="field" type="search" inputmode="numeric" placeholder="Por ejemplo 50"></label><label>Año<select id="revista-anio" class="field"><option value="">Todos los años</option></select></label><label>Tema<input id="revista-tema" class="field" type="search" placeholder="Buscar tema"></label></div><div id="revista-lista" class="resource-grid" aria-live="polite"></div><p id="revista-vacio" class="empty-note" hidden>No hay ediciones para esos filtros.</p></section></main><script src="js/revista-data.js?v=31"></script><script src="js/revista.js?v=31"></script><script src="js/app-shell.js?v=31"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101b38">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/app.css?v=31">
+  <title>Revista Voz Juvenil · Conectados a Cristo</title>
+  <style>
+    .revista-card{display:flex;gap:18px;align-items:flex-start;min-width:0}
+    .revista-cover{display:block;flex:none;width:116px;height:auto;aspect-ratio:453/650;object-fit:cover;border-radius:7px;box-shadow:0 8px 18px rgba(16,27,56,.16)}
+    .revista-copy{display:flex;flex-direction:column;align-items:flex-start;align-self:stretch;min-width:0}
+    .revista-copy strong{font-family:Manrope,system-ui,sans-serif;font-size:20px;margin:0}
+    .revista-copy p{color:var(--muted);font-size:13px;margin:8px 0}
+    .revista-copy small{font-size:12px;margin-bottom:16px}
+    .revista-search{display:block;font-size:13px;font-weight:700;margin:16px 0 20px}
+    .revista-search .field{margin-top:7px}
+    .revista-pages{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px;font-size:12px}
+    .revista-pages span:first-child{width:100%;color:var(--muted)}
+    .revista-pages a{display:inline-grid;min-width:26px;height:26px;place-items:center;padding:0 5px;border:1px solid var(--line);border-radius:7px;color:var(--violet);font-weight:800}
+    .revista-pages a:hover{background:#eee9ff}
+    .revista-pages a:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+    .revista-copy .action-link{margin-top:auto}
+    .revista-copy .action-link:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+    [data-theme=dark] .revista-card{background:var(--surface);border-color:var(--line)}
+    @media(max-width:850px){#revista-lista{grid-template-columns:1fr}}
+    @media(max-width:400px){.revista-cover{width:90px}.revista-card{gap:13px;padding:17px}}
+  </style>
+</head>
+<body>
+  <main class="page-main">
+    <section class="page-hero">
+      <p class="eyebrow">ARCHIVO DE REVISTAS</p>
+      <h1>Voz Juvenil</h1>
+      <p>Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.</p>
+    </section>
+    <section class="panel">
+      <h2>Buscar ediciones</h2>
+      <label class="revista-search">Buscar por palabras en los artículos
+        <input id="revista-palabras" class="field" type="search" placeholder="Escribí una palabra o frase">
+      </label>
+      <div class="filter-grid">
+        <label>Número<input id="revista-numero" class="field" type="search" inputmode="numeric" placeholder="Por ejemplo 50"></label>
+        <label>Año<select id="revista-anio" class="field"><option value="">Todos los años</option></select></label>
+        <label>Tema<input id="revista-tema" class="field" type="search" placeholder="Buscar tema"></label>
+      </div>
+      <div id="revista-lista" class="resource-grid" aria-live="polite"></div>
+      <p id="revista-vacio" class="empty-note" hidden>No hay ediciones para esos filtros.</p>
+    </section>
+  </main>
+  <script src="js/revista-data.js?v=37"></script>
+  <script src="js/revista-ocr.js?v=37"></script>
+  <script src="js/revista.js?v=37"></script>
+  <script src="js/app-shell.js?v=37"></script>
+</body>
+</html>

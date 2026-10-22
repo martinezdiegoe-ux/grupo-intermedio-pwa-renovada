@@ -248,6 +248,29 @@
     it: {'CONECTADOS A CRISTO':'CONECTADOS A CRISTO','Conectados a Cristo · Asamblea Cristiana':'Conectados a Cristo · Assemblea Cristiana','ALIMENTOS PARA EL ALMA':'NUTRIMENTO PER L’ANIMA','Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos.':'Una parola per oggi, canti che incoraggiano e contenuti per continuare a crescere insieme.','MÚSICA PARA ACOMPAÑARTE':'MUSICA CHE TI ACCOMPAGNA','UN AÑO DE LA PALABRA DE DIOS':'UN ANNO NELLA PAROLA DI DIO','Avisos y actividades juveniles':'Avvisi e attività giovanili','Iglesia perseguida':'Chiesa perseguitata','Sección en construcción':'Sezione in preparazione','Mi playlist':'La mia playlist'},
     uk: {'CONECTADOS A CRISTO':'CONECTADOS A CRISTO','Conectados a Cristo · Asamblea Cristiana':'Conectados a Cristo · Християнська Асамблея','ALIMENTOS PARA EL ALMA':'ПОЖИВА ДЛЯ ДУШІ','Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos.':'Слово на сьогодні, пісні прославлення та матеріали, щоб зростати разом.','MÚSICA PARA ACOMPAÑARTE':'МУЗИКА ДЛЯ ВАС','UN AÑO DE LA PALABRA DE DIOS':'РІК БОЖОГО СЛОВА','Avisos y actividades juveniles':'Оголошення та молодіжні заходи','Iglesia perseguida':'Переслідувана церква','Sección en construcción':'Розділ готується','Mi playlist':'Мій список відтворення'}
   };
+  const revistaText = {
+    pt: {
+      'Archivo de la revista juvenil':'Arquivo da revista juvenil','ARCHIVO DE REVISTAS':'ARQUIVO DE REVISTAS',
+      'Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.':'Aqui você encontra as edições da revista juvenil da igreja, com artigos e mensagens para acompanhar sua vida cristã.',
+      'Buscar ediciones':'Buscar edições','Número':'Número','Por ejemplo 50':'Por exemplo 50','Año':'Ano','Todos los años':'Todos os anos','Tema':'Tema','Buscar tema':'Buscar tema',
+      'Buscar por palabras en los artículos':'Buscar por palavras nos artigos','Escribí una palabra o frase':'Digite uma palavra ou frase','Coincidencias en páginas:':'Resultados nas páginas:',
+      'No hay ediciones para esos filtros.':'Não há edições para esses filtros.','Abrir PDF ↗':'Abrir PDF ↗'
+    },
+    it: {
+      'Archivo de la revista juvenil':'Archivio della rivista giovanile','ARCHIVO DE REVISTAS':'ARCHIVIO DELLE RIVISTE',
+      'Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.':'Qui trovi le edizioni della rivista giovanile della chiesa, con articoli e messaggi per accompagnare la tua vita cristiana.',
+      'Buscar ediciones':'Cerca le edizioni','Número':'Numero','Por ejemplo 50':'Per esempio 50','Año':'Anno','Todos los años':'Tutti gli anni','Tema':'Tema','Buscar tema':'Cerca per tema',
+      'Buscar por palabras en los artículos':'Cerca parole negli articoli','Escribí una palabra o frase':'Scrivi una parola o frase','Coincidencias en páginas:':'Risultati alle pagine:',
+      'No hay ediciones para esos filtros.':'Nessuna edizione corrisponde ai filtri.','Abrir PDF ↗':'Apri PDF ↗'
+    },
+    uk: {
+      'Archivo de la revista juvenil':'Архів молодіжного журналу','ARCHIVO DE REVISTAS':'АРХІВ ЖУРНАЛІВ',
+      'Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.':'Тут зібрані випуски церковного молодіжного журналу зі статтями та посланнями для християнського життя.',
+      'Buscar ediciones':'Знайти випуски','Número':'Номер','Por ejemplo 50':'Наприклад, 50','Año':'Рік','Todos los años':'Усі роки','Tema':'Тема','Buscar tema':'Пошук за темою',
+      'Buscar por palabras en los artículos':'Пошук слів у статтях','Escribí una palabra o frase':'Введіть слово або фразу','Coincidencias en páginas:':'Знайдено на сторінках:',
+      'No hay ediciones para esos filtros.':'За цими фільтрами випусків немає.','Abrir PDF ↗':'Відкрити PDF ↗'
+    }
+  };
   function applyEditorial() {
     for (const code of ['pt', 'it', 'uk']) {
       const dictionary = translations[code];
@@ -256,7 +279,7 @@
         dictionary[source] = dictionary[source]
           .replace(/Voz Jovem|Voce giovanile|Voce Giovanile|Voce dei Giovani|Голос молоді|Молодіжний Голос|Youth Voice/g, 'Voz Juvenil');
       }
-      Object.assign(dictionary, editorial[code], bookNames[code], copyCorrections[code], newText[code]);
+      Object.assign(dictionary, editorial[code], bookNames[code], copyCorrections[code], newText[code], revistaText[code]);
     }
   }
   if (translations) applyEditorial();
