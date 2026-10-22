@@ -14,6 +14,15 @@
   const startHint = document.getElementById('audio-start-hint');
   const error = document.getElementById('audio-error');
   const alternative = document.getElementById('audio-alternative');
+  const speech = window.speechSynthesis;
+  const bibleBar = document.getElementById('bible-audio-bar');
+  const bibleTitle = document.getElementById('bible-audio-title');
+  const bibleStatus = document.getElementById('bible-audio-status');
+  const bibleToggle = document.getElementById('bible-audio-toggle');
+  const bibleStop = document.getElementById('bible-audio-stop');
+  let bibleReading = null;
+  let bibleGeneration = 0;
+  let checkDeferredReload = () => {};
   const sourceButtons = [...document.querySelectorAll('[data-audio-source]')];
   const meditation = (window.VOZ_MEDITACIONES || []).filter(item => item.audio)
     .sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0];
@@ -46,9 +55,86 @@
       if (url.href !== frame.contentWindow.location.href) return;
       history.replaceState(null, '', url.href);
       document.title = frame.contentDocument.title || 'Conectados a Cristo · Asamblea Cristiana';
+      sendBibleState();
     } catch (_) {}
   });
   frame.src = pageUrl(new URLSearchParams(location.search).get('page')).href;
+
+  function sendBibleState(message = '') {
+    frame.contentWindow?.postMessage({ type: 'voz-bible-reading-state', active: Boolean(bibleReading),
+      key: bibleReading?.key, reference: bibleReading?.reference, paused: bibleReading?.paused, message }, location.origin);
+  }
+  function renderBibleReading(message = '') {
+    bibleBar.hidden = !bibleReading;
+    if (bibleReading) {
+      bibleTitle.textContent = bibleReading.reference;
+      bibleStatus.textContent = message || (bibleReading.paused ? 'En pausa' : 'Reproduciendo mientras navegás');
+      bibleToggle.textContent = bibleReading.paused ? '▶' : '⏸';
+      bibleToggle.setAttribute('aria-label', bibleReading.paused ? 'Continuar lectura' : 'Pausar lectura');
+    }
+    sendBibleState(message);
+  }
+  function stopBibleReading(message = '') {
+    if (!bibleReading) return;
+    bibleGeneration++;
+    bibleReading = null;
+    speech?.cancel();
+    renderBibleReading(message);
+    checkDeferredReload();
+  }
+  function speakBibleVerse(generation) {
+    if (generation !== bibleGeneration || !bibleReading || bibleReading.paused) return;
+    if (bibleReading.index >= bibleReading.verses.length) {
+      const reference = bibleReading.reference;
+      stopBibleReading(`Terminó la lectura de ${reference}.`);
+      return;
+    }
+    const verse = bibleReading.verses[bibleReading.index++];
+    const utterance = new SpeechSynthesisUtterance(verse.text);
+    utterance.lang = 'es-AR';
+    const voices = speech.getVoices();
+    utterance.voice = voices.find(voice => voice.lang.toLowerCase() === 'es-ar')
+      || voices.find(voice => voice.lang.toLowerCase().startsWith('es')) || null;
+    utterance.onend = () => {
+      if (generation !== bibleGeneration) return;
+      renderBibleReading(`Capítulo ${verse.chapter}, versículo ${verse.verse} · ${bibleReading.index} de ${bibleReading.verses.length}`);
+      speakBibleVerse(generation);
+    };
+    utterance.onerror = event => {
+      if (generation === bibleGeneration && event.error !== 'interrupted' && event.error !== 'canceled') {
+        stopBibleReading('No se pudo continuar la lectura en voz alta.');
+      }
+    };
+    speech.speak(utterance);
+  }
+  function startBibleReading(data) {
+    if (!speech || typeof SpeechSynthesisUtterance === 'undefined') {
+      sendBibleState('Este navegador no ofrece lectura en voz alta.');
+      return;
+    }
+    if (typeof data.key !== 'string' || typeof data.reference !== 'string' ||
+        !Array.isArray(data.verses) || data.verses.length < 1 || data.verses.length > 500 ||
+        !data.verses.every(verse => typeof verse.text === 'string' && verse.text.length < 3000 && Number.isInteger(verse.chapter) && Number.isInteger(verse.verse))) return;
+    stopBibleReading();
+    audio.pause();
+    speech.cancel();
+    const generation = ++bibleGeneration;
+    bibleReading = { key: data.key, reference: data.reference, verses: data.verses, index: 0, paused: false };
+    renderBibleReading(`Leyendo ${data.verses.length} versículos. Podés abrir la Biblia.`);
+    speakBibleVerse(generation);
+  }
+  function toggleBibleReading() {
+    if (!bibleReading) return;
+    bibleReading.paused = !bibleReading.paused;
+    if (bibleReading.paused) speech.pause();
+    else {
+      speech.resume();
+      if (!speech.speaking) speakBibleVerse(bibleGeneration);
+    }
+    renderBibleReading();
+  }
+  bibleToggle.addEventListener('click', toggleBibleReading);
+  bibleStop.addEventListener('click', () => stopBibleReading('Lectura detenida.'));
 
   function localizedTitle() {
     if (currentSource === 'radio') return window.VOZ_TRANSLATIONS?.[language]?.[sources.radio.title] || sources.radio.title;
@@ -114,6 +200,7 @@
   }
 
   function play() {
+    stopBibleReading('Lectura detenida al iniciar otro audio.');
     audio.play().catch(reason => {
       if (reason?.name === 'NotAllowedError') startHint.hidden = false;
       else if (reason?.name !== 'AbortError') showError();
@@ -175,7 +262,7 @@
     button.addEventListener('click', () => selectSource(button.dataset.audioSource, true));
   }
   audio.addEventListener('play', () => {
-    frame.contentWindow?.postMessage({ type: 'voz-bible-reading-stop' }, location.origin);
+    stopBibleReading('Lectura detenida al iniciar otro audio.');
     started = true; error.hidden = true; startHint.hidden = true; renderPlayback();
   });
   audio.addEventListener('pause', renderPlayback);
@@ -183,7 +270,10 @@
   audio.addEventListener('error', showError);
   window.addEventListener('message', event => {
     if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
-    if (event.data?.type === 'voz-bible-reading-start') { audio.pause(); return; }
+    if (event.data?.type === 'voz-bible-reading-start') { startBibleReading(event.data); return; }
+    if (event.data?.type === 'voz-bible-reading-stop') { stopBibleReading('Lectura detenida.'); return; }
+    if (event.data?.type === 'voz-bible-reading-toggle') { toggleBibleReading(); return; }
+    if (event.data?.type === 'voz-bible-reading-state-request') { sendBibleState(); return; }
     if (event.data?.type !== 'voz-audio-select') return;
     openPanel();
     selectSource(event.data.source, true);
@@ -226,12 +316,13 @@
 
     function reloadWhenAudioStops() {
       clearTimeout(reloadTimer);
-      if (!updateReady || (!audio.paused && !audio.ended)) return;
+      if (!updateReady || bibleReading || (!audio.paused && !audio.ended)) return;
       // Changing sources briefly pauses the player; wait for playback to resume.
       reloadTimer = setTimeout(() => {
-        if (updateReady && (audio.paused || audio.ended)) location.reload();
+        if (updateReady && !bibleReading && (audio.paused || audio.ended)) location.reload();
       }, 1000);
     }
+    checkDeferredReload = reloadWhenAudioStops;
 
     audio.addEventListener('play', () => clearTimeout(reloadTimer));
     audio.addEventListener('pause', reloadWhenAudioStops);

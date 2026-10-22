@@ -6,11 +6,11 @@
   const groups = months.map((name, index) => days.filter(day => day.month === index + 1));
   const blocks = groups.length;
   const $ = id => document.getElementById(id);
-  const synthesis = window.speechSynthesis;
   let biblePromise;
   let audio = null;
   let audioGeneration = 0;
   const audioStatus = $('lectura-audio-estado');
+  const inShell = window.parent !== window && window.frameElement?.id === 'site-frame';
 
   function announceAudio(message) { audioStatus.textContent = message; }
   function updateAudioButtons() {
@@ -26,55 +26,16 @@
   function stopAudio(message = '') {
     audioGeneration++;
     audio = null;
-    synthesis?.cancel();
+    if (inShell) window.parent.postMessage({ type: 'voz-bible-reading-stop' }, location.origin);
     announceAudio(message);
     updateAudioButtons();
   }
-  function speakNext(generation) {
-    if (generation !== audioGeneration || !audio || audio.paused) return;
-    if (audio.index >= audio.verses.length) {
-      stopAudio(`Terminó la lectura de ${audio.reference}.`);
-      return;
-    }
-    const { chapter, verse, text } = audio.verses[audio.index++];
-    const utterance = new SpeechSynthesisUtterance(`Versículo ${verse}. ${text}`);
-    utterance.lang = 'es-AR';
-    const voices = synthesis.getVoices();
-    utterance.voice = voices.find(voice => voice.lang.toLowerCase() === 'es-ar')
-      || voices.find(voice => voice.lang.toLowerCase().startsWith('es')) || null;
-    utterance.onend = () => {
-      if (generation === audioGeneration) {
-        announceAudio(`Leyendo ${audio.reference}: capítulo ${chapter}, versículo ${verse}. ${audio.index} de ${audio.verses.length} versículos.`);
-        speakNext(generation);
-      }
-    };
-    utterance.onerror = event => {
-      if (generation === audioGeneration && event.error !== 'interrupted' && event.error !== 'canceled') {
-        stopAudio('No se pudo continuar la lectura en voz alta. Probá nuevamente.');
-      }
-    };
-    synthesis.speak(utterance);
-  }
   async function toggleAudio(reading, key) {
-    if (!synthesis || typeof SpeechSynthesisUtterance === 'undefined') {
-      announceAudio('Este navegador no ofrece lectura en voz alta.');
-      return;
-    }
     if (audio?.key === key) {
-      if (audio.paused) {
-        audio.paused = false;
-        synthesis.resume();
-        if (!synthesis.speaking) speakNext(audioGeneration);
-        announceAudio(`Continuando ${audio.reference}.`);
-      } else {
-        audio.paused = true;
-        synthesis.pause();
-        announceAudio(`Lectura de ${audio.reference} en pausa.`);
-      }
-      updateAudioButtons();
+      window.parent.postMessage({ type: 'voz-bible-reading-toggle' }, location.origin);
       return;
     }
-    stopAudio();
+    audioGeneration++;
     const generation = audioGeneration;
     announceAudio(`Preparando ${reading.reference}…`);
     try {
@@ -85,19 +46,19 @@
       const bible = await biblePromise;
       if (generation !== audioGeneration) return;
       const verses = window.VOZ_LECTURA_AUDIO.versesForReading(reading, bible);
-      window.parent?.postMessage({ type: 'voz-bible-reading-start' }, location.origin);
-      audio = { key, reference: reading.reference, verses, index: 0, paused: false };
-      updateAudioButtons();
-      announceAudio(`Leyendo ${reading.reference}, ${verses.length} versículos. Texto Reina Valera 1960.`);
-      speakNext(generation);
+      if (inShell) window.parent.postMessage({ type: 'voz-bible-reading-start', key, reference: reading.reference, verses }, location.origin);
+      else announceAudio('Abrí la app para escuchar la lectura.');
     } catch (_) {
       if (generation === audioGeneration) announceAudio(`No se pudo preparar ${reading.reference}. Comprobá la conexión e intentá otra vez.`);
     }
   }
-  window.addEventListener('pagehide', () => stopAudio());
   window.addEventListener('message', event => {
-    if (event.origin === location.origin && event.source === window.parent && event.data?.type === 'voz-bible-reading-stop') stopAudio('Lectura detenida al iniciar otro audio.');
+    if (!inShell || event.origin !== location.origin || event.source !== window.parent || event.data?.type !== 'voz-bible-reading-state') return;
+    audio = event.data.active ? { key: event.data.key, reference: event.data.reference, paused: event.data.paused } : null;
+    announceAudio(event.data.message || (audio ? `${audio.paused ? 'En pausa' : 'Leyendo'} ${audio.reference}.` : 'Podés escuchar cada pasaje con la voz de tu dispositivo.'));
+    updateAudioButtons();
   });
+  if (inShell) window.parent.postMessage({ type: 'voz-bible-reading-state-request' }, location.origin);
   let completed = {};
   try {
     const parsed = JSON.parse(localStorage.getItem(key) || '{}');
