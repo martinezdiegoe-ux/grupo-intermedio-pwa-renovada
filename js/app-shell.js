@@ -37,9 +37,9 @@
       'ASAMBLEA CRISTIANA · UN ESPACIO PARA CRECER': 'ASAMBLEA CRISTIANA · UM ESPAÇO PARA CRESCER',
       'Inicio': 'Início', 'Alabanzas': 'Louvores', 'Encontranos': 'Encontre-nos',
       'Nosotros': 'Quem somos', 'DESCUBRÍ': 'DESCUBRA',
-      'Compartir': 'Compartilhar', 'Compartí Voz Juvenil': 'Compartilhe Voz Juvenil',
+      'Compartir': 'Compartilhar', 'Compartí Conectados a Cristo': 'Compartilhe Conectados a Cristo',
       'Escaneá el código QR para abrir el sitio.': 'Escaneie o código QR para abrir o site.',
-      'Código QR para abrir Voz Juvenil': 'Código QR para abrir Voz Juvenil',
+      'Código QR para abrir Conectados a Cristo': 'Código QR para abrir Conectados a Cristo',
       'Enviar por WhatsApp ↗': 'Enviar pelo WhatsApp ↗', 'Cerrar': 'Fechar',
       'Audio': 'Áudio', 'Abrir reproductor de audio': 'Abrir reprodutor de áudio',
       'Escuchar radio': 'Ouvir rádio', 'Escuchar meditación': 'Ouvir meditação',
@@ -77,9 +77,9 @@
       'ASAMBLEA CRISTIANA · UN ESPACIO PARA CRECER': 'ASAMBLEA CRISTIANA · UNO SPAZIO PER CRESCERE',
       'Inicio': 'Home', 'Alabanzas': 'Canti di lode', 'Encontranos': 'Dove trovarci',
       'Nosotros': 'Chi siamo', 'DESCUBRÍ': 'SCOPRI',
-      'Compartir': 'Condividi', 'Compartí Voz Juvenil': 'Condividi Voz Juvenil',
+      'Compartir': 'Condividi', 'Compartí Conectados a Cristo': 'Condividi Conectados a Cristo',
       'Escaneá el código QR para abrir el sitio.': 'Inquadra il codice QR per aprire il sito.',
-      'Código QR para abrir Voz Juvenil': 'Codice QR per aprire Voz Juvenil',
+      'Código QR para abrir Conectados a Cristo': 'Codice QR per aprire Conectados a Cristo',
       'Enviar por WhatsApp ↗': 'Invia con WhatsApp ↗', 'Cerrar': 'Chiudi',
       'Audio': 'Audio', 'Abrir reproductor de audio': 'Apri il lettore audio',
       'Escuchar radio': 'Ascolta la radio', 'Escuchar meditación': 'Ascolta la meditazione',
@@ -115,9 +115,9 @@
       'ASAMBLEA CRISTIANA · UN ESPACIO PARA CRECER': 'ASAMBLEA CRISTIANA · ПРОСТІР ДЛЯ ЗРОСТАННЯ',
       'Inicio': 'Головна', 'Alabanzas': 'Пісні прославлення', 'Encontranos': 'Де нас знайти',
       'Nosotros': 'Про нас', 'DESCUBRÍ': 'ВІДКРИЙТЕ',
-      'Compartir': 'Поділитися', 'Compartí Voz Juvenil': 'Поділіться Voz Juvenil',
+      'Compartir': 'Поділитися', 'Compartí Conectados a Cristo': 'Поділіться Conectados a Cristo',
       'Escaneá el código QR para abrir el sitio.': 'Відскануйте QR-код, щоб відкрити сайт.',
-      'Código QR para abrir Voz Juvenil': 'QR-код для відкриття Voz Juvenil',
+      'Código QR para abrir Conectados a Cristo': 'QR-код для відкриття Conectados a Cristo',
       'Enviar por WhatsApp ↗': 'Надіслати через WhatsApp ↗', 'Cerrar': 'Закрити',
       'Audio': 'Аудіо', 'Abrir reproductor de audio': 'Відкрити аудіопрогравач',
       'Escuchar radio': 'Слухати радіо', 'Escuchar meditación': 'Слухати роздуми',
@@ -243,6 +243,11 @@
       'por leer': 'залишилося прочитати'
     }
   };
+  const newText = {
+    pt: {'CONECTADOS A CRISTO':'CONECTADOS A CRISTO','Conectados a Cristo · Asamblea Cristiana':'Conectados a Cristo · Assembleia Cristã','ALIMENTOS PARA EL ALMA':'ALIMENTO PARA A ALMA','Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos.':'Uma palavra para hoje, louvores que animam e conteúdos para continuarmos crescendo juntos.','MÚSICA PARA ACOMPAÑARTE':'MÚSICA PARA ACOMPANHAR VOCÊ','UN AÑO DE LA PALABRA DE DIOS':'UM ANO DA PALAVRA DE DEUS','Avisos y actividades juveniles':'Avisos e atividades juvenis','Iglesia perseguida':'Igreja perseguida','Voz Juvenil':'Voz Juvenil','Sección en construcción':'Seção em construção','Mi playlist':'Minha playlist'},
+    it: {'CONECTADOS A CRISTO':'CONECTADOS A CRISTO','Conectados a Cristo · Asamblea Cristiana':'Conectados a Cristo · Assemblea Cristiana','ALIMENTOS PARA EL ALMA':'NUTRIMENTO PER L’ANIMA','Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos.':'Una parola per oggi, canti che incoraggiano e contenuti per continuare a crescere insieme.','MÚSICA PARA ACOMPAÑARTE':'MUSICA CHE TI ACCOMPAGNA','UN AÑO DE LA PALABRA DE DIOS':'UN ANNO NELLA PAROLA DI DIO','Avisos y actividades juveniles':'Avvisi e attività giovanili','Iglesia perseguida':'Chiesa perseguitata','Sección en construcción':'Sezione in preparazione','Mi playlist':'La mia playlist'},
+    uk: {'CONECTADOS A CRISTO':'CONECTADOS A CRISTO','Conectados a Cristo · Asamblea Cristiana':'Conectados a Cristo · Християнська Асамблея','ALIMENTOS PARA EL ALMA':'ПОЖИВА ДЛЯ ДУШІ','Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos.':'Слово на сьогодні, пісні прославлення та матеріали, щоб зростати разом.','MÚSICA PARA ACOMPAÑARTE':'МУЗИКА ДЛЯ ВАС','UN AÑO DE LA PALABRA DE DIOS':'РІК БОЖОГО СЛОВА','Avisos y actividades juveniles':'Оголошення та молодіжні заходи','Iglesia perseguida':'Переслідувана церква','Sección en construcción':'Розділ готується','Mi playlist':'Мій список відтворення'}
+  };
   function applyEditorial() {
     for (const code of ['pt', 'it', 'uk']) {
       const dictionary = translations[code];
@@ -251,7 +256,7 @@
         dictionary[source] = dictionary[source]
           .replace(/Voz Jovem|Voce giovanile|Voce Giovanile|Voce dei Giovani|Голос молоді|Молодіжний Голос|Youth Voice/g, 'Voz Juvenil');
       }
-      Object.assign(dictionary, editorial[code], bookNames[code], copyCorrections[code]);
+      Object.assign(dictionary, editorial[code], bookNames[code], copyCorrections[code], newText[code]);
     }
   }
   if (translations) applyEditorial();
@@ -428,7 +433,7 @@
   if (!header.classList.contains('topbar')) {
     document.body.classList.add('legacy-page');
     header.className = 'topbar app-header';
-    header.innerHTML = '<a class="brand" href="index.html"><span class="brand-mark">✦</span><span><strong>VOZ JUVENIL</strong><small>GRUPO INTERMEDIO</small></span></a>';
+    header.innerHTML = '<a class="brand" href="index.html"><span class="brand-mark">✦</span><span><strong>CONECTADOS A CRISTO</strong><small>ASAMBLEA CRISTIANA</small></span></a>';
     document.body.prepend(header);
     const nav = document.createElement('nav');
     nav.className = 'bottom-nav';
@@ -471,8 +476,8 @@
   shareDialog.innerHTML = `
     <div class="site-share-content">
       <button type="button" class="site-share-close" aria-label="Cerrar">×</button>
-      <h2 id="site-share-title">Compartí Voz Juvenil</h2>
-      <img class="site-share-qr" src="assets/compartir-qr.svg" width="240" height="240" alt="Código QR para abrir Voz Juvenil">
+      <h2 id="site-share-title">Compartí Conectados a Cristo</h2>
+      <img class="site-share-qr" src="assets/compartir-qr.svg" width="240" height="240" alt="Código QR para abrir Conectados a Cristo">
       <p class="site-share-hint">Escaneá el código QR para abrir el sitio.</p>
       <a class="site-share-whatsapp" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp ↗</a>
     </div>`;

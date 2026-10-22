@@ -22,10 +22,10 @@
     meditation: { title: meditation?.title || 'Meditación', url: meditation?.audio || '' }
   };
   const labels = {
-    es: { panel: 'Audio de Voz Juvenil', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
-    pt: { panel: 'Áudio do Voz Juvenil', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', alternative: 'Reprodutor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
-    it: { panel: 'Audio di Voz Juvenil', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
-    uk: { panel: 'Аудіо Voz Juvenil', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
+    es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
+    pt: { panel: 'Áudio do Conectados a Cristo', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', alternative: 'Reprodutor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
+    it: { panel: 'Audio di Conectados a Cristo', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
+    uk: { panel: 'Аудіо Conectados a Cristo', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
   };
   let language = 'es';
   let currentSource = 'radio';
@@ -45,7 +45,7 @@
       const url = pageUrl(frame.contentWindow.location.href);
       if (url.href !== frame.contentWindow.location.href) return;
       history.replaceState(null, '', url.href);
-      document.title = frame.contentDocument.title || 'Voz Juvenil · Grupo Intermedio';
+      document.title = frame.contentDocument.title || 'Conectados a Cristo · Asamblea Cristiana';
     } catch (_) {}
   });
   frame.src = pageUrl(new URLSearchParams(location.search).get('page')).href;
@@ -88,7 +88,7 @@
     if (typeof MediaMetadata === 'function') {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: title.textContent,
-        artist: 'Voz Juvenil · Grupo Intermedio',
+        artist: 'Conectados a Cristo · Asamblea Cristiana',
         artwork: [
           { src: new URL('assets/icon-192.png', base).href, sizes: '192x192', type: 'image/png' },
           { src: new URL('assets/icon-512.png', base).href, sizes: '512x512', type: 'image/png' }

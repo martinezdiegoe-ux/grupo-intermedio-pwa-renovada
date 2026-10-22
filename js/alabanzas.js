@@ -3,6 +3,7 @@ const alabanzas=[
   {id:'alabanza2',titulo:'Necesito de Ti',pdf:'pdf/Necesito-de-Ti.pdf',video:'https://youtu.be/t2x339dtz9w'},
   {id:'alabanza3',titulo:'Un Milagro',pdf:'pdf/Un-Milagro.pdf',video:'https://youtu.be/PndoQfL6eps'}
 ];
+window.VOZ_ALABANZAS=alabanzas;
 const lista=document.getElementById('lista-alabanzas');
 alabanzas.forEach((item,i)=>{
   const card=document.createElement('article');card.className='resource-card';
@@ -13,5 +14,5 @@ alabanzas.forEach((item,i)=>{
     const a=document.createElement('a');a.className='action-link'+(j===0?' primary':'');a.href=url;a.textContent=label;
     if(j>0){a.target='_blank';a.rel='noopener noreferrer'}actions.append(a)
   });
-  card.append(over,title,actions);lista.append(card);
+  const pick=document.createElement('button');pick.type='button';pick.className='pill-button playlist-toggle';pick.dataset.id=item.id;pick.textContent='Agregar a mi playlist';card.append(over,title,actions,pick);lista.append(card);
 });

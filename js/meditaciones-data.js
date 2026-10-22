@@ -4,6 +4,7 @@ window.VOZ_MEDITACIONES = [
     "id": "la-gran-comision",
     "title": "La Gran Comisión",
     "date": null,
+    "topics": ["Evangelización", "Discipulado"],
     "reference": "Mateo 28:18–20",
     "summary": "La autoridad de Cristo, el mandato de hacer discípulos y su promesa de estar con nosotros.",
     "verse": "“(18) Y Jesús se acercó y les habló diciendo: Toda potestad me es dada en el cielo y en la tierra. (19) Por tanto, id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo; (20) enseñándoles que guarden todas las cosas que os he mandado; y he aquí yo estoy con vosotros todos los días, hasta el fin del mundo. Amén.”\n\nMateo 28:18-20",

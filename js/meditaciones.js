@@ -18,9 +18,12 @@
     if (!audio.hidden) audio.src = active.audio;
     const url = new URL(location.href); url.searchParams.set('id', active.id); history.replaceState(null,'',url);
   }
+  const topics = [...new Set(items.flatMap(item => item.topics || (item.topic ? [item.topic] : [])))].sort();
+  for(const topic of topics){const option=document.createElement('option');option.value=topic;option.textContent=topic;$('meditation-topic').append(option)}
   function renderList() {
     const query = normalized($('meditation-search').value.trim());
-    const matches = items.filter(item => normalized([item.title,item.reference,item.summary,item.text].join(' ')).includes(query));
+    const topic=$('meditation-topic').value, from=$('meditation-from').value, to=$('meditation-to').value;
+    const matches = items.filter(item => normalized([item.title,item.reference,item.summary,item.text].join(' ')).includes(query) && (!topic || (item.topics || [item.topic]).includes(topic)) && (!from || (item.date && item.date >= from)) && (!to || (item.date && item.date <= to)));
     $('meditation-count').textContent = `${items.length} ${items.length === 1 ? 'meditación disponible' : 'meditaciones disponibles'}`;
     $('meditation-empty').hidden = matches.length > 0;
     const list = $('meditation-list'); list.replaceChildren();
@@ -36,5 +39,6 @@
     }
   }
   $('meditation-search').addEventListener('input',renderList);
+  ['meditation-topic','meditation-from','meditation-to'].forEach(id=>$(id).addEventListener('change',renderList));
   if (active) {renderArticle();renderList();}
 })();
