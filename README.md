@@ -6,7 +6,7 @@ PWA pública de contenidos de la Asamblea Cristiana. La identidad de la portada 
 
 - Meditación diaria, archivo de meditaciones con búsqueda, tema y fechas, y audio existente.
 - Alabanzas con tres PDF y videos, más una playlist personal de enlaces a esos videos. La selección se guarda en el navegador; no sincroniza con Spotify ni YouTube Music. El catálogo de himnos permanece en el código, oculto de la interfaz mientras se revisan permisos.
-- Plan de lectura de 365 días con PDF original, progreso local y enlaces a la Biblia RV1960, capítulo y versículo.
+- Plan de lectura de 365 días que abre en el mes actual, destaca la lectura de hoy, permite volver a ella desde cualquier mes y mantiene el progreso local. Incluye el PDF original y enlaces a la Biblia RV1960, capítulo y versículo.
 - Estudios bíblicos: meditaciones, Biblia y biblioteca digital.
 - Comunicados y cronograma con filtros de filial y fecha. Un comunicado general se muestra bajo cualquier filial. La búsqueda a 100 km necesita coordenadas verificadas por evento; sin ellas informa que no hay datos suficientes. Maps aparece cuando el evento tenga dirección o enlace confirmado.
 - Mensajes al correo institucional, oración con notas locales, juegos, radio y directorio de filiales.
