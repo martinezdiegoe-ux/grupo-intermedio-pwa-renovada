@@ -20,9 +20,21 @@
   const bibleStatus = document.getElementById('bible-audio-status');
   const bibleToggle = document.getElementById('bible-audio-toggle');
   const bibleStop = document.getElementById('bible-audio-stop');
+  const installDialog = document.getElementById('install-dialog');
+  const installEyebrow = document.getElementById('install-eyebrow');
+  const installTitle = document.getElementById('install-title');
+  const installDescription = document.getElementById('install-description');
+  const installHelp = document.getElementById('install-help');
+  const installAction = document.getElementById('install-action');
+  const installLater = document.getElementById('install-later');
   let bibleReading = null;
   let bibleGeneration = 0;
   let checkDeferredReload = () => {};
+  let installPromptEvent = null;
+  let installHelpVisible = false;
+  let installOfferShown = false;
+  const installDismissKey = 'voz-app-install-dismissed-until';
+  const installDoneKey = 'voz-app-installed';
   const sourceButtons = [...document.querySelectorAll('[data-audio-source]')];
   const meditation = (window.VOZ_MEDITACIONES || []).filter(item => item.audio)
     .sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0];
@@ -36,6 +48,134 @@
     it: { panel: 'Audio di Conectados a Cristo', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
     uk: { panel: 'Аудіо Conectados a Cristo', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
   };
+  const installCopy = {
+    es: {
+      eyebrow: 'INSTALÁ LA APP', title: 'Conectados a Cristo, a un toque',
+      description: 'Agregá la app a tu pantalla de inicio para volver fácilmente a las meditaciones, alabanzas y revistas.',
+      install: 'Instalar app', how: 'Ver cómo instalar', later: 'Ahora no', done: 'Entendido',
+      ios: 'En el menú Compartir de tu navegador, elegí “Agregar a pantalla de inicio” y confirmá.',
+      android: 'En el menú ⋮ del navegador, tocá “Instalar app” o “Agregar a pantalla principal”.',
+      desktop: 'En la computadora, usá el ícono de instalar de la barra de direcciones o abrí el menú del navegador y elegí “Instalar Conectados a Cristo”.',
+      other: 'Abrí el menú de tu navegador y elegí “Instalar app” o “Agregar a pantalla de inicio”.'
+    },
+    pt: {
+      eyebrow: 'INSTALE O APLICATIVO', title: 'Conectados a Cristo, a um toque',
+      description: 'Adicione o aplicativo à tela inicial para voltar facilmente às meditações, músicas e revistas.',
+      install: 'Instalar aplicativo', how: 'Ver como instalar', later: 'Agora não', done: 'Entendi',
+      ios: 'No menu Compartilhar do navegador, escolha “Adicionar à Tela de Início” e confirme.',
+      android: 'No menu ⋮ do navegador, toque em “Instalar aplicativo” ou “Adicionar à tela inicial”.',
+      desktop: 'No computador, use o ícone de instalação na barra de endereço ou abra o menu do navegador e escolha “Instalar Conectados a Cristo”.',
+      other: 'Abra o menu do navegador e escolha “Instalar aplicativo” ou “Adicionar à tela inicial”.'
+    },
+    it: {
+      eyebrow: 'INSTALLA L’APP', title: 'Conectados a Cristo, a portata di mano',
+      description: 'Aggiungi l’app alla schermata Home per ritrovare facilmente meditazioni, canti e riviste.',
+      install: 'Installa app', how: 'Come installarla', later: 'Non ora', done: 'Ho capito',
+      ios: 'Nel menu Condividi del browser, scegli “Aggiungi alla schermata Home” e conferma.',
+      android: 'Nel menu ⋮ del browser, tocca “Installa app” o “Aggiungi a schermata Home”.',
+      desktop: 'Sul computer, usa l’icona di installazione nella barra degli indirizzi o apri il menu del browser e scegli “Installa Conectados a Cristo”.',
+      other: 'Apri il menu del browser e scegli “Installa app” o “Aggiungi alla schermata Home”.'
+    },
+    uk: {
+      eyebrow: 'ВСТАНОВІТЬ ЗАСТОСУНОК', title: 'Conectados a Cristo завжди поруч',
+      description: 'Додайте застосунок на головний екран, щоб легко відкривати роздуми, пісні та журнали.',
+      install: 'Встановити застосунок', how: 'Як встановити', later: 'Не зараз', done: 'Зрозуміло',
+      ios: 'У меню «Поділитися» браузера виберіть «На початковий екран» і підтвердьте.',
+      android: 'У меню ⋮ браузера виберіть «Встановити застосунок» або «Додати на головний екран».',
+      desktop: 'На комп’ютері натисніть значок встановлення в адресному рядку або відкрийте меню браузера й виберіть «Встановити Conectados a Cristo».',
+      other: 'Відкрийте меню браузера та виберіть «Встановити застосунок» або «Додати на головний екран».'
+    }
+  };
+
+  function installInstructions(copy) {
+    const userAgent = navigator.userAgent || '';
+    const isAppleTouch = /iPhone|iPad|iPod/i.test(userAgent)
+      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (isAppleTouch) return copy.ios;
+    if (/Android/i.test(userAgent)) return copy.android;
+    if (window.matchMedia && window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 700) return copy.desktop;
+    return copy.other;
+  }
+
+  function renderInstallCopy() {
+    const copy = installCopy[language] || installCopy.es;
+    installEyebrow.textContent = copy.eyebrow;
+    installTitle.textContent = copy.title;
+    installDescription.textContent = copy.description;
+    installLater.textContent = copy.later;
+    installAction.textContent = installPromptEvent ? copy.install : installHelpVisible ? copy.done : copy.how;
+    if (installHelpVisible) installHelp.textContent = installInstructions(copy);
+  }
+
+  function showInstallOffer() {
+    if (installOfferShown || navigator.standalone === true
+        || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)) return;
+    try {
+      if (localStorage.getItem(installDoneKey) === 'true') return;
+      if (Number(localStorage.getItem(installDismissKey)) > Date.now()) return;
+    } catch (_) { /* The install offer remains available when storage is blocked. */ }
+    installOfferShown = true;
+    if (typeof installDialog.show === 'function') installDialog.show();
+    else installDialog.setAttribute('open', '');
+  }
+
+  function dismissInstallOffer() {
+    try { localStorage.setItem(installDismissKey, String(Date.now() + 7 * 24 * 60 * 60 * 1000)); } catch (_) {}
+    if (installDialog.open) installDialog.close();
+    else installDialog.removeAttribute('open');
+  }
+
+  installAction.addEventListener('click', async () => {
+    if (!installPromptEvent) {
+      if (installHelpVisible) {
+        dismissInstallOffer();
+        return;
+      }
+      installHelpVisible = true;
+      installHelp.textContent = installInstructions(installCopy[language] || installCopy.es);
+      installHelp.hidden = false;
+      renderInstallCopy();
+      return;
+    }
+    const promptEvent = installPromptEvent;
+    installPromptEvent = null;
+    try {
+      await promptEvent.prompt();
+      const choice = await promptEvent.userChoice;
+      if (choice?.outcome === 'accepted') {
+        try { localStorage.setItem(installDoneKey, 'true'); } catch (_) {}
+        if (installDialog.open) installDialog.close();
+        else installDialog.removeAttribute('open');
+      } else dismissInstallOffer();
+    } catch (_) {
+      installHelpVisible = true;
+      installHelp.hidden = false;
+      renderInstallCopy();
+    }
+  });
+  installLater.addEventListener('click', dismissInstallOffer);
+  installDialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    dismissInstallOffer();
+  });
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    installPromptEvent = event;
+    if (installHelpVisible) {
+      installHelpVisible = false;
+      installHelp.hidden = true;
+    }
+    renderInstallCopy();
+  });
+  window.addEventListener('appinstalled', () => {
+    installPromptEvent = null;
+    try {
+      localStorage.setItem(installDoneKey, 'true');
+      localStorage.removeItem(installDismissKey);
+    } catch (_) {}
+    if (installDialog.open) installDialog.close();
+    else installDialog.removeAttribute('open');
+  });
   let language = 'es';
   let currentSource = 'radio';
   let started = false;
@@ -57,8 +197,10 @@
       document.title = frame.contentDocument.title || 'Conectados a Cristo · Asamblea Cristiana';
       sendBibleState();
     } catch (_) {}
+    showInstallOffer();
   });
   frame.src = pageUrl(new URLSearchParams(location.search).get('page')).href;
+  window.setTimeout(showInstallOffer, 1200);
 
   function sendBibleState(message = '') {
     frame.contentWindow?.postMessage({ type: 'voz-bible-reading-state', active: Boolean(bibleReading),
@@ -167,6 +309,7 @@
     error.textContent = copy.error;
     alternative.textContent = copy.alternative;
     liveNote.textContent = copy.liveNote;
+    renderInstallCopy();
   }
 
   function updateMediaSession() {
