@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101b38">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/revista-leer.css?v=39">
+  <title>Leer Voz Juvenil · Conectados a Cristo</title>
+</head>
+<body>
+  <header class="reader-header">
+    <a class="reader-back" href="voz-juvenil.html" aria-label="Volver a Voz Juvenil">← <span>Voz Juvenil</span></a>
+    <h1 id="reader-title">Voz Juvenil</h1>
+    <button id="reader-zoom" class="reader-button" type="button" aria-label="Ampliar página">Ampliar</button>
+  </header>
+  <p class="reader-tip">Deslizá para pasar de página · Pellizcá con dos dedos para ampliar</p>
+  <main id="reader-stage" class="reader-stage" aria-label="Página de la revista">
+    <p id="reader-status" class="reader-status" role="status">Cargando página…</p>
+    <img id="reader-image" class="reader-image" alt="" draggable="false" hidden>
+    <p id="reader-error" class="reader-error" role="alert" hidden>No se pudo cargar la página. <a id="reader-pdf" href="voz-juvenil.html">Abrir el PDF original</a></p>
+  </main>
+  <nav class="reader-controls" aria-label="Páginas de la revista">
+    <button id="reader-prev" class="reader-button" type="button" aria-label="Página anterior">← Anterior</button>
+    <label class="reader-counter">Página <input id="reader-page" type="number" min="1" inputmode="numeric" aria-label="Ir a la página"> <span id="reader-total"></span></label>
+    <button id="reader-next" class="reader-button" type="button" aria-label="Página siguiente">Siguiente →</button>
+  </nav>
+  <script src="js/revista-data.js?v=39"></script>
+  <script src="js/revista-leer.js?v=39"></script>
+</body>
+</html>

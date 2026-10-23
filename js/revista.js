@@ -59,11 +59,9 @@
       topics.textContent = (item.temas || []).join(' · ');
       const link = document.createElement('a');
       link.className = 'action-link primary';
-      link.href = item.pdf;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.textContent = 'Abrir PDF ↗';
-      link.setAttribute('aria-label', 'Abrir edición Nº ' + item.numero + ' en PDF');
+      link.href = 'revista-leer.html?numero=' + item.numero;
+      link.textContent = 'Leer revista →';
+      link.setAttribute('aria-label', 'Leer edición Nº ' + item.numero + ' dentro de la app');
 
       copy.append(title, period, topics);
       if (pages.length) {
@@ -74,9 +72,7 @@
         pageMatches.append(label);
         pages.slice(0, 8).forEach(page => {
           const pageLink = document.createElement('a');
-          pageLink.href = item.pdf + '#page=' + page;
-          pageLink.target = '_blank';
-          pageLink.rel = 'noopener noreferrer';
+          pageLink.href = 'revista-leer.html?numero=' + item.numero + '&pagina=' + page;
           pageLink.textContent = String(page);
           pageLink.setAttribute('aria-label', 'Abrir página ' + page + ' de la edición Nº ' + item.numero);
           pageMatches.append(pageLink);
