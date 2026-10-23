@@ -5,6 +5,13 @@
   const ocr = window.VOZ_REVISTA_OCR || {};
   const $ = id => document.getElementById(id);
   const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const topicInput = $('revista-tema');
+  const topicList = $('revista-temas-list');
+  const topicPicker = topicInput.closest('.revista-topic-picker');
+  const topicCollator = new Intl.Collator('es', { sensitivity: 'base' });
+  const topics = [...new Set(items.flatMap(item => item.temas || []))].sort(topicCollator.compare);
+  let topicSuggestions = [];
+  let activeTopicIndex = -1;
   const year = $('revista-anio');
   const list = $('revista-lista');
   const searchIndex = new Map(items.map(item => [item.numero, {
@@ -17,6 +24,80 @@
     option.value = value;
     option.textContent = value;
     year.append(option);
+  });
+
+  function setTopicDropdown(open) {
+    topicList.hidden = !open;
+    topicInput.setAttribute('aria-expanded', String(open));
+    if (!open) topicInput.removeAttribute('aria-activedescendant');
+  }
+
+  function renderTopicOptions(open = true) {
+    const query = norm(topicInput.value.trim());
+    topicSuggestions = topics.filter(topic => !query || norm(topic).includes(query));
+    activeTopicIndex = -1;
+    topicList.replaceChildren();
+    if (!topicSuggestions.length) {
+      const empty = document.createElement('div');
+      empty.className = 'revista-topic-empty';
+      empty.setAttribute('role', 'option');
+      empty.setAttribute('aria-disabled', 'true');
+      empty.textContent = 'No hay temas que coincidan';
+      topicList.append(empty);
+    } else {
+      topicSuggestions.forEach((topic, index) => {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'revista-topic-option';
+        option.id = 'revista-tema-opcion-' + index;
+        option.tabIndex = -1;
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', 'false');
+        const name = document.createElement('span');
+        name.textContent = topic;
+        option.append(name);
+        option.addEventListener('pointerdown', event => event.preventDefault());
+        option.addEventListener('click', () => {
+          topicInput.value = topic;
+          setTopicDropdown(false);
+          render();
+          topicInput.focus();
+        });
+        topicList.append(option);
+      });
+    }
+    setTopicDropdown(open);
+  }
+
+  function moveActiveTopic(delta) {
+    if (!topicSuggestions.length) return;
+    activeTopicIndex = (activeTopicIndex + delta + topicSuggestions.length) % topicSuggestions.length;
+    topicList.querySelectorAll('[role="option"]').forEach((option, index) => {
+      option.setAttribute('aria-selected', String(index === activeTopicIndex));
+    });
+    topicInput.setAttribute('aria-activedescendant', 'revista-tema-opcion-' + activeTopicIndex);
+    topicList.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' });
+  }
+
+  topicInput.addEventListener('focus', () => renderTopicOptions());
+  topicInput.addEventListener('input', () => renderTopicOptions());
+  topicInput.addEventListener('keydown', event => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (topicList.hidden) renderTopicOptions();
+      moveActiveTopic(event.key === 'ArrowDown' ? 1 : -1);
+    } else if (event.key === 'Enter' && !topicList.hidden && activeTopicIndex >= 0) {
+      event.preventDefault();
+      topicInput.value = topicSuggestions[activeTopicIndex];
+      setTopicDropdown(false);
+      render();
+    } else if (event.key === 'Escape' && !topicList.hidden) {
+      event.preventDefault();
+      setTopicDropdown(false);
+    }
+  });
+  document.addEventListener('pointerdown', event => {
+    if (!topicPicker.contains(event.target)) setTopicDropdown(false);
   });
 
   function render() {
