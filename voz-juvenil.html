@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="css/app.css?v=31">
   <title>Revista Voz Juvenil · Conectados a Cristo</title>
   <style>
-    .revista-card{display:flex;gap:18px;align-items:flex-start;min-width:0}
+    .revista-card{position:relative;display:flex;gap:18px;align-items:flex-start;min-width:0;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+    .revista-card:hover,.revista-card:focus-within{border-color:var(--violet);box-shadow:0 8px 24px rgba(16,27,56,.12)}
     .revista-cover{display:block;flex:none;width:116px;height:auto;aspect-ratio:453/650;object-fit:cover;border-radius:7px;box-shadow:0 8px 18px rgba(16,27,56,.16)}
     .revista-copy{display:flex;flex-direction:column;align-items:flex-start;align-self:stretch;min-width:0}
     .revista-copy strong{font-family:Manrope,system-ui,sans-serif;font-size:20px;margin:0}
@@ -16,12 +17,13 @@
     .revista-copy small{font-size:12px;margin-bottom:16px}
     .revista-search{display:block;font-size:13px;font-weight:700;margin:16px 0 20px}
     .revista-search .field{margin-top:7px}
-    .revista-pages{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px;font-size:12px}
+    .revista-pages{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px;font-size:12px}
     .revista-pages span:first-child{width:100%;color:var(--muted)}
     .revista-pages a{display:inline-grid;min-width:26px;height:26px;place-items:center;padding:0 5px;border:1px solid var(--line);border-radius:7px;color:var(--violet);font-weight:800}
     .revista-pages a:hover{background:#eee9ff}
     .revista-pages a:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
     .revista-copy .action-link{margin-top:auto}
+    .revista-copy .action-link::after{position:absolute;inset:0;content:''}
     .revista-copy .action-link:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
     [data-theme=dark] .revista-card{background:var(--surface);border-color:var(--line)}
     @media(max-width:850px){#revista-lista{grid-template-columns:1fr}}
@@ -51,7 +53,7 @@
   </main>
   <script src="js/revista-data.js?v=39"></script>
   <script src="js/revista-ocr.js?v=37"></script>
-  <script src="js/revista.js?v=39"></script>
-  <script src="js/app-shell.js?v=37"></script>
+  <script src="js/revista.js?v=41"></script>
+  <script src="js/app-shell.js?v=41"></script>
 </body>
 </html>

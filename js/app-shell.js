@@ -13,6 +13,13 @@
   const languageNames = { es: 'Español', pt: 'Português', it: 'Italiano', uk: 'Українська' };
   const languageKey = 'voz-juvenil-idioma';
   const themeKey = 'voz-juvenil-modo';
+  const fontSizeKey = 'voz-juvenil-tamano-letra';
+  const fontScales = { small: .9, normal: 1, large: 1.1, larger: 1.2 };
+  let fontSize = 'normal';
+  try {
+    const saved = localStorage.getItem(fontSizeKey);
+    if (Object.hasOwn(fontScales, saved)) fontSize = saved;
+  } catch (_) { /* The selector still works for this visit. */ }
   let theme = 'light';
   try {
     if (localStorage.getItem(themeKey) === 'dark') theme = 'dark';
@@ -254,22 +261,27 @@
       'Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.':'Aqui você encontra as edições da revista juvenil da igreja, com artigos e mensagens para acompanhar sua vida cristã.',
       'Buscar ediciones':'Buscar edições','Número':'Número','Por ejemplo 50':'Por exemplo 50','Año':'Ano','Todos los años':'Todos os anos','Tema':'Tema','Buscar tema':'Buscar tema',
       'Buscar por palabras en los artículos':'Buscar por palavras nos artigos','Escribí una palabra o frase':'Digite uma palavra ou frase','Coincidencias en páginas:':'Resultados nas páginas:',
-      'No hay ediciones para esos filtros.':'Não há edições para esses filtros.','Abrir PDF ↗':'Abrir PDF ↗'
+      'No hay ediciones para esos filtros.':'Não há edições para esses filtros.','Leer revista →':'Ler revista →'
     },
     it: {
       'Archivo de la revista juvenil':'Archivio della rivista giovanile','ARCHIVO DE REVISTAS':'ARCHIVIO DELLE RIVISTE',
       'Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.':'Qui trovi le edizioni della rivista giovanile della chiesa, con articoli e messaggi per accompagnare la tua vita cristiana.',
       'Buscar ediciones':'Cerca le edizioni','Número':'Numero','Por ejemplo 50':'Per esempio 50','Año':'Anno','Todos los años':'Tutti gli anni','Tema':'Tema','Buscar tema':'Cerca per tema',
       'Buscar por palabras en los artículos':'Cerca parole negli articoli','Escribí una palabra o frase':'Scrivi una parola o frase','Coincidencias en páginas:':'Risultati alle pagine:',
-      'No hay ediciones para esos filtros.':'Nessuna edizione corrisponde ai filtri.','Abrir PDF ↗':'Apri PDF ↗'
+      'No hay ediciones para esos filtros.':'Nessuna edizione corrisponde ai filtri.','Leer revista →':'Leggi la rivista →'
     },
     uk: {
       'Archivo de la revista juvenil':'Архів молодіжного журналу','ARCHIVO DE REVISTAS':'АРХІВ ЖУРНАЛІВ',
       'Aquí encontrarás las ediciones de la revista juvenil de la iglesia. Te invitamos a descubrir artículos y mensajes que acompañen tu vida cristiana.':'Тут зібрані випуски церковного молодіжного журналу зі статтями та посланнями для християнського життя.',
       'Buscar ediciones':'Знайти випуски','Número':'Номер','Por ejemplo 50':'Наприклад, 50','Año':'Рік','Todos los años':'Усі роки','Tema':'Тема','Buscar tema':'Пошук за темою',
       'Buscar por palabras en los artículos':'Пошук слів у статтях','Escribí una palabra o frase':'Введіть слово або фразу','Coincidencias en páginas:':'Знайдено на сторінках:',
-      'No hay ediciones para esos filtros.':'За цими фільтрами випусків немає.','Abrir PDF ↗':'Відкрити PDF ↗'
+      'No hay ediciones para esos filtros.':'За цими фільтрами випусків немає.','Leer revista →':'Читати журнал →'
     }
+  };
+  const fontSizeText = {
+    pt: {'Tamaño de letra':'Tamanho da letra','Pequeña':'Pequena','Normal':'Normal','Grande':'Grande','Muy grande':'Muito grande'},
+    it: {'Tamaño de letra':'Dimensione del testo','Pequeña':'Piccola','Normal':'Normale','Grande':'Grande','Muy grande':'Molto grande'},
+    uk: {'Tamaño de letra':'Розмір шрифту','Pequeña':'Малий','Normal':'Звичайний','Grande':'Великий','Muy grande':'Дуже великий'}
   };
   function applyEditorial() {
     for (const code of ['pt', 'it', 'uk']) {
@@ -279,7 +291,7 @@
         dictionary[source] = dictionary[source]
           .replace(/Voz Jovem|Voce giovanile|Voce Giovanile|Voce dei Giovani|Голос молоді|Молодіжний Голос|Youth Voice/g, 'Voz Juvenil');
       }
-      Object.assign(dictionary, editorial[code], bookNames[code], copyCorrections[code], newText[code], revistaText[code]);
+      Object.assign(dictionary, editorial[code], bookNames[code], copyCorrections[code], newText[code], revistaText[code], fontSizeText[code]);
     }
   }
   if (translations) applyEditorial();
@@ -447,7 +459,7 @@
   const header = document.querySelector('.topbar') || document.createElement('header');
   const menuStyles = document.createElement('link');
   menuStyles.rel = 'stylesheet';
-  menuStyles.href = 'css/site-menu.css';
+  menuStyles.href = 'css/site-menu.css?v=41';
   document.head.append(menuStyles);
   const themeStyles = document.createElement('link');
   themeStyles.rel = 'stylesheet';
@@ -491,6 +503,13 @@
         <button type="button" class="site-menu-theme" data-theme-choice="light">Claro</button>
         <button type="button" class="site-menu-theme" data-theme-choice="dark">Oscuro</button>
       </div>
+      <div id="site-menu-font-title" class="site-menu-font-title">Tamaño de letra</div>
+      <div class="site-menu-font-sizes" role="group" aria-labelledby="site-menu-font-title">
+        <button type="button" class="site-menu-font-size" data-font-size="small">Pequeña</button>
+        <button type="button" class="site-menu-font-size" data-font-size="normal">Normal</button>
+        <button type="button" class="site-menu-font-size" data-font-size="large">Grande</button>
+        <button type="button" class="site-menu-font-size" data-font-size="larger">Muy grande</button>
+      </div>
     </nav>`;
   header.append(menu);
   const shareDialog = document.createElement('dialog');
@@ -516,6 +535,7 @@
   const panel = menu.querySelector('.site-menu-panel');
   const languageButtons = menu.querySelector('.site-menu-languages');
   const themeButtons = menu.querySelectorAll('.site-menu-theme');
+  const fontButtons = menu.querySelectorAll('.site-menu-font-size');
   for (const code of languages) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -526,6 +546,38 @@
     languageButtons.append(button);
   }
   for (const button of themeButtons) button.addEventListener('click', () => setTheme(button.dataset.themeChoice));
+  for (const button of fontButtons) button.addEventListener('click', () => setFontSize(button.dataset.fontSize));
+
+  // Scale declared type sizes while preserving each page's existing media queries and layout sizes.
+  const originalFontSizes = new WeakMap();
+  function prepareFontScaling() {
+    function visit(rules) {
+      for (const rule of rules) {
+        if (rule.cssRules?.length) visit(rule.cssRules);
+        if (!rule.style || /::?(before|after)/i.test(rule.selectorText || '')) continue;
+        const size = originalFontSizes.get(rule) || rule.style.fontSize;
+        if (!size || !/(?:px|rem|em|vw|vh)/i.test(size)) continue;
+        originalFontSizes.set(rule, size);
+        rule.style.fontSize = size.replace(/(\d*\.?\d+)(px|rem|em|vw|vh)/gi,
+          (_, number, unit) => `${Number((Number(number) * fontScales[fontSize]).toFixed(3))}${unit}`);
+      }
+    }
+    for (const sheet of document.styleSheets) {
+      try { visit(sheet.cssRules); } catch (_) { /* Third-party stylesheets may block CSSOM access. */ }
+    }
+  }
+  menuStyles.addEventListener('load', prepareFontScaling);
+  themeStyles.addEventListener('load', prepareFontScaling);
+  prepareFontScaling();
+
+  function setFontSize(next) {
+    if (!Object.hasOwn(fontScales, next)) return;
+    fontSize = next;
+    prepareFontScaling();
+    for (const button of fontButtons) button.setAttribute('aria-pressed', String(button.dataset.fontSize === next));
+    try { localStorage.setItem(fontSizeKey, next); } catch (_) {}
+  }
+  setFontSize(fontSize);
 
   function renderTheme() {
     document.documentElement.dataset.theme = theme;
