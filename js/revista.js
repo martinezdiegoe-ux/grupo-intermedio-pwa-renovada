@@ -14,6 +14,7 @@
   let activeTopicIndex = -1;
   const year = $('revista-anio');
   const list = $('revista-lista');
+  const searchForm = $('revista-search-form');
   const searchIndex = new Map(items.map(item => [item.numero, {
     metadata: norm([item.numero, item.anio, item.periodo, ...(item.temas || []), ...(item.articulos || [])].join(' ')),
     pages: (ocr[item.numero] || []).map(norm)
@@ -219,10 +220,35 @@
     }
   }
 
+  let highlightedMatch = null;
+  let highlightTimer = 0;
+  function showFirstPageMatch() {
+    if (!$('revista-palabras').value.trim()) return;
+    const target = list.querySelector('.revista-pages a') || list.querySelector('.revista-card');
+    if (!target) return;
+    clearTimeout(highlightTimer);
+    highlightedMatch?.classList.remove('revista-search-highlight');
+    target.classList.remove('revista-search-highlight');
+    void target.offsetWidth;
+    target.classList.add('revista-search-highlight');
+    highlightedMatch = target;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    highlightTimer = window.setTimeout(() => {
+      target.classList.remove('revista-search-highlight');
+      if (highlightedMatch === target) highlightedMatch = null;
+    }, reduceMotion ? 1800 : 3400);
+  }
+
   ['revista-palabras', 'revista-numero', 'revista-tema'].forEach(id => $(id).addEventListener('input', () => {
     render();
     syncCatalogUrl();
   }));
+  searchForm.addEventListener('submit', event => {
+    event.preventDefault();
+    showFirstPageMatch();
+    syncCatalogUrl();
+  });
   year.addEventListener('change', () => {
     render();
     syncCatalogUrl();

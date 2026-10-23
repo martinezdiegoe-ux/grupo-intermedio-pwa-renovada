@@ -15,8 +15,14 @@
     .revista-copy strong{font-family:Manrope,system-ui,sans-serif;font-size:20px;margin:0}
     .revista-copy p{color:var(--muted);font-size:13px;margin:8px 0}
     .revista-copy small{font-size:12px;margin-bottom:16px}
-    .revista-search{display:block;font-size:13px;font-weight:700;margin:16px 0 20px}
-    .revista-search .field{margin-top:7px}
+    .revista-search-form{margin:16px 0 20px}
+    .revista-search-label{display:block;font-size:13px;font-weight:700}
+    .revista-search-controls{display:flex;gap:8px;margin-top:7px}
+    .revista-search-controls .field{flex:1;min-width:0;margin-top:0}
+    .revista-search-submit{display:grid;flex:none;width:46px;place-items:center;border:1px solid var(--line);border-radius:11px;background:var(--surface,#fff);color:var(--violet);cursor:pointer}
+    .revista-search-submit:hover{background:#eee9ff}
+    .revista-search-submit:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+    .revista-search-submit svg{width:19px;height:19px}
     .revista-topic-picker{position:relative}
     .revista-topic-options{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:12;max-height:240px;overflow-y:auto;padding:5px;border:1px solid var(--line);border-radius:11px;background:var(--surface,#fff);box-shadow:0 12px 28px rgba(16,27,56,.16)}
     .revista-topic-options[hidden]{display:none}
@@ -30,6 +36,11 @@
     .revista-pages a{display:inline-grid;min-width:26px;height:26px;place-items:center;padding:0 5px;border:1px solid var(--line);border-radius:7px;color:var(--violet);font-weight:800}
     .revista-pages a:hover{background:#eee9ff}
     .revista-pages a:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+    .revista-pages a.revista-search-highlight{position:relative;z-index:2;animation:revista-page-pulse 1.05s ease-in-out 3}
+    .revista-card.revista-search-highlight{animation:revista-card-pulse 1.05s ease-in-out 3}
+    @keyframes revista-page-pulse{0%,100%{transform:scale(1);background:transparent;box-shadow:0 0 0 0 rgba(111,76,255,0)}50%{transform:scale(1.16);background:#ded5ff;box-shadow:0 0 0 5px rgba(111,76,255,.13)}}
+    @keyframes revista-card-pulse{0%,100%{box-shadow:0 7px 20px rgba(31,43,74,.035)}50%{box-shadow:0 0 0 4px rgba(111,76,255,.22),0 8px 24px rgba(16,27,56,.12)}}
+    @media(prefers-reduced-motion:reduce){.revista-pages a.revista-search-highlight{animation:none;outline:2px solid var(--violet);outline-offset:2px;background:#ded5ff}.revista-card.revista-search-highlight{animation:none;border-color:var(--violet);box-shadow:0 0 0 4px rgba(111,76,255,.22)}}
     .revista-copy .action-link{margin-top:auto}
     .revista-copy .action-link::after{position:absolute;inset:0;content:''}
     .revista-copy .action-link:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
@@ -47,9 +58,15 @@
     </section>
     <section class="panel">
       <h2>Buscar ediciones</h2>
-      <label class="revista-search">Buscar por palabras en los artículos
-        <input id="revista-palabras" class="field" type="search" placeholder="Escribí una palabra o frase">
-      </label>
+      <form id="revista-search-form" class="revista-search-form" role="search">
+        <label class="revista-search-label" for="revista-palabras">Buscar por palabras en los artículos</label>
+        <div class="revista-search-controls">
+          <input id="revista-palabras" class="field" type="search" placeholder="Escribí una palabra o frase" enterkeyhint="search">
+          <button class="revista-search-submit" type="submit" aria-label="Buscar y mostrar el primer resultado" title="Buscar">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="2"></circle><path d="m16 16 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+          </button>
+        </div>
+      </form>
       <div class="filter-grid revista-filters">
         <label>Número<input id="revista-numero" class="field" type="search" inputmode="numeric" placeholder="Por ejemplo 50"></label>
         <label>Año<select id="revista-anio" class="field"><option value="">Todos los años</option></select></label>
@@ -66,7 +83,7 @@
   </main>
   <script src="js/revista-data.js?v=39"></script>
   <script src="js/revista-ocr.js?v=37"></script>
-  <script src="js/revista.js?v=45"></script>
+  <script src="js/revista.js?v=46"></script>
   <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>
