@@ -51,39 +51,39 @@
   const installCopy = {
     es: {
       eyebrow: 'INSTALÁ LA APP', title: 'Conectados a Cristo, a un toque',
-      description: 'Agregá la app a tu pantalla de inicio para volver fácilmente a las meditaciones, alabanzas y revistas.',
-      install: 'Instalar app', how: 'Ver cómo instalar', later: 'Ahora no', done: 'Entendido',
-      ios: 'En el menú Compartir de tu navegador, elegí “Agregar a pantalla de inicio” y confirmá.',
-      android: 'En el menú ⋮ del navegador, tocá “Instalar app” o “Agregar a pantalla principal”.',
-      desktop: 'En la computadora, usá el ícono de instalar de la barra de direcciones o abrí el menú del navegador y elegí “Instalar Conectados a Cristo”.',
-      other: 'Abrí el menú de tu navegador y elegí “Instalar app” o “Agregar a pantalla de inicio”.'
+      description: 'Tocá “Instalar app” y confirmá en el aviso del navegador. Si no se puede abrir el aviso, te mostramos los pasos para agregarla desde el menú.',
+      install: 'Instalar app', how: 'Instalar app', later: 'Ahora no', done: 'Entendido',
+      ios: 'En Safari, tocá Compartir → Agregar a pantalla de inicio → Agregar.',
+      android: 'En Android, abrí ⋮ → Instalar app (o Agregar a pantalla principal) → Instalar.',
+      desktop: 'En la barra de direcciones, tocá el ícono Instalar o abrí el menú del navegador → Instalar Conectados a Cristo → Instalar.',
+      other: 'Abrí el menú del navegador y elegí “Instalar app” o “Agregar a pantalla de inicio”; después confirmá.'
     },
     pt: {
       eyebrow: 'INSTALE O APLICATIVO', title: 'Conectados a Cristo, a um toque',
-      description: 'Adicione o aplicativo à tela inicial para voltar facilmente às meditações, músicas e revistas.',
+      description: 'Toque em “Instalar aplicativo” e confirme no aviso do navegador. Se o aviso não puder ser aberto, mostraremos como adicionar pelo menu.',
       install: 'Instalar aplicativo', how: 'Ver como instalar', later: 'Agora não', done: 'Entendi',
-      ios: 'No menu Compartilhar do navegador, escolha “Adicionar à Tela de Início” e confirme.',
-      android: 'No menu ⋮ do navegador, toque em “Instalar aplicativo” ou “Adicionar à tela inicial”.',
-      desktop: 'No computador, use o ícone de instalação na barra de endereço ou abra o menu do navegador e escolha “Instalar Conectados a Cristo”.',
-      other: 'Abra o menu do navegador e escolha “Instalar aplicativo” ou “Adicionar à tela inicial”.'
+      ios: 'No Safari, toque em Compartilhar → Adicionar à Tela de Início → Adicionar.',
+      android: 'No Android, abra ⋮ → Instalar aplicativo (ou Adicionar à tela inicial) → Instalar.',
+      desktop: 'Na barra de endereço, toque no ícone Instalar ou abra o menu do navegador → Instalar Conectados a Cristo → Instalar.',
+      other: 'Abra o menu do navegador e escolha “Instalar aplicativo” ou “Adicionar à tela inicial”; depois confirme.'
     },
     it: {
       eyebrow: 'INSTALLA L’APP', title: 'Conectados a Cristo, a portata di mano',
-      description: 'Aggiungi l’app alla schermata Home per ritrovare facilmente meditazioni, canti e riviste.',
+      description: 'Tocca “Installa app” e conferma nell’avviso del browser. Se non è possibile aprirlo, ti mostreremo come aggiungerla dal menu.',
       install: 'Installa app', how: 'Come installarla', later: 'Non ora', done: 'Ho capito',
-      ios: 'Nel menu Condividi del browser, scegli “Aggiungi alla schermata Home” e conferma.',
-      android: 'Nel menu ⋮ del browser, tocca “Installa app” o “Aggiungi a schermata Home”.',
-      desktop: 'Sul computer, usa l’icona di installazione nella barra degli indirizzi o apri il menu del browser e scegli “Installa Conectados a Cristo”.',
-      other: 'Apri il menu del browser e scegli “Installa app” o “Aggiungi alla schermata Home”.'
+      ios: 'In Safari, tocca Condividi → Aggiungi alla schermata Home → Aggiungi.',
+      android: 'Su Android, apri ⋮ → Installa app (o Aggiungi alla schermata Home) → Installa.',
+      desktop: 'Nella barra degli indirizzi, tocca l’icona Installa o apri il menu del browser → Installa Conectados a Cristo → Installa.',
+      other: 'Apri il menu del browser e scegli “Installa app” o “Aggiungi alla schermata Home”; poi conferma.'
     },
     uk: {
       eyebrow: 'ВСТАНОВІТЬ ЗАСТОСУНОК', title: 'Conectados a Cristo завжди поруч',
-      description: 'Додайте застосунок на головний екран, щоб легко відкривати роздуми, пісні та журнали.',
+      description: 'Натисніть «Встановити застосунок» і підтвердьте у вікні браузера. Якщо вікно не відкривається, покажемо кроки в меню.',
       install: 'Встановити застосунок', how: 'Як встановити', later: 'Не зараз', done: 'Зрозуміло',
-      ios: 'У меню «Поділитися» браузера виберіть «На початковий екран» і підтвердьте.',
-      android: 'У меню ⋮ браузера виберіть «Встановити застосунок» або «Додати на головний екран».',
-      desktop: 'На комп’ютері натисніть значок встановлення в адресному рядку або відкрийте меню браузера й виберіть «Встановити Conectados a Cristo».',
-      other: 'Відкрийте меню браузера та виберіть «Встановити застосунок» або «Додати на головний екран».'
+      ios: 'У Safari натисніть «Поділитися» → «На початковий екран» → «Додати».',
+      android: 'На Android відкрийте ⋮ → «Встановити застосунок» (або «Додати на головний екран») → «Встановити».',
+      desktop: 'В адресному рядку натисніть значок встановлення або відкрийте меню браузера → «Встановити Conectados a Cristo» → «Встановити».',
+      other: 'Відкрийте меню браузера, виберіть «Встановити застосунок» або «Додати на головний екран» і підтвердьте.'
     }
   };
 
@@ -103,7 +103,7 @@
     installTitle.textContent = copy.title;
     installDescription.textContent = copy.description;
     installLater.textContent = copy.later;
-    installAction.textContent = installPromptEvent ? copy.install : installHelpVisible ? copy.done : copy.how;
+    installAction.textContent = installHelpVisible ? copy.done : copy.install;
     if (installHelpVisible) installHelp.textContent = installInstructions(copy);
   }
 
