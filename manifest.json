@@ -1,6 +1,6 @@
 {
-  "name": "Conectados a Cristo · Asamblea Cristiana",
-  "short_name": "Conectados",
+  "name": "Conectados a Cristo",
+  "short_name": "Conectados a Cristo",
   "description": "Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos",
   "start_url": "./app.html?page=index.html",
   "scope": "./",
