@@ -305,6 +305,7 @@
     toggle.setAttribute('aria-label', audio.paused ? copy.resume : copy.pause);
     kind.textContent = currentSource === 'radio' ? copy.live : copy.reflection;
     title.textContent = localizedTitle();
+    title.hidden = currentSource === 'radio';
     startHint.textContent = copy.start;
     error.textContent = copy.error;
     alternative.textContent = copy.alternative;

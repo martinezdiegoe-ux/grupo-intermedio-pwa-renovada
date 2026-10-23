@@ -1,6 +1,6 @@
-const CACHE_NAME='conectados-a-cristo-v55';
+const CACHE_NAME='conectados-a-cristo-v56';
 const STATIC_ASSETS=[
-  './','index.html','home.html','app.html','manifest.json','css/app.css?v=31','css/hero-bible.css','css/site-menu.css?v=41','css/theme.css','css/audio-shell.css?v=37','js/app-shell.js?v=43','js/audio-shell.js?v=39','js/i18n-data.js','reproductor.html',
+  './','index.html','home.html','app.html','manifest.json','css/app.css?v=31','css/hero-bible.css','css/site-menu.css?v=41','css/theme.css','css/audio-shell.css?v=37','js/app-shell.js?v=43','js/audio-shell.js?v=40','js/i18n-data.js','reproductor.html',
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas.js?v=31','js/alabanza.js','js/playlist.js?v=31',
   'juegos.html','crucigramas.html','verdadero-falso.html','opcion-multiple.html',
   'cronograma.html','novedades.html','comunicados.html','mensajes.html','iglesia-perseguida.html','voz-juvenil.html','revista-leer.html','css/revista-leer.css?v=39','js/revista-data.js?v=39','js/revista-ocr.js?v=37','js/revista.js?v=48','js/revista-leer.js?v=41',
