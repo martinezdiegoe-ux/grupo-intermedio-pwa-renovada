@@ -151,18 +151,13 @@
         const label = document.createElement('span');
         label.textContent = 'Coincidencias en páginas:';
         pageMatches.append(label);
-        pages.slice(0, 8).forEach(page => {
+        pages.forEach(page => {
           const pageLink = document.createElement('a');
           pageLink.href = 'revista-leer.html?numero=' + item.numero + '&pagina=' + page;
           pageLink.textContent = String(page);
           pageLink.setAttribute('aria-label', 'Abrir página ' + page + ' de la edición Nº ' + item.numero);
           pageMatches.append(pageLink);
         });
-        if (pages.length > 8) {
-          const more = document.createElement('span');
-          more.textContent = '+' + (pages.length - 8);
-          pageMatches.append(more);
-        }
         copy.append(pageMatches);
       }
       copy.append(link);
