@@ -31,16 +31,19 @@
     .revista-topic-option small{flex:none;color:var(--muted);font-size:.85em}
     .revista-topic-empty{padding:10px;color:var(--muted);font-size:13px}
     @media(max-width:640px){.revista-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.revista-filters label:nth-child(3){grid-column:1/-1}}
-    .revista-pages{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px;font-size:12px}
-    .revista-pages span:first-child{width:100%;color:var(--muted)}
-    .revista-pages a{display:inline-grid;min-width:26px;height:26px;place-items:center;padding:0 5px;border:1px solid var(--line);border-radius:7px;color:var(--violet);font-weight:800}
-    .revista-pages a:hover{background:#eee9ff}
-    .revista-pages a:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
-    .revista-pages a.revista-search-highlight{position:relative;z-index:2;animation:revista-page-pulse 1.05s ease-in-out 3}
+    .revista-card.revista-search-card{display:block;min-height:0;cursor:default}
+    .revista-search-card .revista-search-issue{font-size:19px;margin:0 0 10px}
+    .revista-search-page-list{display:grid;gap:11px}
+    .revista-search-page{display:grid;gap:4px;padding-top:10px;border-top:1px solid var(--line)}
+    .revista-search-page-link{justify-self:start;color:var(--violet);font-size:13px;font-weight:800;text-decoration:none}
+    .revista-search-page-link:hover{text-decoration:underline}
+    .revista-search-page-link:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+    .revista-search-excerpt{margin:0;padding-left:10px;border-left:2px solid var(--line);color:var(--muted);font-size:14px;line-height:1.55;overflow-wrap:anywhere}
+    .revista-search-page-link.revista-search-highlight{position:relative;z-index:2;animation:revista-page-pulse 1.05s ease-in-out 3}
     .revista-card.revista-search-highlight{animation:revista-card-pulse 1.05s ease-in-out 3}
     @keyframes revista-page-pulse{0%,100%{transform:scale(1);background:transparent;box-shadow:0 0 0 0 rgba(111,76,255,0)}50%{transform:scale(1.16);background:#ded5ff;box-shadow:0 0 0 5px rgba(111,76,255,.13)}}
     @keyframes revista-card-pulse{0%,100%{box-shadow:0 7px 20px rgba(31,43,74,.035)}50%{box-shadow:0 0 0 4px rgba(111,76,255,.22),0 8px 24px rgba(16,27,56,.12)}}
-    @media(prefers-reduced-motion:reduce){.revista-pages a.revista-search-highlight{animation:none;outline:2px solid var(--violet);outline-offset:2px;background:#ded5ff}.revista-card.revista-search-highlight{animation:none;border-color:var(--violet);box-shadow:0 0 0 4px rgba(111,76,255,.22)}}
+    @media(prefers-reduced-motion:reduce){.revista-search-page-link.revista-search-highlight{animation:none;outline:2px solid var(--violet);outline-offset:2px;background:#ded5ff}.revista-card.revista-search-highlight{animation:none;border-color:var(--violet);box-shadow:0 0 0 4px rgba(111,76,255,.22)}}
     .revista-copy .action-link{margin-top:auto}
     .revista-copy .action-link::after{position:absolute;inset:0;content:''}
     .revista-copy .action-link:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
@@ -83,7 +86,7 @@
   </main>
   <script src="js/revista-data.js?v=39"></script>
   <script src="js/revista-ocr.js?v=37"></script>
-  <script src="js/revista.js?v=46"></script>
+  <script src="js/revista.js?v=48"></script>
   <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>

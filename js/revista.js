@@ -5,6 +5,27 @@
   const ocr = window.VOZ_REVISTA_OCR || {};
   const $ = id => document.getElementById(id);
   const norm = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  function pageExcerpt(text, words) {
+    // Corrige uniones verificadas del OCR en los pasajes que aparecen como cita.
+    const source = String(text || '')
+      .replace(/\bdegozo\b/gi, match => `${match.slice(0, 2)} ${match.slice(2)}`)
+      .replace(/\bysufe\b/gi, match => `${match.slice(0, 1)} ${match.slice(1, 3)} ${match.slice(3)}`)
+      .replace(/\bnofingida\b/gi, match => `${match.slice(0, 2)} ${match.slice(2)}`)
+      .replace(/\bgozoy\b/gi, match => `${match.slice(0, 4)} ${match.slice(4)}`);
+    const tokens = [...source.matchAll(/[\p{L}\p{N}]+/gu)];
+    if (!tokens.length) return '';
+    const focusWords = words.map(word => word.replace(/[^\p{L}\p{N}]/gu, '')).filter(Boolean);
+    const focusWord = focusWords.slice().sort((a, b) => b.length - a.length)
+      .find(word => tokens.some(token => norm(token[0]).includes(word)));
+    if (!focusWord) return '';
+    const matchIndex = tokens.findIndex(token => norm(token[0]).includes(focusWord));
+    const first = Math.max(0, matchIndex - 2);
+    const last = Math.min(tokens.length - 1, matchIndex + 3);
+    const start = tokens[first].index;
+    const end = tokens[last].index + tokens[last][0].length;
+    const excerpt = source.slice(start, end).replace(/\s+/g, ' ').trim();
+    return `«${first > 0 ? '… ' : ''}${excerpt}${last < tokens.length - 1 ? ' …' : ''}»`;
+  }
   const topicInput = $('revista-tema');
   const topicList = $('revista-temas-list');
   const topicPicker = topicInput.closest('.revista-topic-picker');
@@ -15,10 +36,14 @@
   const year = $('revista-anio');
   const list = $('revista-lista');
   const searchForm = $('revista-search-form');
-  const searchIndex = new Map(items.map(item => [item.numero, {
-    metadata: norm([item.numero, item.anio, item.periodo, ...(item.temas || []), ...(item.articulos || [])].join(' ')),
-    pages: (ocr[item.numero] || []).map(norm)
-  }]));
+  const searchIndex = new Map(items.map(item => {
+    const rawPages = ocr[item.numero] || [];
+    return [item.numero, {
+      metadata: norm([item.numero, item.anio, item.periodo, ...(item.temas || []), ...(item.articulos || [])].join(' ')),
+      rawPages,
+      pages: rawPages.map(norm)
+    }];
+  }));
 
   [...new Set(items.map(item => item.anio))].sort((a, b) => b - a).forEach(value => {
     const option = document.createElement('option');
@@ -153,18 +178,50 @@
     const selectedYear = year.value;
     const matches = items.map(item => {
       const index = searchIndex.get(item.numero);
-      const pages = words.length ? index.pages.flatMap((text, position) => words.every(word => text.includes(word)) ? [position + 1] : []) : [];
+      const pages = words.length ? index.pages.flatMap((text, position) => words.every(word => text.includes(word)) ? [{
+        number: position + 1,
+        excerpt: pageExcerpt(index.rawPages[position], words)
+      }] : []) : [];
       const metadataMatch = words.length === 0 || words.every(word => index.metadata.includes(word));
       return { item, pages, metadataMatch };
     }).filter(({item, pages, metadataMatch}) =>
       (!number || String(item.numero).includes(number)) &&
       (!selectedYear || String(item.anio) === selectedYear) &&
       (!topic || norm((item.temas || []).join(' ')).includes(topic)) &&
-      (metadataMatch || pages.length > 0)
+      (words.length ? pages.length > 0 : metadataMatch)
     );
     list.replaceChildren();
 
     for (const {item, pages} of matches) {
+      if (words.length) {
+        const card = document.createElement('article');
+        card.className = 'resource-card revista-card revista-search-card';
+        const title = document.createElement('strong');
+        title.className = 'revista-search-issue';
+        title.textContent = 'Edición Nº ' + item.numero;
+        const pageList = document.createElement('div');
+        pageList.className = 'revista-search-page-list';
+
+        pages.forEach(page => {
+          const row = document.createElement('div');
+          row.className = 'revista-search-page';
+          const pageLink = document.createElement('a');
+          pageLink.className = 'revista-search-page-link';
+          attachReaderLink(pageLink, item.numero, page.number);
+          pageLink.textContent = 'Página ' + page.number;
+          pageLink.setAttribute('aria-label', 'Abrir página ' + page.number + ' de la edición Nº ' + item.numero);
+          const quote = document.createElement('p');
+          quote.className = 'revista-search-excerpt';
+          quote.textContent = page.excerpt;
+          row.append(pageLink, quote);
+          pageList.append(row);
+        });
+
+        card.append(title, pageList);
+        list.append(card);
+        continue;
+      }
+
       const card = document.createElement('article');
       card.className = 'resource-card revista-card';
 
@@ -191,26 +248,12 @@
       link.setAttribute('aria-label', 'Leer edición Nº ' + item.numero + ' dentro de la app');
 
       copy.append(title, period, topics);
-      if (pages.length) {
-        const pageMatches = document.createElement('div');
-        pageMatches.className = 'revista-pages';
-        const label = document.createElement('span');
-        label.textContent = 'Coincidencias en páginas:';
-        pageMatches.append(label);
-        pages.forEach(page => {
-          const pageLink = document.createElement('a');
-          attachReaderLink(pageLink, item.numero, page);
-          pageLink.textContent = String(page);
-          pageLink.setAttribute('aria-label', 'Abrir página ' + page + ' de la edición Nº ' + item.numero);
-          pageMatches.append(pageLink);
-        });
-        copy.append(pageMatches);
-      }
       copy.append(link);
       card.append(cover, copy);
       list.append(card);
     }
 
+    $('revista-vacio').textContent = words.length ? 'No se encontraron páginas con esas palabras.' : 'No hay ediciones para esos filtros.';
     $('revista-vacio').hidden = matches.length > 0 || items.length === 0;
     if (!items.length) {
       const note = document.createElement('p');
@@ -224,7 +267,7 @@
   let highlightTimer = 0;
   function showFirstPageMatch() {
     if (!$('revista-palabras').value.trim()) return;
-    const target = list.querySelector('.revista-pages a') || list.querySelector('.revista-card');
+    const target = list.querySelector('.revista-search-page-link') || list.querySelector('.revista-card');
     if (!target) return;
     clearTimeout(highlightTimer);
     highlightedMatch?.classList.remove('revista-search-highlight');
