@@ -39,7 +39,7 @@
   const meditation = (window.VOZ_MEDITACIONES || []).filter(item => item.audio)
     .sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0];
   const sources = {
-    radio: { title: 'Radio de la Asamblea Cristiana', url: 'https://servidor18-2.brlogic.com:7106/live' },
+    radio: { title: 'Radio en vivo', url: 'https://servidor18-2.brlogic.com:7106/live' },
     meditation: { title: meditation?.title || 'Meditación', url: meditation?.audio || '' }
   };
   const labels = {
