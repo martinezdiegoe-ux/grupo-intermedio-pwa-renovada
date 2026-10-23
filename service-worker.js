@@ -1,4 +1,4 @@
-const CACHE_NAME='conectados-a-cristo-v58';
+const CACHE_NAME='conectados-a-cristo-v59';
 const STATIC_ASSETS=[
   './','index.html','home.html','app.html','manifest.json','css/app.css?v=31','css/hero-bible.css','css/radio-compact.css?v=1','css/site-menu.css?v=41','css/theme.css','css/audio-shell.css?v=37','js/app-shell.js?v=43','js/audio-shell.js?v=40','js/i18n-data.js','reproductor.html',
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas.js?v=31','js/alabanza.js','js/playlist.js?v=31',
