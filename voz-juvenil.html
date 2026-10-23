@@ -17,6 +17,7 @@
     .revista-copy small{font-size:12px;margin-bottom:16px}
     .revista-search{display:block;font-size:13px;font-weight:700;margin:16px 0 20px}
     .revista-search .field{margin-top:7px}
+    @media(max-width:640px){.revista-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.revista-filters label:nth-child(3){grid-column:1/-1}}
     .revista-pages{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px;font-size:12px}
     .revista-pages span:first-child{width:100%;color:var(--muted)}
     .revista-pages a{display:inline-grid;min-width:26px;height:26px;place-items:center;padding:0 5px;border:1px solid var(--line);border-radius:7px;color:var(--violet);font-weight:800}
@@ -42,7 +43,7 @@
       <label class="revista-search">Buscar por palabras en los artículos
         <input id="revista-palabras" class="field" type="search" placeholder="Escribí una palabra o frase">
       </label>
-      <div class="filter-grid">
+      <div class="filter-grid revista-filters">
         <label>Número<input id="revista-numero" class="field" type="search" inputmode="numeric" placeholder="Por ejemplo 50"></label>
         <label>Año<select id="revista-anio" class="field"><option value="">Todos los años</option></select></label>
         <label>Tema<input id="revista-tema" class="field" type="search" placeholder="Buscar tema"></label>
