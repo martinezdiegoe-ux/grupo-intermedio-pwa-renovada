@@ -14,6 +14,14 @@
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
   const issue = (window.VOZ_REVISTAS || []).find(item => String(item.numero) === params.get('numero'));
+  const backLink = document.querySelector('.reader-back');
+  if (backLink && params.has('volver')) {
+    try {
+      const returnUrl = new URL(params.get('volver'), location.href);
+      const catalogUrl = new URL('voz-juvenil.html', location.href);
+      if (returnUrl.origin === location.origin && returnUrl.pathname === catalogUrl.pathname) backLink.href = returnUrl.href;
+    } catch (_) { /* Keep the default catalog link if the return URL is invalid. */ }
+  }
   const stage = $('reader-stage');
   const image = $('reader-image');
   const pageInput = $('reader-page');

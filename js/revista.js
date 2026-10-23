@@ -26,6 +26,51 @@
     year.append(option);
   });
 
+  function currentCatalogUrl() {
+    const params = new URLSearchParams();
+    [['palabras', $('revista-palabras').value], ['numero', $('revista-numero').value],
+      ['anio', year.value], ['tema', topicInput.value]].forEach(([key, value]) => {
+      if (value) params.set(key, value);
+    });
+    if (window.scrollY > 0) params.set('scroll', String(Math.round(window.scrollY)));
+    const query = params.toString();
+    return 'voz-juvenil.html' + (query ? '?' + query : '');
+  }
+
+  function syncCatalogUrl() {
+    const url = new URL(currentCatalogUrl(), location.href);
+    history.replaceState(null, '', url.pathname + url.search + location.hash);
+  }
+
+  function restoreFiltersFromUrl() {
+    const params = new URLSearchParams(location.search);
+    $('revista-palabras').value = params.get('palabras') || '';
+    $('revista-numero').value = params.get('numero') || '';
+    topicInput.value = params.get('tema') || '';
+    const selectedYear = params.get('anio');
+    if ([...year.options].some(option => option.value === selectedYear)) year.value = selectedYear;
+    const hasSearchState = ['palabras', 'numero', 'anio', 'tema', 'scroll'].some(key => params.has(key));
+    const scroll = Number(params.get('scroll'));
+    return hasSearchState && Number.isFinite(scroll) ? scroll : null;
+  }
+
+  function readerHref(numero, pagina) {
+    const params = new URLSearchParams({ numero: String(numero), volver: currentCatalogUrl() });
+    if (pagina) params.set('pagina', String(pagina));
+    return 'revista-leer.html?' + params.toString();
+  }
+
+  function attachReaderLink(link, numero, pagina) {
+    const update = () => {
+      syncCatalogUrl();
+      link.href = readerHref(numero, pagina);
+    };
+    link.href = readerHref(numero, pagina);
+    link.addEventListener('click', update);
+  }
+
+  window.addEventListener('pagehide', syncCatalogUrl);
+
   function setTopicDropdown(open) {
     topicList.hidden = !open;
     topicInput.setAttribute('aria-expanded', String(open));
@@ -140,7 +185,7 @@
       topics.textContent = (item.temas || []).join(' · ');
       const link = document.createElement('a');
       link.className = 'action-link primary';
-      link.href = 'revista-leer.html?numero=' + item.numero;
+      attachReaderLink(link, item.numero);
       link.textContent = 'Leer revista →';
       link.setAttribute('aria-label', 'Leer edición Nº ' + item.numero + ' dentro de la app');
 
@@ -153,7 +198,7 @@
         pageMatches.append(label);
         pages.forEach(page => {
           const pageLink = document.createElement('a');
-          pageLink.href = 'revista-leer.html?numero=' + item.numero + '&pagina=' + page;
+          attachReaderLink(pageLink, item.numero, page);
           pageLink.textContent = String(page);
           pageLink.setAttribute('aria-label', 'Abrir página ' + page + ' de la edición Nº ' + item.numero);
           pageMatches.append(pageLink);
@@ -174,6 +219,15 @@
     }
   }
 
-  ['revista-palabras', 'revista-numero', 'revista-tema', 'revista-anio'].forEach(id => $(id).addEventListener('input', render));
+  ['revista-palabras', 'revista-numero', 'revista-tema'].forEach(id => $(id).addEventListener('input', () => {
+    render();
+    syncCatalogUrl();
+  }));
+  year.addEventListener('change', () => {
+    render();
+    syncCatalogUrl();
+  });
+  const returnScroll = restoreFiltersFromUrl();
   render();
+  if (returnScroll !== null) requestAnimationFrame(() => window.scrollTo(0, returnScroll));
 })();
