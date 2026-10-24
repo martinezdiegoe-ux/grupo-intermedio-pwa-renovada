@@ -352,8 +352,8 @@
         title: title.textContent,
         artist: 'Conectados a Cristo · Asamblea Cristiana',
         artwork: [
-          { src: new URL('assets/icon-192.png', base).href, sizes: '192x192', type: 'image/png' },
-          { src: new URL('assets/icon-512.png', base).href, sizes: '512x512', type: 'image/png' }
+          { src: new URL('assets/icon-192-v2.png', base).href, sizes: '192x192', type: 'image/png' },
+          { src: new URL('assets/icon-512-v2.png', base).href, sizes: '512x512', type: 'image/png' }
         ]
       });
     }

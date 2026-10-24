@@ -468,7 +468,7 @@
   if (!header.classList.contains('topbar')) {
     document.body.classList.add('legacy-page');
     header.className = 'topbar app-header';
-    header.innerHTML = '<a class="brand" href="index.html"><img class="brand-mark" src="assets/icon-192.png" alt=""><span><strong>CONECTADOS A CRISTO</strong><small>ASAMBLEA CRISTIANA</small></span></a>';
+    header.innerHTML = '<a class="brand" href="index.html"><img class="brand-mark" src="assets/icon-192-v2.png" alt=""><span><strong>CONECTADOS A CRISTO</strong><small>ASAMBLEA CRISTIANA</small></span></a>';
     document.body.prepend(header);
     const nav = document.createElement('nav');
     nav.className = 'bottom-nav';
