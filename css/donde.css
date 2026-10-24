@@ -1,26 +1,11 @@
 .directory-hero {
   background: radial-gradient(circle at 84% 18%, #444a90, #172448 58%, #101b38);
 }
-.directory-feature {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-}
-.directory-feature .eyebrow,
 .directory-heading .eyebrow {
   margin-bottom: 8px;
 }
-.directory-feature h2,
 .directory-heading h2 {
   margin: 0;
-}
-.directory-feature p:last-child {
-  margin: 9px 0 0;
-  color: var(--muted);
-}
-.directory-feature .action-link {
-  flex: none;
 }
 .directory-panel {
   padding: 30px;
@@ -114,7 +99,6 @@
   outline-offset: 3px;
 }
 @media (max-width: 700px) {
-  .directory-feature,
   .directory-heading {
     align-items: flex-start;
     flex-direction: column;
