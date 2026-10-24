@@ -14,6 +14,12 @@
   const startHint = document.getElementById('audio-start-hint');
   const error = document.getElementById('audio-error');
   const alternative = document.getElementById('audio-alternative');
+  const playlistControls = document.getElementById('playlist-controls');
+  const playlistPrevious = document.getElementById('playlist-previous');
+  const playlistNext = document.getElementById('playlist-next');
+  const playlistPosition = document.getElementById('playlist-position');
+  const songs = window.VOZ_ALABANZAS || [];
+  const playlistKey = 'conectados-playlist-v1';
   const speech = window.speechSynthesis;
   const bibleBar = document.getElementById('bible-audio-bar');
   const bibleTitle = document.getElementById('bible-audio-title');
@@ -43,10 +49,10 @@
     meditation: { title: meditation?.title || 'Meditación', url: meditation?.audio || '' }
   };
   const labels = {
-    es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
-    pt: { panel: 'Áudio do Conectados a Cristo', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', alternative: 'Reprodutor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
-    it: { panel: 'Audio di Conectados a Cristo', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
-    uk: { panel: 'Аудіо Conectados a Cristo', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
+    es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', playlist: 'Mi playlist', worship: 'ALABANZA', previous: 'Alabanza anterior', next: 'Alabanza siguiente', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
+    pt: { panel: 'Áudio do Conectados a Cristo', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', playlist: 'Minha playlist', worship: 'LOUVOR', previous: 'Louvor anterior', next: 'Próximo louvor', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', alternative: 'Reprodutor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
+    it: { panel: 'Audio di Conectados a Cristo', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', playlist: 'La mia playlist', worship: 'CANTO', previous: 'Canto precedente', next: 'Canto successivo', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
+    uk: { panel: 'Аудіо Conectados a Cristo', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', playlist: 'Мій плейлист', worship: 'ХВАЛА', previous: 'Попередня пісня', next: 'Наступна пісня', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
   };
   const installCopy = {
     es: {
@@ -179,6 +185,18 @@
   let language = 'es';
   let currentSource = 'radio';
   let started = false;
+  let queue = [];
+  let trackIndex = -1;
+
+  function selectedSongs() {
+    try {
+      const ids = JSON.parse(localStorage.getItem(playlistKey) || '[]');
+      if (Array.isArray(ids)) return [...new Set(ids)].filter(id => songs.some(song => song.id === id && song.audio));
+    } catch (_) {}
+    return [];
+  }
+
+  function activeTrack() { return songs.find(song => song.id === queue[trackIndex]); }
 
   function pageUrl(raw) {
     try {
@@ -280,7 +298,19 @@
 
   function localizedTitle() {
     if (currentSource === 'radio') return window.VOZ_TRANSLATIONS?.[language]?.[sources.radio.title] || sources.radio.title;
+    if (currentSource === 'playlist') return activeTrack()?.titulo || labels[language].playlist;
     return window.VOZ_TRANSLATIONS?.[language]?.[sources.meditation.title] || sources.meditation.title;
+  }
+
+  function renderPlaylistControls() {
+    const isPlaylist = currentSource === 'playlist';
+    playlistControls.hidden = !isPlaylist;
+    if (!isPlaylist) return;
+    playlistPosition.textContent = `${Math.max(0, trackIndex + 1)} / ${queue.length}`;
+    playlistPrevious.disabled = trackIndex < 1;
+    playlistNext.disabled = trackIndex >= queue.length - 1;
+    playlistPrevious.setAttribute('aria-label', labels[language].previous);
+    playlistNext.setAttribute('aria-label', labels[language].next);
   }
 
   function renderLanguage() {
@@ -300,16 +330,18 @@
     document.querySelector('.audio-source-tabs').setAttribute('aria-label', copy.choose);
     sourceButtons[0].textContent = copy.radio;
     sourceButtons[1].textContent = copy.meditation;
+    sourceButtons[2].textContent = copy.playlist;
     document.getElementById('audio-fab-label').textContent = copy.fab;
     fab.setAttribute('aria-label', copy.open);
     toggle.setAttribute('aria-label', audio.paused ? copy.resume : copy.pause);
-    kind.textContent = currentSource === 'radio' ? copy.live : copy.reflection;
+    kind.textContent = currentSource === 'radio' ? copy.live : currentSource === 'playlist' ? copy.worship : copy.reflection;
     title.textContent = localizedTitle();
     title.hidden = currentSource === 'radio';
     startHint.textContent = copy.start;
     error.textContent = copy.error;
     alternative.textContent = copy.alternative;
     liveNote.textContent = copy.liveNote;
+    renderPlaylistControls();
     renderInstallCopy();
   }
 
@@ -354,16 +386,72 @@
   function updateSeekActions() {
     if (!('mediaSession' in navigator)) return;
     try {
-      navigator.mediaSession.setActionHandler('seekbackward', currentSource === 'meditation' ? details => {
+      navigator.mediaSession.setActionHandler('seekbackward', currentSource !== 'radio' ? details => {
         audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
       } : null);
-      navigator.mediaSession.setActionHandler('seekforward', currentSource === 'meditation' ? details => {
+      navigator.mediaSession.setActionHandler('seekforward', currentSource !== 'radio' ? details => {
         audio.currentTime = Math.min(Number.isFinite(audio.duration) ? audio.duration : Infinity, audio.currentTime + (details.seekOffset || 10));
       } : null);
     } catch (_) { /* Some browsers do not expose these media actions. */ }
+    try {
+      navigator.mediaSession.setActionHandler('previoustrack', currentSource === 'playlist' ? previousTrack : null);
+      navigator.mediaSession.setActionHandler('nexttrack', currentSource === 'playlist' ? nextTrack : null);
+    } catch (_) { /* Some browsers do not expose track actions. */ }
+  }
+
+  function loadTrack(index, playNow = false) {
+    const track = songs.find(song => song.id === queue[index]);
+    if (!track?.audio) return;
+    audio.pause();
+    currentSource = 'playlist';
+    trackIndex = index;
+    audio.controls = true;
+    audio.hidden = false;
+    liveNote.hidden = true;
+    audio.src = new URL(track.audio, base).href;
+    audio.load();
+    sourceButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.audioSource === 'playlist')));
+    try { localStorage.setItem('voz-juvenil-audio-source', 'playlist'); } catch (_) {}
+    error.hidden = true;
+    startHint.hidden = true;
+    alternative.hidden = true;
+    renderLanguage();
+    renderPlayback();
+    updateSeekActions();
+    if (playNow) play();
+  }
+
+  function startPlaylist(id, playNow = true) {
+    const selected = selectedSongs();
+    if (id && !songs.some(song => song.id === id && song.audio)) return;
+    queue = id && !selected.includes(id) ? [id] : selected;
+    if (!queue.length) return;
+    loadTrack(id ? queue.indexOf(id) : 0, playNow);
+  }
+
+  function previousTrack() {
+    if (currentSource !== 'playlist' || trackIndex < 1) return;
+    loadTrack(trackIndex - 1, true);
+  }
+
+  function nextTrack() {
+    if (currentSource !== 'playlist' || trackIndex >= queue.length - 1) return;
+    loadTrack(trackIndex + 1, true);
+  }
+
+  function updateQueue() {
+    if (currentSource !== 'playlist') return;
+    const currentId = activeTrack()?.id;
+    const selected = selectedSongs();
+    // Finish the current track even if it was just removed from the saved list.
+    queue = currentId && !selected.includes(currentId) ? [currentId, ...selected] : selected;
+    trackIndex = queue.indexOf(currentId);
+    renderPlaylistControls();
+    updateSeekActions();
   }
 
   function selectSource(next, playNow = false) {
+    if (next === 'playlist') { startPlaylist(null, playNow); return; }
     if (!sources[next]?.url) return;
     if (next !== currentSource || !audio.src) {
       const wasPlaying = !audio.paused && !audio.ended;
@@ -403,14 +491,20 @@
   toggle.addEventListener('click', () => audio.paused ? play() : audio.pause());
   for (const button of sourceButtons) {
     if (button.dataset.audioSource === 'meditation' && !sources.meditation.url) button.disabled = true;
+    if (button.dataset.audioSource === 'playlist' && !selectedSongs().length) button.disabled = true;
     button.addEventListener('click', () => selectSource(button.dataset.audioSource, true));
   }
+  playlistPrevious.addEventListener('click', previousTrack);
+  playlistNext.addEventListener('click', nextTrack);
   audio.addEventListener('play', () => {
     stopBibleReading('Lectura detenida al iniciar otro audio.');
     started = true; error.hidden = true; startHint.hidden = true; renderPlayback();
   });
   audio.addEventListener('pause', renderPlayback);
-  audio.addEventListener('ended', renderPlayback);
+  audio.addEventListener('ended', () => {
+    if (currentSource === 'playlist' && trackIndex < queue.length - 1) nextTrack();
+    else renderPlayback();
+  });
   audio.addEventListener('error', showError);
   window.addEventListener('message', event => {
     if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
@@ -418,11 +512,24 @@
     if (event.data?.type === 'voz-bible-reading-stop') { stopBibleReading('Lectura detenida.'); return; }
     if (event.data?.type === 'voz-bible-reading-toggle') { toggleBibleReading(); return; }
     if (event.data?.type === 'voz-bible-reading-state-request') { sendBibleState(); return; }
+    if (event.data?.type === 'voz-playlist-updated') {
+      sourceButtons[2].disabled = !selectedSongs().length;
+      updateQueue();
+      return;
+    }
+    if (event.data?.type === 'voz-audio-playlist') { openPanel(); startPlaylist(); return; }
+    if (event.data?.type === 'voz-audio-track' && typeof event.data.id === 'string') {
+      openPanel(); startPlaylist(event.data.id); return;
+    }
     if (event.data?.type !== 'voz-audio-select') return;
     openPanel();
     selectSource(event.data.source, true);
   });
   window.addEventListener('storage', event => {
+    if (event.key === playlistKey) {
+      sourceButtons[2].disabled = !selectedSongs().length;
+      updateQueue();
+    }
     if (event.key === 'voz-juvenil-idioma' || event.key === 'voz-juvenil-modo') {
       renderLanguage();
       updateMediaSession();
@@ -450,7 +557,7 @@
 
   let initialSource = 'radio';
   try { initialSource = localStorage.getItem('voz-juvenil-audio-source') || 'radio'; } catch (_) {}
-  selectSource(sources[initialSource]?.url ? initialSource : 'radio');
+  selectSource(initialSource === 'playlist' && selectedSongs().length ? 'playlist' : sources[initialSource]?.url ? initialSource : 'radio');
   renderLanguage();
   if ('serviceWorker' in navigator) {
     const serviceWorkers = navigator.serviceWorker;
@@ -495,3 +602,4 @@
     });
   }
 })();
+

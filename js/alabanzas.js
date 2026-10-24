@@ -1,9 +1,4 @@
-const alabanzas=[
-  {id:'alabanza1',titulo:'Te lo debo a Ti',pdf:'pdf/Te-lo-debo-a-Ti.pdf',video:'https://youtu.be/58pJyGiIjeM'},
-  {id:'alabanza2',titulo:'Necesito de Ti',pdf:'pdf/Necesito-de-Ti.pdf',video:'https://youtu.be/t2x339dtz9w'},
-  {id:'alabanza3',titulo:'Un Milagro',pdf:'pdf/Un-Milagro.pdf',video:'https://youtu.be/PndoQfL6eps'}
-];
-window.VOZ_ALABANZAS=alabanzas;
+const alabanzas=window.VOZ_ALABANZAS||[];
 const lista=document.getElementById('lista-alabanzas');
 alabanzas.forEach((item,i)=>{
   const card=document.createElement('article');card.className='resource-card';
@@ -14,5 +9,9 @@ alabanzas.forEach((item,i)=>{
     const a=document.createElement('a');a.className='action-link'+(j===0?' primary':'');a.href=url;a.textContent=label;
     if(j>0){a.target='_blank';a.rel='noopener noreferrer'}actions.append(a)
   });
+  const play=document.createElement('button');play.type='button';play.className='action-link';play.textContent='▶ Escuchar audio';play.addEventListener('click',()=>{
+    window.parent.postMessage({type:'voz-audio-track',id:item.id},location.origin);
+  });actions.append(play);
   const pick=document.createElement('button');pick.type='button';pick.className='pill-button playlist-toggle';pick.dataset.id=item.id;pick.textContent='Agregar a mi playlist';card.append(over,title,actions,pick);lista.append(card);
 });
+

@@ -56,5 +56,9 @@ document.getElementById("titulo-alabanza").textContent = data.titulo;
 document.getElementById("texto-letra").innerText = data.letra;
 document.getElementById("btn-pdf").href = data.pdf;
 document.getElementById("btn-youtube").href = data.youtube;
+document.getElementById('btn-audio').addEventListener('click', () => {
+  window.parent.postMessage({ type: 'voz-audio-track', id }, location.origin);
+});
 
 });
+
