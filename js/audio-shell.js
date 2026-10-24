@@ -2,6 +2,10 @@
   'use strict';
 
   const base = new URL('./', location.href);
+  const shellParams = new URLSearchParams(location.search);
+  const embeddedPage = shellParams.get('page') || '';
+  let radioMseRequested = shellParams.get('radioPlayer') === 'mse';
+  try { radioMseRequested ||= new URL(embeddedPage, base).searchParams.get('radioPlayer') === 'mse'; } catch (_) {}
   const frame = document.getElementById('site-frame');
   const panel = document.getElementById('audio-panel');
   const fab = document.getElementById('audio-fab');
@@ -49,7 +53,7 @@
     meditation: { title: meditation?.title || 'Meditación', url: meditation?.audio || '' }
   };
   const labels = {
-    es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', playlist: 'Mi playlist', worship: 'ALABANZA', previous: 'Alabanza anterior', next: 'Alabanza siguiente', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', reconnecting: 'Conexión inestable. Reconectando a la radio…', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
+    es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', playlist: 'Mi playlist', worship: 'ALABANZA', previous: 'Alabanza anterior', next: 'Alabanza siguiente', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', reconnecting: 'Conexión inestable. Reconectando a la radio…', mseConnecting: 'Probando el reproductor experimental…', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
     pt: { panel: 'Áudio do Conectados a Cristo', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', playlist: 'Minha playlist', worship: 'LOUVOR', previous: 'Louvor anterior', next: 'Próximo louvor', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', reconnecting: 'Conexão instável. Reconectando ao rádio…', alternative: 'Reproductor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
     it: { panel: 'Audio di Conectados a Cristo', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', playlist: 'La mia playlist', worship: 'CANTO', previous: 'Canto precedente', next: 'Prossimo canto', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', reconnecting: 'Connessione instabile. Riconnessione alla radio…', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
     uk: { panel: 'Аудіо Conectados a Cristo', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', playlist: 'Мій плейлист', worship: 'ХВАЛА', previous: 'Попередня пісня', next: 'Наступна пісня', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', reconnecting: 'З’єднання нестабільне. Повторне підключення до радіо…', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
@@ -190,8 +194,32 @@
   let radioRetryCount = 0;
   let radioRetryTimer = 0;
   let radioStallTimer = 0;
+  let radioMseEnabled = radioMseRequested && typeof window.RadioMSEPlayer === 'function';
+  let radioMseActive = false;
+  let radioMseFailureEvent = false;
+  let radioMsePlayer = null;
   let queue = [];
   let trackIndex = -1;
+
+  if (radioMseEnabled) {
+    radioMsePlayer = new window.RadioMSEPlayer(audio, state => {
+      if (state.type === 'fatal') {
+        fallbackFromMse(state.error);
+        return;
+      }
+      if (currentSource !== 'radio' || !radioPlaybackRequested) return;
+      if (state.type === 'connecting') {
+        error.textContent = labels[language].mseConnecting || labels[language].reconnecting;
+        error.hidden = false;
+      } else if (state.type === 'reconnecting') {
+        radioRetrying = true;
+        error.textContent = labels[language].reconnecting;
+        error.hidden = false;
+        alternative.hidden = true;
+        renderPlayback();
+      }
+    });
+  }
 
   function selectedSongs() {
     try {
@@ -391,10 +419,35 @@
     clearTimeout(radioStallTimer);
     radioRetryTimer = 0;
     radioStallTimer = 0;
+    radioMseActive = false;
+    radioMsePlayer?.stop(false);
+  }
+
+  function fallbackFromMse() {
+    if (!radioMseActive) return;
+    radioMseActive = false;
+    radioMseEnabled = false;
+    radioMseFailureEvent = true;
+    radioMsePlayer?.stop(false);
+    window.setTimeout(() => { radioMseFailureEvent = false; }, 0);
+    if (currentSource !== 'radio' || !radioPlaybackRequested) return;
+
+    radioRetrying = true;
+    error.textContent = labels[language].reconnecting;
+    error.hidden = false;
+    audio.src = sources.radio.url;
+    audio.load();
+    audio.play().catch(reason => {
+      if (reason?.name === 'NotAllowedError') {
+        stopRadioRecovery();
+        startHint.hidden = false;
+        showError();
+      } else if (reason?.name !== 'AbortError') retryRadio();
+    });
   }
 
   function retryRadio() {
-    if (currentSource !== 'radio' || !radioPlaybackRequested || radioRetryTimer) return;
+    if (radioMseActive || currentSource !== 'radio' || !radioPlaybackRequested || radioRetryTimer) return;
     clearTimeout(radioStallTimer);
     radioStallTimer = 0;
     if (audio.readyState >= 3 && !audio.paused && !audio.error) {
@@ -430,7 +483,7 @@
   }
 
   function watchRadioBuffer() {
-    if (currentSource !== 'radio' || !radioPlaybackRequested || radioRetryTimer || radioStallTimer) return;
+    if (radioMseActive || currentSource !== 'radio' || !radioPlaybackRequested || radioRetryTimer || radioStallTimer) return;
     radioStallTimer = window.setTimeout(() => {
       radioStallTimer = 0;
       if (currentSource === 'radio' && radioPlaybackRequested && audio.readyState < 3) retryRadio();
@@ -451,6 +504,12 @@
       radioPlaybackRequested = true;
       error.hidden = true;
       alternative.hidden = true;
+      if (radioMseEnabled && radioMsePlayer) {
+        radioMseActive = true;
+        radioRetrying = true;
+        radioMsePlayer.start(sources.radio.url).catch(fallbackFromMse);
+        return;
+      }
     }
     audio.play().catch(reason => {
       if (reason?.name === 'NotAllowedError') {
@@ -604,17 +663,22 @@
   audio.addEventListener('pause', renderPlayback);
   audio.addEventListener('ended', () => {
     if (currentSource === 'playlist' && trackIndex < queue.length - 1) nextTrack();
-    else if (currentSource === 'radio' && radioPlaybackRequested) retryRadio();
+    else if (!radioMseActive && currentSource === 'radio' && radioPlaybackRequested) retryRadio();
     else renderPlayback();
   });
   audio.addEventListener('waiting', watchRadioBuffer);
   audio.addEventListener('stalled', watchRadioBuffer);
   audio.addEventListener('error', () => {
+    if (radioMseActive || radioMseFailureEvent) return;
     if (currentSource === 'radio' && radioPlaybackRequested) retryRadio();
     else showError();
   });
   window.addEventListener('online', () => {
     if (currentSource === 'radio' && radioPlaybackRequested) {
+      if (radioMseActive) {
+        radioMsePlayer?.forceReconnect();
+        return;
+      }
       clearTimeout(radioRetryTimer);
       radioRetryTimer = 0;
       radioRetryCount = 0;
