@@ -7,7 +7,7 @@
   <meta name="description" content="Una palabra para hoy, alabanzas que animan y contenidos para seguir creciendo juntos.">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="css/audio-shell.css?v=37">
+  <link rel="stylesheet" href="css/audio-shell.css?v=44">
   <title>Conectados a Cristo · Asamblea Cristiana</title>
 </head>
 <body>
@@ -39,10 +39,16 @@
       <div class="audio-source-tabs" role="group" aria-label="Elegir audio">
         <button type="button" data-audio-source="radio">Radio en vivo</button>
         <button type="button" data-audio-source="meditation">Audio de meditación</button>
+        <button type="button" data-audio-source="playlist">Mi playlist</button>
       </div>
       <p id="audio-kind" class="audio-kind">EN VIVO</p>
       <h2 id="audio-title" hidden>Radio en vivo</h2>
       <audio id="persistent-audio" preload="none" hidden></audio>
+      <div id="playlist-controls" class="playlist-controls" hidden>
+        <button id="playlist-previous" type="button" aria-label="Alabanza anterior">⏮</button>
+        <span id="playlist-position" role="status"></span>
+        <button id="playlist-next" type="button" aria-label="Alabanza siguiente">⏭</button>
+      </div>
       <p id="audio-live-note" class="audio-message" hidden>Transmisión en vivo. No se puede adelantar ni retroceder.</p>
       <p id="audio-start-hint" class="audio-message" hidden>Tocá reproducir para comenzar.</p>
       <p id="audio-error" class="audio-message audio-error" role="alert" hidden>No se pudo reproducir el audio. Intentá nuevamente.</p>
@@ -55,6 +61,8 @@
   </div>
   <script src="js/meditaciones-data.js?v=31"></script>
   <script src="js/i18n-data.js"></script>
-  <script src="js/audio-shell.js?v=40"></script>
+  <script src="js/alabanzas-data.js?v=1"></script>
+  <script src="js/audio-shell.js?v=44"></script>
 </body>
 </html>
+
