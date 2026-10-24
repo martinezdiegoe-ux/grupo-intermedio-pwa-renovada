@@ -49,10 +49,10 @@
     meditation: { title: meditation?.title || 'Meditación', url: meditation?.audio || '' }
   };
   const labels = {
-    es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', playlist: 'Mi playlist', worship: 'ALABANZA', previous: 'Alabanza anterior', next: 'Alabanza siguiente', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
-    pt: { panel: 'Áudio do Conectados a Cristo', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', playlist: 'Minha playlist', worship: 'LOUVOR', previous: 'Louvor anterior', next: 'Próximo louvor', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', alternative: 'Reprodutor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
-    it: { panel: 'Audio di Conectados a Cristo', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', playlist: 'La mia playlist', worship: 'CANTO', previous: 'Canto precedente', next: 'Canto successivo', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
-    uk: { panel: 'Аудіо Conectados a Cristo', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', playlist: 'Мій плейлист', worship: 'ХВАЛА', previous: 'Попередня пісня', next: 'Наступна пісня', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
+    es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', playlist: 'Mi playlist', worship: 'ALABANZA', previous: 'Alabanza anterior', next: 'Alabanza siguiente', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', reconnecting: 'Conexión inestable. Reconectando a la radio…', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },
+    pt: { panel: 'Áudio do Conectados a Cristo', close: 'Fechar reprodutor', radio: 'Rádio ao vivo', meditation: 'Áudio de meditação', playlist: 'Minha playlist', worship: 'LOUVOR', previous: 'Louvor anterior', next: 'Próximo louvor', live: 'AO VIVO', reflection: 'MEDITAÇÃO', fab: 'Áudio', open: 'Abrir reprodutor de áudio', pause: 'Pausar áudio', resume: 'Retomar áudio', start: 'Toque em reproduzir para começar.', error: 'Não foi possível reproduzir o áudio. Tente novamente.', reconnecting: 'Conexão instável. Reconectando ao rádio…', alternative: 'Reproductor alternativo ↗', choose: 'Escolher áudio', liveNote: 'Transmissão ao vivo. Não é possível avançar nem retroceder.' },
+    it: { panel: 'Audio di Conectados a Cristo', close: 'Chiudi lettore', radio: 'Radio in diretta', meditation: 'Audio della meditazione', playlist: 'La mia playlist', worship: 'CANTO', previous: 'Canto precedente', next: 'Prossimo canto', live: 'IN DIRETTA', reflection: 'MEDITAZIONE', fab: 'Audio', open: 'Apri il lettore audio', pause: 'Metti in pausa l’audio', resume: 'Riprendi l’audio', start: 'Tocca riproduci per iniziare.', error: 'Impossibile riprodurre l’audio. Riprova.', reconnecting: 'Connessione instabile. Riconnessione alla radio…', alternative: 'Lettore alternativo ↗', choose: 'Scegli l’audio', liveNote: 'Trasmissione in diretta. Non è possibile andare avanti o indietro.' },
+    uk: { panel: 'Аудіо Conectados a Cristo', close: 'Закрити програвач', radio: 'Радіо наживо', meditation: 'Аудіороздуми', playlist: 'Мій плейлист', worship: 'ХВАЛА', previous: 'Попередня пісня', next: 'Наступна пісня', live: 'НАЖИВО', reflection: 'РОЗДУМИ', fab: 'Аудіо', open: 'Відкрити аудіопрогравач', pause: 'Призупинити аудіо', resume: 'Відновити аудіо', start: 'Натисніть відтворення, щоб почати.', error: 'Не вдалося відтворити аудіо. Спробуйте ще раз.', reconnecting: 'З’єднання нестабільне. Повторне підключення до радіо…', alternative: 'Інший програвач ↗', choose: 'Вибрати аудіо', liveNote: 'Прямий ефір. Перемотування вперед і назад недоступне.' }
   };
   const installCopy = {
     es: {
@@ -185,6 +185,11 @@
   let language = 'es';
   let currentSource = 'radio';
   let started = false;
+  let radioPlaybackRequested = false;
+  let radioRetrying = false;
+  let radioRetryCount = 0;
+  let radioRetryTimer = 0;
+  let radioStallTimer = 0;
   let queue = [];
   let trackIndex = -1;
 
@@ -276,6 +281,7 @@
         !Array.isArray(data.verses) || data.verses.length < 1 || data.verses.length > 500 ||
         !data.verses.every(verse => typeof verse.text === 'string' && verse.text.length < 3000 && Number.isInteger(verse.chapter) && Number.isInteger(verse.verse))) return;
     stopBibleReading();
+    stopRadioRecovery();
     audio.pause();
     speech.cancel();
     const generation = ++bibleGeneration;
@@ -338,7 +344,7 @@
     title.textContent = localizedTitle();
     title.hidden = currentSource === 'radio';
     startHint.textContent = copy.start;
-    error.textContent = copy.error;
+    error.textContent = radioRetrying ? copy.reconnecting : copy.error;
     alternative.textContent = copy.alternative;
     liveNote.textContent = copy.liveNote;
     renderPlaylistControls();
@@ -357,11 +363,11 @@
         ]
       });
     }
-    navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing';
+    navigator.mediaSession.playbackState = (currentSource === 'radio' ? radioPlaybackRequested : !audio.paused) ? 'playing' : 'paused';
   }
 
   function renderPlayback() {
-    const playing = !audio.paused && !audio.ended;
+    const playing = currentSource === 'radio' ? radioPlaybackRequested : !audio.paused && !audio.ended;
     fab.classList.toggle('is-playing', playing);
     toggle.hidden = currentSource !== 'radio' && !started;
     toggle.textContent = playing ? '⏸' : '▶';
@@ -370,16 +376,91 @@
   }
 
   function showError() {
+    radioRetrying = false;
+    error.textContent = labels[language].error;
     error.hidden = false;
     alternative.hidden = currentSource !== 'radio';
     renderPlayback();
   }
 
+  function stopRadioRecovery() {
+    radioPlaybackRequested = false;
+    radioRetrying = false;
+    radioRetryCount = 0;
+    clearTimeout(radioRetryTimer);
+    clearTimeout(radioStallTimer);
+    radioRetryTimer = 0;
+    radioStallTimer = 0;
+  }
+
+  function retryRadio() {
+    if (currentSource !== 'radio' || !radioPlaybackRequested || radioRetryTimer) return;
+    clearTimeout(radioStallTimer);
+    radioStallTimer = 0;
+    if (audio.readyState >= 3 && !audio.paused && !audio.error) {
+      radioRetrying = false;
+      error.hidden = true;
+      alternative.hidden = true;
+      return;
+    }
+
+    radioRetrying = true;
+    error.textContent = labels[language].reconnecting;
+    error.hidden = false;
+    alternative.hidden = navigator.onLine && radioRetryCount < 5;
+    renderPlayback();
+    if (!navigator.onLine) return;
+
+    const delay = Math.min(1000 * (2 ** Math.min(radioRetryCount, 5)), 30000);
+    radioRetryCount += 1;
+    radioRetryTimer = window.setTimeout(() => {
+      radioRetryTimer = 0;
+      if (currentSource !== 'radio' || !radioPlaybackRequested || !navigator.onLine) return;
+      audio.src = sources.radio.url;
+      audio.load();
+      audio.play().catch(reason => {
+        if (reason?.name === 'NotAllowedError') {
+          stopRadioRecovery();
+          audio.pause();
+          startHint.hidden = false;
+          showError();
+        } else if (reason?.name !== 'AbortError') retryRadio();
+      });
+    }, delay);
+  }
+
+  function watchRadioBuffer() {
+    if (currentSource !== 'radio' || !radioPlaybackRequested || radioRetryTimer || radioStallTimer) return;
+    radioStallTimer = window.setTimeout(() => {
+      radioStallTimer = 0;
+      if (currentSource === 'radio' && radioPlaybackRequested && audio.readyState < 3) retryRadio();
+    }, 10000);
+  }
+
+  function pauseAudio() {
+    stopRadioRecovery();
+    if (!error.hidden && currentSource === 'radio') error.hidden = true;
+    audio.pause();
+    renderPlayback();
+  }
+
   function play() {
     stopBibleReading('Lectura detenida al iniciar otro audio.');
+    if (currentSource === 'radio') {
+      stopRadioRecovery();
+      radioPlaybackRequested = true;
+      error.hidden = true;
+      alternative.hidden = true;
+    }
     audio.play().catch(reason => {
-      if (reason?.name === 'NotAllowedError') startHint.hidden = false;
-      else if (reason?.name !== 'AbortError') showError();
+      if (reason?.name === 'NotAllowedError') {
+        if (currentSource === 'radio') stopRadioRecovery();
+        startHint.hidden = false;
+        if (currentSource === 'radio') showError();
+      } else if (reason?.name !== 'AbortError') {
+        if (currentSource === 'radio' && radioPlaybackRequested) retryRadio();
+        else showError();
+      }
     });
   }
 
@@ -402,6 +483,7 @@
   function loadTrack(index, playNow = false) {
     const track = songs.find(song => song.id === queue[index]);
     if (!track?.audio) return;
+    stopRadioRecovery();
     audio.pause();
     currentSource = 'playlist';
     trackIndex = index;
@@ -454,7 +536,8 @@
     if (next === 'playlist') { startPlaylist(null, playNow); return; }
     if (!sources[next]?.url) return;
     if (next !== currentSource || !audio.src) {
-      const wasPlaying = !audio.paused && !audio.ended;
+      const wasPlaying = radioPlaybackRequested || !audio.paused && !audio.ended;
+      stopRadioRecovery();
       audio.pause();
       currentSource = next;
       audio.controls = next === 'meditation';
@@ -488,7 +571,9 @@
     fab.setAttribute('aria-expanded', 'false');
     fab.focus();
   });
-  toggle.addEventListener('click', () => audio.paused ? play() : audio.pause());
+  toggle.addEventListener('click', () => currentSource === 'radio'
+    ? radioPlaybackRequested ? pauseAudio() : play()
+    : audio.paused ? play() : pauseAudio());
   for (const button of sourceButtons) {
     if (button.dataset.audioSource === 'meditation' && !sources.meditation.url) button.disabled = true;
     if (button.dataset.audioSource === 'playlist' && !selectedSongs().length) button.disabled = true;
@@ -498,14 +583,44 @@
   playlistNext.addEventListener('click', nextTrack);
   audio.addEventListener('play', () => {
     stopBibleReading('Lectura detenida al iniciar otro audio.');
-    started = true; error.hidden = true; startHint.hidden = true; renderPlayback();
+    started = true;
+    if (!radioRetrying) error.hidden = true;
+    startHint.hidden = true;
+    renderPlayback();
+  });
+  audio.addEventListener('playing', () => {
+    if (currentSource === 'radio') {
+      clearTimeout(radioRetryTimer);
+      clearTimeout(radioStallTimer);
+      radioRetryTimer = 0;
+      radioStallTimer = 0;
+      radioRetryCount = 0;
+      radioRetrying = false;
+      error.hidden = true;
+      alternative.hidden = true;
+    }
+    renderPlayback();
   });
   audio.addEventListener('pause', renderPlayback);
   audio.addEventListener('ended', () => {
     if (currentSource === 'playlist' && trackIndex < queue.length - 1) nextTrack();
+    else if (currentSource === 'radio' && radioPlaybackRequested) retryRadio();
     else renderPlayback();
   });
-  audio.addEventListener('error', showError);
+  audio.addEventListener('waiting', watchRadioBuffer);
+  audio.addEventListener('stalled', watchRadioBuffer);
+  audio.addEventListener('error', () => {
+    if (currentSource === 'radio' && radioPlaybackRequested) retryRadio();
+    else showError();
+  });
+  window.addEventListener('online', () => {
+    if (currentSource === 'radio' && radioPlaybackRequested) {
+      clearTimeout(radioRetryTimer);
+      radioRetryTimer = 0;
+      radioRetryCount = 0;
+      retryRadio();
+    }
+  });
   window.addEventListener('message', event => {
     if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
     if (event.data?.type === 'voz-bible-reading-start') { startBibleReading(event.data); return; }
@@ -538,7 +653,7 @@
   if ('mediaSession' in navigator) {
     const actions = {
       play,
-      pause: () => audio.pause()
+      pause: pauseAudio
     };
     for (const [action, handler] of Object.entries(actions)) {
       try { navigator.mediaSession.setActionHandler(action, handler); } catch (_) {}
@@ -567,10 +682,10 @@
 
     function reloadWhenAudioStops() {
       clearTimeout(reloadTimer);
-      if (!updateReady || bibleReading || (!audio.paused && !audio.ended)) return;
+      if (!updateReady || bibleReading || radioPlaybackRequested || (!audio.paused && !audio.ended)) return;
       // Changing sources briefly pauses the player; wait for playback to resume.
       reloadTimer = setTimeout(() => {
-        if (updateReady && !bibleReading && (audio.paused || audio.ended)) location.reload();
+        if (updateReady && !bibleReading && !radioPlaybackRequested && (audio.paused || audio.ended)) location.reload();
       }, 1000);
     }
     checkDeferredReload = reloadWhenAudioStops;
