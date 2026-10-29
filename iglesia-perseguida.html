@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#101b38">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/app.css?v=31">
-  <link rel="stylesheet" href="css/iglesia-perseguida.css?v=1">
+  <link rel="stylesheet" href="css/iglesia-perseguida.css?v=2">
   <title>Iglesia perseguida · Conectados a Cristo</title>
 </head>
 <body>
@@ -19,10 +19,16 @@
 
     <section class="persecution-feed" aria-labelledby="persecution-feed-title">
       <header class="persecution-feed-header">
-        <p class="persecution-kicker">ÚLTIMOS 12 MESES · 27 OCT 2025—27 OCT 2026</p>
+        <p class="persecution-kicker">ÚLTIMOS 2 AÑOS · 29 OCT 2024—29 OCT 2026</p>
         <h2 id="persecution-feed-title">Historias recientes</h2>
-        <p>Cada caso se cotejó con agencias, medios u organismos. Cuando las fuentes discrepan o no confirman un móvil religioso, lo aclaramos.</p>
+        <p>Se incluyen reportes de Puertas Abiertas y The Voice of the Martyrs. Cada caso se contrasta con otras fuentes cuando es posible; las cifras o atribuciones no confirmadas quedan señaladas.</p>
       </header>
+
+      <div class="persecution-search">
+        <label class="sr-only" for="persecution-search-input">Buscar noticias</label>
+        <input id="persecution-search-input" class="field" type="search" autocomplete="off" placeholder="Buscar por país o palabra">
+        <p id="persecution-search-status" class="persecution-search-status" role="status" aria-live="polite"></p>
+      </div>
 
       <article class="persecution-story">
         <p class="persecution-meta"><span>Etiopía</span><time datetime="2026-10-24">20 y 24 de octubre de 2026</time></p>
@@ -177,8 +183,58 @@
         <p>El reverendo Edwin Achi, su esposa y su hija fueron secuestrados de su hogar en Kaduna. La Iglesia anglicana informó que el sacerdote murió después de aproximadamente un mes en cautiverio. Su esposa y su hija fueron liberadas en enero de 2026, tras casi 80 días secuestradas. Reuters informó sobre el asesinato y los medios locales confirmaron posteriormente la liberación de ambas.</p>
         <p class="persecution-source">Fuentes: Reuters; Channels Television; FIJ.ng; Iglesia Anglicana de Kaduna (octubre de 2025–enero de 2026).</p>
       </article>
+
+      <article class="persecution-story">
+        <p class="persecution-meta"><span>China</span><time datetime="2025-10-09">9–11 de octubre de 2025</time></p>
+        <h3>Detienen o desaparecen pastores de iglesias clandestinas</h3>
+        <p>Puertas Abiertas informó que casi 30 pastores y líderes vinculados a la red de iglesias en casa Sion fueron detenidos o desaparecieron en distintas regiones. También reportó una operación policial contra otras iglesias domésticas. Al 13 de octubre, 16 de los detenidos de Sion habían sido liberados; la situación de los demás seguía sin aclararse.</p>
+        <p class="persecution-source">Fuente: Puertas Abiertas, «Oleada de pastores detenidos en China» (16 de octubre de 2025).</p>
+      </article>
+
+      <article class="persecution-story">
+        <p class="persecution-meta"><span>China</span><time datetime="2025-06-29">29 de junio de 2025</time></p>
+        <h3>Detienen a un pastor y hostigan a su familia</h3>
+        <p>La policía detuvo al pastor Chang Shun, de la Iglesia Reformada de Maizhong, bajo la sospecha de organizar reuniones ilegales. Según su esposa, las autoridades también interrogaron a invitados de su casa y luego la siguieron y acosaron a ella, mientras sus hijos temían por su padre.</p>
+        <p class="persecution-source">Fuente: The Voice of the Martyrs, «Pastor Arrested, Wife Harassed in Ongoing Persecution» (9 de octubre de 2025).</p>
+      </article>
+
+      <article class="persecution-story">
+        <p class="persecution-meta"><span>Nigeria</span><time datetime="2025-05-24">24–28 de mayo de 2025</time></p>
+        <h3>Una oleada de ataques deja más de 100 muertos y miles de desplazados</h3>
+        <p>Puertas Abiertas reportó ataques en comunidades de Benue, Taraba y Plateau, incluidos nuevos tiroteos contra supervivientes. La organización contabilizó más de 100 muertos en los distintos hechos y más de 5.000 personas desplazadas. Los saldos y la atribución de algunos ataques se basan en testimonios y fuentes locales, y no eran uniformes.</p>
+        <p class="persecution-source">Fuente: Puertas Abiertas, «Callar es morir dos veces» (12 de junio de 2025).</p>
+      </article>
+
+      <article class="persecution-story">
+        <p class="persecution-meta"><span>Nigeria</span><time datetime="2025-04-13">13 de abril de 2025</time></p>
+        <h3>Al menos 43 muertos en un ataque del Domingo de Ramos</h3>
+        <p>Un ataque nocturno alcanzó a la comunidad de Kimakpa, en el área de Bassa, estado de Plateau. Un contacto local citado por Puertas Abiertas informó 43 muertos; el periódico nigeriano Vanguard publicó un saldo de 49. El hecho se produjo durante una serie de ataques contra comunidades de la zona en la que hubo más víctimas y desplazamientos.</p>
+        <p class="persecution-source">Fuente: Puertas Abiertas, «43 asesinados en Domingo de Ramos» (15 de abril de 2025); Vanguard.</p>
+      </article>
+
+      <article class="persecution-story">
+        <p class="persecution-meta"><span>República Centroafricana</span><time datetime="2025-02-27">27 de febrero de 2025</time></p>
+        <h3>Secuestran a una madre cristiana y atacan una aldea cercana</h3>
+        <p>Hombres armados secuestraron el 13 de febrero a una madre de cinco hijos mientras trabajaba en su terreno en Bocaranga. Dos semanas después, asaltantes incendiaron 75 viviendas y mataron a alrededor de una docena de personas en una aldea cercana, según el reporte de The Voice of the Martyrs. Líderes cristianos locales pidieron oración por la familia y por las comunidades desplazadas.</p>
+        <p class="persecution-source">Fuente: The Voice of the Martyrs, «Christian Mother Abducted, Others Killed by Islamists» (24 de abril de 2025).</p>
+      </article>
+
+      <article class="persecution-story">
+        <p class="persecution-meta"><span>Togo</span><time datetime="2025-02-07">7 de febrero de 2025</time></p>
+        <h3>Asesinan a un pastor en el norte de Togo</h3>
+        <p>Militantes armados mataron a tiros y apuñalaron al pastor Gbendja Félidja en su casa. El pastor había huido de su aldea después de un ataque anterior y regresado meses más tarde. El reporte también describe amenazas contra otro pastor de la región.</p>
+        <p class="persecution-source">Fuente: The Voice of the Martyrs, «Pastors Targeted by Islamists» (3 de abril de 2025).</p>
+      </article>
+
+      <article class="persecution-story">
+        <p class="persecution-meta"><span>Vietnam</span><time datetime="2024-11-05">5 de noviembre de 2024</time></p>
+        <h3>Incendian la casa de una familia cristiana</h3>
+        <p>Tras recibir amenazas, Cai y Hien perdieron su casa y sus pertenencias en un incendio intencional. The Voice of the Martyrs informó que la pareja sufría hostigamiento desde que se convirtió al cristianismo, incluida la negativa de servicios básicos y de escolarizar a sus hijos. La organización pidió oración y ayuda para que pudieran encontrar vivienda.</p>
+        <p class="persecution-source">Fuente: The Voice of the Martyrs, «Christian Family Loses Home to Arson» (21 de noviembre de 2024).</p>
+      </article>
     </section>
   </main>
+  <script src="js/iglesia-perseguida.js?v=1"></script>
   <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>

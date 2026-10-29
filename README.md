@@ -10,7 +10,7 @@ PWA pública de contenidos de la Asamblea Cristiana. La identidad de la portada 
 - Estudios bíblicos: meditaciones, Biblia y biblioteca digital.
 - Comunicados y cronograma con filtros de filial y fecha. Un comunicado general se muestra bajo cualquier filial. La búsqueda a 100 km necesita coordenadas verificadas por evento; sin ellas informa que no hay datos suficientes. Maps aparece cuando el evento tenga dirección o enlace confirmado.
 - Mensajes al correo institucional, oración con notas locales, juegos, radio y directorio de filiales.
-- Iglesia perseguida: enlaces oficiales externos a Voice of the Martyrs y Puertas Abiertas. El contenido propio queda sujeto a revisión editorial.
+- Iglesia perseguida: noticias de los últimos 2 años, con reportes de Puertas Abiertas y The Voice of the Martyrs. Citar las fuentes como texto, sin enlaces externos. El contenido propio queda sujeto a revisión editorial.
 - Voz Juvenil: catálogo de revista con número, año, tema y portada. Están disponibles en PDF las ediciones Nº 59, 60 y 61, con búsqueda por palabras dentro de sus páginas.
 - Nosotros: tres textos institucionales en construcción hasta la revisión de los ancianos; el directorio de filiales sigue operativo.
 
