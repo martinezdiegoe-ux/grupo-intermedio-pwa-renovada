@@ -39,10 +39,12 @@
   width: 35px;
   height: 35px;
   margin: 0 0 auto;
-  background: rgba(255,255,255,.14);
-  color: #eee9ff;
   font-size: 18px;
 }
+.home-main .module .module-icon.lilac { background: #3b315c; color: #cbbfff; }
+.home-main .module .module-icon.peach { background: #51362f; color: #ffd0af; }
+.home-main .module .module-icon.blue { background: #293d62; color: #b5caff; }
+.home-main .module .module-icon.mint { background: #254f48; color: #a9e8cf; }
 .home-main .module strong {
   color: #fff;
   font-size: 17px;
