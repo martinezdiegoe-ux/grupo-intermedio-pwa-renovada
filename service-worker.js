@@ -1,5 +1,5 @@
-const CACHE_NAME='conectados-a-cristo-v72';
-const CORE_ASSETS=['./','index.html','app.html','manifest.json?v=2','css/app.css?v=33','css/home-cards.css?v=1','css/audio-shell.css?v=44','js/audio-shell.js?v=46','js/app-shell.js?v=43','js/meditaciones-data.js?v=31','js/i18n-data.js','js/alabanzas-data.js?v=1','js/radio-mse-player.js?v=1'];
+const CACHE_NAME='conectados-a-cristo-v73';
+const CORE_ASSETS=['./','index.html','app.html','manifest.json?v=2','css/app.css?v=33','css/home-cards.css?v=2','css/audio-shell.css?v=44','js/audio-shell.js?v=46','js/app-shell.js?v=43','js/meditaciones-data.js?v=31','js/i18n-data.js','js/alabanzas-data.js?v=1','js/radio-mse-player.js?v=1'];
 const STATIC_ASSETS=[
   './','index.html','home.html','app.html','manifest.json','manifest.json?v=2','css/app.css?v=31','css/app.css?v=33','css/hero-bible.css','css/radio-compact.css?v=1','css/site-menu.css?v=41','css/theme.css','css/audio-shell.css?v=44','js/app-shell.js?v=42','js/app-shell.js?v=43','js/audio-shell.js?v=46','js/radio-mse-player.js?v=1','js/i18n-data.js','reproductor.html','js/home.js',
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas-data.js?v=1','js/alabanzas-i18n.js?v=1','js/alabanzas.js?v=44','js/alabanza.js?v=44','js/playlist.js?v=44',
