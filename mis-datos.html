@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b38">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/app.css?v=31">
+  <title>Mis datos · Conectados a Cristo</title>
+</head>
+<body>
+  <main class="page-main">
+    <section class="page-hero">
+      <p class="eyebrow">EN ESTE DISPOSITIVO</p>
+      <h1>Mis datos</h1>
+      <p>Guardá una copia de tu plan de lectura, tus notas de oración y tu playlist para recuperarlos en otro navegador o dispositivo.</p>
+    </section>
+    <section class="panel" aria-labelledby="backup-title">
+      <h2 id="backup-title">Copia de seguridad</h2>
+      <p>El archivo contiene tus notas personales. Guardalo en un lugar privado y compartilo sólo si querés compartirlas.</p>
+      <div class="button-row">
+        <button id="backup-export" class="action-link primary" type="button">Descargar mis datos</button>
+        <button id="backup-import-trigger" class="action-link" type="button">Recuperar desde un archivo</button>
+        <input id="backup-import" type="file" accept="application/json,.json" hidden>
+      </div>
+      <p>Al recuperar un archivo se reemplazan los datos guardados en este navegador.</p>
+      <p id="backup-status" class="empty-note" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="js/mis-datos.js"></script>
+  <script src="js/app-shell.js?v=42"></script>
+</body>
+</html>

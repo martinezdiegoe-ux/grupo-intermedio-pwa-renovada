@@ -16,6 +16,11 @@
   </header>
   <p class="reader-tip">Deslizá para pasar de página · Pellizcá con dos dedos para ampliar</p>
   <main id="reader-stage" class="reader-stage" aria-label="Página de la revista">
+    <details class="reader-transcript">
+      <summary>Leer texto de esta página</summary>
+      <p>Transcripción automática: puede contener errores. Consultá la imagen o el PDF original para verificar una cita.</p>
+      <p id="reader-text"></p>
+    </details>
     <p id="reader-status" class="reader-status" role="status">Cargando página…</p>
     <img id="reader-image" class="reader-image" alt="" draggable="false" hidden>
     <p id="reader-error" class="reader-error" role="alert" hidden>No se pudo cargar la página. <a id="reader-pdf" href="voz-juvenil.html">Abrir el PDF original</a></p>
@@ -26,6 +31,7 @@
     <button id="reader-next" class="reader-button" type="button" aria-label="Página siguiente">Siguiente →</button>
   </nav>
   <script src="js/revista-data.js?v=39"></script>
+  <script src="js/revista-ocr.js?v=37"></script>
   <script src="js/revista-leer.js?v=41"></script>
 </body>
 </html>

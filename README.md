@@ -12,7 +12,7 @@ PWA pública de contenidos de la Asamblea Cristiana. La identidad de la portada 
 - Mensajes al correo institucional, oración con notas locales, juegos, radio y directorio de filiales.
 - Iglesia perseguida: noticias de los últimos 2 años, con reportes de Puertas Abiertas y The Voice of the Martyrs. Citar las fuentes como texto, sin enlaces externos. El contenido propio queda sujeto a revisión editorial.
 - Voz Juvenil: catálogo de revista con número, año, tema y portada. Están disponibles en PDF las ediciones Nº 59, 60 y 61, con búsqueda por palabras dentro de sus páginas.
-- Nosotros: tres textos institucionales en construcción hasta la revisión de los ancianos; el directorio de filiales sigue operativo.
+- Nosotros: los tres textos institucionales permanecen ocultos hasta la revisión de los ancianos; el directorio de filiales sigue operativo.
 
 ## Publicación de contenido
 
@@ -22,6 +22,6 @@ Agregar meditaciones a `js/meditaciones-data.js` con `date`, `topics`, texto y a
 
 Agregar los PDF propios de la revista en `pdf/revista/`, sus tapas WebP en `assets/revista/` y sus registros en `js/revista-data.js` (`numero`, `anio`, `periodo`, `temas`, `articulos`, `portada`, `pdf`). El texto OCR para la búsqueda está en `js/revista-ocr.js`, con una entrada por página. Los PDF de las ediciones 59 a 61 tienen 24 páginas cada uno. Las tapas livianas y el índice de búsqueda se guardan sin conexión; los PDF se descargan al abrir una edición. Verificar derechos de himnos, CD, PDF y video antes de sumar material nuevo.
 
-Actualizar las traducciones de los textos nuevos en `js/i18n-data.js` o `js/app-shell.js`. Los recursos PDF, video y audio conservan su idioma original. La elección de idioma y tema se guarda localmente. El avance de lectura, notas de oración y playlist se guardan solo en el navegador y no se sincronizan.
+Actualizar las traducciones de los textos nuevos en `js/i18n-data.js` o `js/app-shell.js`. Los recursos PDF, video y audio conservan su idioma original. La elección de idioma y tema se guarda localmente. El avance de lectura, notas de oración y playlist se guardan solo en el navegador y no se sincronizan. La página «Mis datos» permite descargar e importar una copia privada de esos tres datos.
 
 Al publicar cambios de contenido o diseño, incrementar `CACHE_NAME` en `service-worker.js`. GitHub Pages sirve la rama `main`. La app arranca en `app.html?page=index.html` para conservar el audio durante la navegación.

@@ -18,6 +18,7 @@ a{color:inherit}
 .reader-stage{min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;padding:12px;position:relative;touch-action:pan-y}
 .reader-stage.is-zoomed{touch-action:pan-x pan-y}
 .reader-image{display:block;margin:auto;width:auto;height:auto;max-width:none;max-height:none;box-shadow:0 8px 24px #101b3833;background:#fff;user-select:none;-webkit-user-select:none}
+.reader-transcript{max-width:760px;margin:0 auto 12px;padding:12px 16px;border-radius:10px;background:#fff;line-height:1.65}.reader-transcript summary{cursor:pointer;font-weight:700;color:#4934ac}.reader-transcript p:last-child{white-space:pre-wrap;overflow-wrap:anywhere}
 .reader-status,.reader-error{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;max-width:85%;padding:16px 20px;border-radius:12px;background:#fff;text-align:center;box-shadow:0 8px 24px #101b381c}
 .reader-error a{color:#5943c5;font-weight:700}
 .reader-controls{min-height:66px;padding-bottom:max(10px,env(safe-area-inset-bottom))}
@@ -28,6 +29,7 @@ a{color:inherit}
 [data-theme=dark] .reader-header,[data-theme=dark] .reader-controls{background:#17223a;box-shadow:none}
 [data-theme=dark] .reader-button,[data-theme=dark] .reader-counter input{background:#23314d;border-color:#45516b;color:#f3f4fa}
 [data-theme=dark] .reader-stage{background:#10192d}
+[data-theme=dark] .reader-transcript{background:#23314d}[data-theme=dark] .reader-transcript summary{color:#c1b7ff}
 [data-theme=dark] .reader-status,[data-theme=dark] .reader-error{background:#23314d;color:#f3f4fa}
 [data-theme=dark] .reader-tip{background:#302a57;color:#e2dcff}
 @media(max-width:640px){.reader-tip{display:block}}

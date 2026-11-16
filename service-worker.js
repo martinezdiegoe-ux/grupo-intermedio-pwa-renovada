@@ -1,15 +1,20 @@
-const CACHE_NAME='conectados-a-cristo-v67';
+const CACHE_NAME='conectados-a-cristo-v70';
+const CORE_ASSETS=['./','index.html','app.html','manifest.json?v=2','css/app.css?v=33','css/audio-shell.css?v=44','js/audio-shell.js?v=46','js/app-shell.js?v=43','js/meditaciones-data.js?v=31','js/i18n-data.js','js/alabanzas-data.js?v=1','js/radio-mse-player.js?v=1'];
 const STATIC_ASSETS=[
-  './','index.html','home.html','app.html','manifest.json','manifest.json?v=2','css/app.css?v=31','css/hero-bible.css','css/radio-compact.css?v=1','css/site-menu.css?v=41','css/theme.css','css/audio-shell.css?v=44','js/app-shell.js?v=43','js/audio-shell.js?v=46','js/radio-mse-player.js?v=1','js/i18n-data.js','reproductor.html',
+  './','index.html','home.html','app.html','manifest.json','manifest.json?v=2','css/app.css?v=31','css/app.css?v=33','css/hero-bible.css','css/radio-compact.css?v=1','css/site-menu.css?v=41','css/theme.css','css/audio-shell.css?v=44','js/app-shell.js?v=42','js/app-shell.js?v=43','js/audio-shell.js?v=46','js/radio-mse-player.js?v=1','js/i18n-data.js','reproductor.html','js/home.js',
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas-data.js?v=1','js/alabanzas-i18n.js?v=1','js/alabanzas.js?v=44','js/alabanza.js?v=44','js/playlist.js?v=44',
   'juegos.html','crucigramas.html','verdadero-falso.html','opcion-multiple.html',
-  'cronograma.html','novedades.html','comunicados.html','mensajes.html','iglesia-perseguida.html','css/iglesia-perseguida.css?v=2','js/iglesia-perseguida.js?v=1','voz-juvenil.html','revista-leer.html','css/revista-leer.css?v=39','js/revista-data.js?v=39','js/revista-ocr.js?v=37','js/revista.js?v=48','js/revista-leer.js?v=41',
+  'cronograma.html','novedades.html','comunicados.html','mensajes.html','iglesia-perseguida.html','css/iglesia-perseguida.css?v=2','js/iglesia-perseguida.js?v=1','voz-juvenil.html','revista-leer.html','css/revista-leer.css?v=39','js/revista-data.js?v=39','js/revista-ocr.js?v=37','js/revista.js?v=48','js/revista-leer.js?v=41','mis-datos.html','js/mis-datos.js',
   'lectura.html','js/plan-365.js?v=20','js/lectura-audio.js?v=34','js/lectura.js?v=36','pdf/plan-biblia-un-ano.pdf','recursos.html','js/estudios-i18n.js','biblia.html','js/biblia.js?v=32','datos/biblia-rv1960.json?v=23','meditaciones.html','js/meditaciones.js?v=31','js/meditaciones-data.js?v=31','biblioteca.html','js/biblioteca.js','js/biblioteca-data.js','oracion.html','js/oracion.js','radio.html',
-  'acerca.html','quienes.html','creemos.html','vision.html','donde.html','css/donde.css','js/filiales-data.js','js/donde.js',
-  'assets/icon-192.png','assets/icon-512.png','assets/icon-192-v2.png','assets/icon-512-v2.png','assets/hero-biblia-abierta.png','assets/compartir-qr.svg',
+  'acerca.html','donde.html','css/donde.css','js/filiales-data.js','js/donde.js',
+  'assets/icon-192-v2.png','assets/icon-512-v2.png','assets/hero-biblia-abierta.png','assets/compartir-qr.svg',
+  'assets/descubri/juegos.webp','assets/descubri/lectura.webp','assets/descubri/novedades.webp','assets/descubri/cronograma.webp','assets/descubri/estudios.webp','assets/descubri/oracion.webp','assets/descubri/encontranos.webp','assets/descubri/nosotros.webp','assets/descubri/iglesia-perseguida.webp',
   'assets/revista/voz-juvenil-59.webp','assets/revista/voz-juvenil-60.webp','assets/revista/voz-juvenil-61.webp'
 ];
-self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(STATIC_ASSETS.map(path=>new Request(path,{cache:'reload'})))).then(()=>self.skipWaiting()))});
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(async cache=>{
+  await cache.addAll(CORE_ASSETS.map(path=>new Request(path,{cache:'reload'})));
+  await Promise.allSettled(STATIC_ASSETS.filter(path=>!CORE_ASSETS.includes(path)).map(path=>cache.add(new Request(path,{cache:'reload'}))));
+}).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET'||new URL(event.request.url).origin!==self.location.origin)return;

@@ -207,5 +207,12 @@
   setInterval(refreshCalendar, 60000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshCalendar(); });
   updateSummary(); render();
+  const requestedDay = Number(new URLSearchParams(location.search).get('dia'));
+  const requested = days.find(day => day.day === requestedDay);
+  if (requested) {
+    currentBlock = requested.month - 1;
+    render();
+    requestAnimationFrame(() => $('dias-lectura').querySelector(`[data-day="${requested.day}"]`)?.scrollIntoView({ block: 'center' }));
+  }
 })();
 

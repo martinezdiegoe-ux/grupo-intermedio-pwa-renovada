@@ -91,6 +91,7 @@
     if (nextPage === page && image.src && !image.hidden) { pageInput.value = String(page); return; }
     page = nextPage;
     pageInput.value = String(page);
+    $('reader-text').textContent = window.VOZ_REVISTA_OCR?.[issue.numero]?.[page - 1] || 'No hay transcripción de esta página.';
     $('reader-prev').disabled = page === 1;
     $('reader-next').disabled = page === issue.paginas;
     $('reader-status').hidden = false;
