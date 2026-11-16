@@ -32,8 +32,8 @@
   z-index: 1;
   opacity: .82;
   filter: saturate(.72);
-  -webkit-mask-image: radial-gradient(circle, #000 38%, rgba(0,0,0,.8) 55%, transparent 75%);
-  mask-image: radial-gradient(circle, #000 38%, rgba(0,0,0,.8) 55%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle, #000 30%, rgba(0,0,0,.65) 49%, transparent 74%);
+  mask-image: radial-gradient(circle, #000 30%, rgba(0,0,0,.65) 49%, transparent 74%);
 }
 .home-main .module .module-icon {
   width: 35px;

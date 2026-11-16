@@ -1,5 +1,5 @@
-const CACHE_NAME='conectados-a-cristo-v74';
-const CORE_ASSETS=['./','index.html','app.html','manifest.json?v=2','css/app.css?v=33','css/home-cards.css?v=3','css/audio-shell.css?v=44','js/audio-shell.js?v=46','js/app-shell.js?v=43','js/meditaciones-data.js?v=31','js/i18n-data.js','js/alabanzas-data.js?v=1','js/radio-mse-player.js?v=1'];
+const CACHE_NAME='conectados-a-cristo-v75';
+const CORE_ASSETS=['./','index.html','app.html','manifest.json?v=2','css/app.css?v=33','css/home-cards.css?v=4','css/audio-shell.css?v=44','js/audio-shell.js?v=46','js/app-shell.js?v=43','js/meditaciones-data.js?v=31','js/i18n-data.js','js/alabanzas-data.js?v=1','js/radio-mse-player.js?v=1'];
 const STATIC_ASSETS=[
   './','index.html','home.html','app.html','manifest.json','manifest.json?v=2','css/app.css?v=31','css/app.css?v=33','css/hero-bible.css','css/radio-compact.css?v=1','css/site-menu.css?v=41','css/theme.css','css/audio-shell.css?v=44','js/app-shell.js?v=42','js/app-shell.js?v=43','js/audio-shell.js?v=46','js/radio-mse-player.js?v=1','js/i18n-data.js','reproductor.html','js/home.js',
   'palabra.html','js/palabra.js','alabanzas.html','alabanza.html','js/alabanzas-data.js?v=1','js/alabanzas-i18n.js?v=1','js/alabanzas.js?v=44','js/alabanza.js?v=44','js/playlist.js?v=44',
@@ -8,7 +8,7 @@ const STATIC_ASSETS=[
   'lectura.html','js/plan-365.js?v=20','js/lectura-audio.js?v=34','js/lectura.js?v=36','pdf/plan-biblia-un-ano.pdf','recursos.html','js/estudios-i18n.js','biblia.html','js/biblia.js?v=32','datos/biblia-rv1960.json?v=23','meditaciones.html','js/meditaciones.js?v=31','js/meditaciones-data.js?v=31','biblioteca.html','js/biblioteca.js','js/biblioteca-data.js','oracion.html','js/oracion.js','radio.html',
   'acerca.html','donde.html','css/donde.css','js/filiales-data.js','js/donde.js',
   'assets/icon-192-v2.png','assets/icon-512-v2.png','assets/hero-biblia-abierta.png','assets/compartir-qr.svg',
-  'assets/descubri/juegos.webp','assets/descubri/lectura.webp','assets/descubri/novedades.webp','assets/descubri/cronograma.webp','assets/descubri/estudios-lampara.webp','assets/descubri/oracion.webp','assets/descubri/encontranos.webp','assets/descubri/nosotros.webp','assets/descubri/iglesia-perseguida.webp',
+  'assets/descubri/juegos.webp','assets/descubri/lectura.webp','assets/descubri/novedades.webp','assets/descubri/cronograma.webp','assets/descubri/estudios-lampara.webp','assets/descubri/oracion.webp','assets/descubri/encontranos.webp','assets/descubri/nosotros.webp?v=2','assets/descubri/iglesia-perseguida.webp',
   'assets/revista/voz-juvenil-59.webp','assets/revista/voz-juvenil-60.webp','assets/revista/voz-juvenil-61.webp'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(async cache=>{
