@@ -5,15 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Opción Múltiple – Biblia</title>
 
-  <link rel="stylesheet" href="css/opcion-multiple.css">
-<link rel="stylesheet" href="css/app.css?v=31">
+  <link rel="stylesheet" href="css/app.css?v=31">
+  <link rel="stylesheet" href="css/juegos.css?v=1">
 </head>
 
 <body>
+  <main class="page-main game-page game-multiple">
+    <section class="page-hero">
+      <a href="juegos.html">← Juegos y actividades</a>
+      <h1>📖 Opción Múltiple – Biblia</h1>
+      <p>Elegí una respuesta por pregunta.</p>
+    </section>
 
-  <h1>📖 Opción Múltiple – Biblia</h1>
-
-  <div class="contenedor">
+    <div class="game-quiz">
 
     <form id="quiz">
 
@@ -103,13 +107,15 @@
 
       <div id="resultado" class="resultado">
         <strong>Resultado final</strong>
-        <div id="texto-resultado">
+        <div id="texto-resultado" role="status">
           Presioná “Validar respuestas” para ver tu resultado.
         </div>
       </div>
 
     </form>
   </div>
+
+  </main>
 
   <script src="js/opcion-multiple.js"></script>
 <script src="js/app-shell.js?v=42"></script>

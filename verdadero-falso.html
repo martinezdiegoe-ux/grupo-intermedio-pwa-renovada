@@ -5,15 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verdadero o Falso – Biblia</title>
 
-  <link rel="stylesheet" href="css/verdadero-falso.css">
-<link rel="stylesheet" href="css/app.css?v=31">
+  <link rel="stylesheet" href="css/app.css?v=31">
+  <link rel="stylesheet" href="css/juegos.css?v=1">
 </head>
 
 <body>
+  <main class="page-main game-page game-true-false">
+    <section class="page-hero">
+      <a href="juegos.html">← Juegos y actividades</a>
+      <h1>📖 Verdadero o Falso – Biblia</h1>
+      <p>Decidí si cada afirmación es verdadera o falsa.</p>
+    </section>
 
-  <h1>📖 Verdadero o Falso – Biblia</h1>
-
-  <div class="contenedor">
+    <div class="game-quiz">
 
     <form id="quiz">
 
@@ -80,15 +84,18 @@
       <button type="button" class="btn-validar" onclick="validar()">
         Validar respuestas
       </button>
-<!-- ✅ RECUADRO FIJO Y SIEMPRE PRESENTE -->
+
     <div id="resultado" class="resultado">
       <strong>Resultado final</strong>
-      <div id="texto-resultado">
+      <div id="texto-resultado" role="status">
         Presioná “Validar respuestas” para ver tu resultado.
       </div>
     </div>
 
+    </form>
   </div>
+
+  </main>
 
   <script src="js/verdadero-falso.js"></script>
 <script src="js/app-shell.js?v=42"></script>
