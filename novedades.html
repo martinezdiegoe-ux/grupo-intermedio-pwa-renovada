@@ -20,17 +20,16 @@
     .news-art-simple{display:grid;place-items:center;width:170px;height:170px;border:1px solid rgba(255,255,255,.25);border-radius:38px;background:rgba(255,255,255,.08);font-size:88px;color:#c9bdff;transform:none}.news-card.feature{background:var(--surface,#fff);border-color:var(--line)}
     @media(max-width:640px){.news-art-simple{display:none}}
   </style>
-</head>
+<link rel="stylesheet" href="css/section-thumbnails.css?v=1"></head>
 <body>
   <main class="page-main news-main">
-    <section class="news-hero" aria-labelledby="news-title">
+    <section class="news-hero with-thumbnail" aria-labelledby="news-title">
       <div class="news-hero-copy"><p class="eyebrow">ASAMBLEA CRISTIANA</p><h1 id="news-title">Avisos y actividades juveniles<span>.</span></h1><p>Comunicados, actividades y un espacio para escribirnos.</p></div>
-      <div class="news-art news-art-simple" aria-hidden="true">✦</div>
-    </section>
+    <img class="section-thumbnail" src="assets/descubri/novedades.webp" alt=""></section>
     <section aria-labelledby="news-sections"><div class="news-heading"><p class="eyebrow">ACTUALIDAD JUVENIL</p><h2 id="news-sections">Elegí qué querés ver<span class="accent-dot">.</span></h2></div>
       <div class="news-grid">
-        <a class="news-card feature" href="comunicados.html"><span class="news-card-top"><span class="news-icon blue" aria-hidden="true">▤</span><span class="news-arrow" aria-hidden="true">↗</span></span><span class="news-kicker">PARA ESTAR AL DÍA</span><h3>Comunicados</h3><p class="news-desc">Avisos y actividades juveniles por filial.</p><span class="news-action">Ver comunicados <span aria-hidden="true">→</span></span></a>
-        <a class="news-card" href="mensajes.html"><span class="news-card-top"><span class="news-icon peach" aria-hidden="true">✉</span><span class="news-arrow" aria-hidden="true">↗</span></span><span class="news-kicker">EN CONTACTO</span><h3>Mensajes</h3><p class="news-desc">Escribinos y compartí tu mensaje.</p><span class="news-action">Enviar mensaje <span aria-hidden="true">→</span></span></a>
+        <a class="news-card feature with-thumbnail" href="comunicados.html"><span class="news-card-top"><span class="news-icon blue" aria-hidden="true">▤</span><span class="news-arrow" aria-hidden="true">↗</span></span><span class="news-kicker">PARA ESTAR AL DÍA</span><h3>Comunicados</h3><p class="news-desc">Avisos y actividades juveniles por filial.</p><span class="news-action">Ver comunicados <span aria-hidden="true">→</span></span><img class="section-thumbnail" src="assets/descubri/comunicados.webp" alt=""></a>
+        <a class="news-card with-thumbnail" href="mensajes.html"><span class="news-card-top"><span class="news-icon peach" aria-hidden="true">✉</span><span class="news-arrow" aria-hidden="true">↗</span></span><span class="news-kicker">EN CONTACTO</span><h3>Mensajes</h3><p class="news-desc">Escribinos y compartí tu mensaje.</p><span class="news-action">Enviar mensaje <span aria-hidden="true">→</span></span><img class="section-thumbnail" src="assets/descubri/mensajes.webp" alt=""></a>
       </div>
     </section>
   </main>
