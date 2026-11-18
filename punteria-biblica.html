@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101b38">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/app.css?v=31">
+  <title>Puntería Bíblica · Conectados a Cristo</title>
+  <style>
+    .targets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-block:20px; max-width:42rem }
+    .targets button { min-height:88px; border-radius:50%; border:3px double currentColor; padding:12px; font:inherit; font-weight:700; cursor:crosshair }
+    .targets button:focus-visible { outline:3px solid currentColor; outline-offset:3px }
+    @media (prefers-reduced-motion:no-preference) {
+      .targets button { animation:float-target 3s ease-in-out infinite alternate }
+      .targets button:nth-child(2n) { animation-delay:-2s }
+      @keyframes float-target { to { transform:translateY(6px) } }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-main">
+    <section class="page-hero">
+      <a href="juegos.html">← Juegos y actividades</a>
+      <h1>Puntería Bíblica</h1>
+      <p>Acertá a la diana con la respuesta correcta. Tenés tres vidas.</p>
+    </section>
+    <section aria-labelledby="question">
+      <p id="score" role="status"></p>
+      <h2 id="question" tabindex="-1">Partida</h2>
+      <div class="targets" id="targets"></div>
+      <p id="feedback" role="status"></p>
+      <button class="btn" id="continue">Empezar</button>
+    </section>
+  </main>
+  <script src="js/punteria-biblica.js"></script>
+  <script src="js/app-shell.js?v=42"></script>
+</body>
+</html>
