@@ -15,12 +15,21 @@
   const targets = document.querySelector('#targets');
   const feedback = document.querySelector('#feedback');
   const next = document.querySelector('#continue');
+  const timed = document.querySelector('#timed');
+  const timedOption = document.querySelector('#timed-option');
+  const clock = document.querySelector('#clock');
+  const seconds = document.querySelector('#seconds');
+  const timeLeft = document.querySelector('#time-left');
+  const roundSeconds = 15;
   let index = -1;
   let lives = 3;
   let points = 0;
+  let streak = 0;
+  let timer;
+  let deadline;
 
   function updateScore() {
-    score.textContent = `Vidas: ${lives} · Puntos: ${points}`;
+    score.textContent = `Vidas: ${lives} · Puntos: ${points} · Racha: ${streak}`;
   }
 
   next.addEventListener('click', () => {
@@ -28,6 +37,7 @@
       index = -1;
       lives = 3;
       points = 0;
+      streak = 0;
     }
     index++;
     feedback.textContent = '';
@@ -35,6 +45,7 @@
     if (index === questions.length) {
       question.textContent = '¡Completaste todas las preguntas!';
       next.textContent = 'Volver a jugar';
+      timedOption.hidden = false;
       question.focus();
       return;
     }
@@ -43,27 +54,54 @@
     const reference = options.pop();
     options.splice(Math.floor(Math.random() * 4), 0, correct);
     question.textContent = prompt;
+    timedOption.hidden = true;
+    next.hidden = true;
+
+    function finish(option) {
+      clearInterval(timer);
+      clock.hidden = true;
+      const hit = option === correct;
+      if (hit) {
+        points += 10;
+        streak++;
+      } else {
+        lives--;
+        streak = 0;
+      }
+      updateScore();
+      feedback.dataset.result = hit ? 'hit' : 'miss';
+      const result = hit ? '¡Acierto! +10 puntos.' : option ? '¡Fallaste!' : '¡Se acabó el tiempo!';
+      feedback.textContent = hit ? `${result} ${reference}.` : `${result} La respuesta era ${correct}. ${reference}.`;
+      if (!lives) {
+        question.textContent = 'Se terminaron las vidas';
+        timedOption.hidden = false;
+      }
+      next.textContent = !lives ? 'Volver a jugar' : index + 1 === questions.length ? 'Ver resultado' : 'Siguiente pregunta';
+      next.hidden = false;
+      next.focus();
+      targets.replaceChildren();
+    }
+
     for (const option of options) {
       const target = document.createElement('button');
       target.type = 'button';
       target.textContent = option;
-      target.addEventListener('click', () => {
-        const hit = option === correct;
-        if (hit) points += 10;
-        else lives--;
-        updateScore();
-        feedback.textContent = hit
-          ? `¡Acertaste! ${reference}.`
-          : `La respuesta era ${correct}. ${reference}.`;
-        if (!lives) question.textContent = 'Se terminaron las vidas';
-        next.textContent = !lives ? 'Volver a jugar' : index + 1 === questions.length ? 'Ver resultado' : 'Siguiente pregunta';
-        next.hidden = false;
-        next.focus();
-        targets.replaceChildren();
-      });
+      target.addEventListener('click', () => finish(!timed.checked || Date.now() < deadline ? option : undefined));
       targets.append(target);
     }
-    next.hidden = true;
+    if (timed.checked) {
+      clock.hidden = false;
+      deadline = Date.now() + roundSeconds * 1000;
+      const tick = () => {
+        const remaining = Math.max(0, (deadline - Date.now()) / 1000);
+        timeLeft.value = remaining;
+        seconds.textContent = `${Math.ceil(remaining)} s`;
+        clock.toggleAttribute('data-urgent', remaining <= 5);
+        if (remaining === 0) finish();
+      };
+      tick();
+      timer = setInterval(tick, 100);
+    }
     question.focus();
   });
 

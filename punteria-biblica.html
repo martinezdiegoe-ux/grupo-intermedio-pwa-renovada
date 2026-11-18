@@ -8,13 +8,34 @@
   <link rel="stylesheet" href="css/app.css?v=31">
   <title>Puntería Bíblica · Conectados a Cristo</title>
   <style>
-    .targets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-block:20px; max-width:42rem }
-    .targets button { min-height:88px; border-radius:50%; border:3px double currentColor; padding:12px; font:inherit; font-weight:700; cursor:crosshair }
-    .targets button:focus-visible { outline:3px solid currentColor; outline-offset:3px }
+    .arena { max-width:46rem; margin:24px auto; padding:clamp(14px, 4vw, 32px); border-radius:24px; color:#fff7ec; background:#211743 radial-gradient(ellipse at top right,#703657,transparent 65%); border:1px solid #946684 }
+    .arena h2 { color:inherit }
+    .arena .btn { background:#ffcd72; color:#291535 }
+    #score { display:inline-block; padding:8px 12px; border-radius:12px; color:#ffe0a5; background:#321e49; font-weight:700 }
+    #timed-option:not([hidden]) { display:block; margin-bottom:14px }
+    .clock { margin:12px 0 18px; color:#fff7ec; font-weight:700 }
+    .clock progress { display:block; width:100%; height:12px; margin-top:6px; overflow:hidden; border:0; border-radius:12px; accent-color:#ffd178; background:#4e375f }
+    .clock progress::-webkit-progress-bar { background:#4e375f }
+    .clock progress::-webkit-progress-value { background:linear-gradient(90deg,#ff8a82,#ffe38a) }
+    .clock[data-urgent] progress::-webkit-progress-value { background:#ff6588 }
+    .clock[data-urgent] progress { accent-color:#ff6588 }
+    .targets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 14px; padding:26px 12px; margin-block:16px; border-radius:18px; background:radial-gradient(circle at center,#513766,#281c44 72%) }
+    .targets:empty { display:none }
+    .targets button { --target:#ffce73; min-height:86px; border-radius:44px; border:3px solid #fff5; padding:8px; color:#281739; background:var(--target); box-shadow:0 5px 0 #140d2a, 0 0 16px color-mix(in srgb,var(--target) 55%,transparent); font:inherit; font-weight:800; cursor:crosshair; overflow-wrap:anywhere }
+    .targets button:nth-child(2) { --target:#ffa7bf }
+    .targets button:nth-child(3) { --target:#aaf0c1 }
+    .targets button:nth-child(4) { --target:#c8b7ff }
+    .targets button:focus-visible { outline:3px solid #fff; outline-offset:4px }
+    .targets button:hover { filter:brightness(1.12) }
+    #feedback:not(:empty) { border-radius:12px; padding:12px; font-weight:700 }
+    #feedback[data-result="hit"] { background:#aaf0c1; color:#133423 }
+    #feedback[data-result="miss"] { background:#ffb6be; color:#4b1424 }
     @media (prefers-reduced-motion:no-preference) {
-      .targets button { animation:float-target 3s ease-in-out infinite alternate }
+      .targets button { animation:float-target 2.2s ease-in-out infinite alternate }
       .targets button:nth-child(2n) { animation-delay:-2s }
-      @keyframes float-target { to { transform:translateY(6px) } }
+      #feedback:not(:empty) { animation:reveal .3s ease-out }
+      @keyframes float-target { from { transform:translateY(-8px) } to { transform:translateY(8px) } }
+      @keyframes reveal { from { opacity:.3; transform:scale(.96) } }
     }
   </style>
 </head>
@@ -25,15 +46,20 @@
       <h1>Puntería Bíblica</h1>
       <p>Acertá a la diana con la respuesta correcta. Tenés tres vidas.</p>
     </section>
-    <section aria-labelledby="question">
+    <section class="arena" aria-labelledby="question">
       <p id="score" role="status"></p>
+      <label id="timed-option"><input type="checkbox" id="timed" checked> Jugar con 15 segundos por pregunta</label>
+      <div class="clock" id="clock" hidden>
+        <span id="seconds"></span>
+        <progress id="time-left" value="15" max="15" aria-label="Tiempo restante"></progress>
+      </div>
       <h2 id="question" tabindex="-1">Partida</h2>
       <div class="targets" id="targets"></div>
       <p id="feedback" role="status"></p>
       <button class="btn" id="continue">Empezar</button>
     </section>
   </main>
-  <script src="js/punteria-biblica.js"></script>
+  <script src="js/punteria-biblica.js?v=2"></script>
   <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>
