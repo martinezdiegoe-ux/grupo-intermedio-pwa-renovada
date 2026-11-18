@@ -1,3 +1,34 @@
+.games-menu :is(.page-hero,.module) {
+  position:relative;
+  padding-inline-end:calc(var(--thumbnail-size) + 22px);
+}
+.games-menu .page-hero { --thumbnail-size:clamp(76px,16vw,148px) }
+.games-menu .page-hero::after { display:none }
+.games-menu .games-grid { grid-template-columns:repeat(2,minmax(0,1fr)) }
+.games-menu .module {
+  --thumbnail-size:clamp(74px,12vw,116px);
+  min-height:132px;
+}
+.games-menu .module small { line-height:1.35 }
+.games-menu .game-thumbnail {
+  position:absolute;
+  z-index:2;
+  inset-inline-end:9px;
+  top:50%;
+  width:var(--thumbnail-size);
+  aspect-ratio:1;
+  transform:translateY(-50%);
+  border-radius:50%;
+  object-fit:cover;
+  opacity:.88;
+  mask-image:radial-gradient(circle closest-side,#000 48%,#000a 72%,transparent 100%);
+  pointer-events:none;
+}
+@media (max-width:640px) {
+  .games-menu .games-grid { grid-template-columns:minmax(0,1fr) }
+  .games-menu .module { min-height:110px }
+}
+
 .game-page {
   --game-accent:#6540b0;
   --game-tint:#efe5ff;
