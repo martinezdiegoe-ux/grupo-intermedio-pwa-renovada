@@ -48,5 +48,12 @@ test('los enlaces con parámetros conservan su página al navegar sin conexión'
   assert.equal(await navigate('lectura.html?dia=328'), resolve('lectura.html'));
   assert.ok(entries.has(resolve('js/cronograma.js?v=32')));
   assert.ok(entries.has(resolve('js/comunicados.js?v=32')));
+  assert.equal(await navigate('alabanza.html?id=1'), resolve('alabanza.html'));
+  const song = readFileSync(path.join(__dirname, '..', 'alabanza.html'), 'utf8');
+  const dependencies = song.matchAll(/<script\b[^>]*\bsrc="([^"]+)"|<link\b[^>]*\brel="stylesheet"[^>]*\bhref="([^"]+)"/g);
+  for (const [, script, stylesheet] of dependencies) {
+    assert.ok(entries.has(resolve(script || stylesheet)), script || stylesheet);
+  }
+  assert.equal(entries.has(resolve('datos/biblia-rv1960.json?v=23')), false);
   assert.equal((await navigate('sin-guardar.html?dia=1')).status, 503);
 });

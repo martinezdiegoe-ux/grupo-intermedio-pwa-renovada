@@ -31,6 +31,7 @@
         <div><strong id="racha-lectura">0</strong><span>racha de días</span></div>
         <div><strong id="dias-pendientes">365</strong><span>por leer</span></div>
       </div>
+      <p id="lectura-guardado" class="empty-note" role="status" hidden>El navegador no pudo guardar el avance. Los cambios pueden perderse al cerrar esta página.</p>
       <p class="reading-local-note">El avance se guarda solo en este dispositivo. No requiere iniciar sesión. <a href="mis-datos.html">Guardá o recuperá tus datos ↗</a></p>
     </section>
     <section class="panel reading-plan" aria-labelledby="plan-titulo">
@@ -58,9 +59,9 @@
     (() => {
       const sourceMonths = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
       const extras = {
-        pt: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Três passagens por dia, organizadas de janeiro a dezembro conforme o plano anual. Leia e marque cada dia ao terminar. Avance no seu ritmo.','Elegí un mes':'Escolha um mês','Mes anterior':'Mês anterior','Mes siguiente':'Próximo mês','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'Os links levam ao primeiro versículo de cada leitura. Siga os versículos indicados no plano.','Ver plan original en PDF ↗':'Ver plano original em PDF ↗','Capítulo':'Capítulo'},
-        it: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Tre brani al giorno, organizzati da gennaio a dicembre secondo il piano annuale. Leggi e segna ogni giorno completato. Procedi al tuo ritmo.','Elegí un mes':'Scegli un mese','Mes anterior':'Mese precedente','Mes siguiente':'Mese successivo','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'I collegamenti portano al primo versetto di ogni lettura. Segui i versetti indicati nel piano.','Ver plan original en PDF ↗':'Vedi piano originale in PDF ↗','Capítulo':'Capitolo'},
-        uk: {'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Три уривки на день із січня до грудня за річним планом. Читайте й позначайте завершені дні. Рухайтеся у власному темпі.','Elegí un mes':'Оберіть місяць','Mes anterior':'Попередній місяць','Mes siguiente':'Наступний місяць','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'Посилання ведуть до першого вірша кожного читання. Дотримуйтесь віршів, указаних у плані.','Ver plan original en PDF ↗':'Переглянути оригінальний план у PDF ↗','Capítulo':'Розділ'}
+        pt: {"El navegador no pudo guardar el avance. Los cambios pueden perderse al cerrar esta página.":"O navegador não conseguiu salvar o progresso. As alterações podem se perder ao fechar esta página.",'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Três passagens por dia, organizadas de janeiro a dezembro conforme o plano anual. Leia e marque cada dia ao terminar. Avance no seu ritmo.','Elegí un mes':'Escolha um mês','Mes anterior':'Mês anterior','Mes siguiente':'Próximo mês','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'Os links levam ao primeiro versículo de cada leitura. Siga os versículos indicados no plano.','Ver plan original en PDF ↗':'Ver plano original em PDF ↗','Capítulo':'Capítulo'},
+        it: {"El navegador no pudo guardar el avance. Los cambios pueden perderse al cerrar esta página.":"Il browser non è riuscito a salvare i progressi. Le modifiche potrebbero andare perse chiudendo questa pagina.",'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Tre brani al giorno, organizzati da gennaio a dicembre secondo il piano annuale. Leggi e segna ogni giorno completato. Procedi al tuo ritmo.','Elegí un mes':'Scegli un mese','Mes anterior':'Mese precedente','Mes siguiente':'Mese successivo','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'I collegamenti portano al primo versetto di ogni lettura. Segui i versetti indicati nel piano.','Ver plan original en PDF ↗':'Vedi piano originale in PDF ↗','Capítulo':'Capitolo'},
+        uk: {"El navegador no pudo guardar el avance. Los cambios pueden perderse al cerrar esta página.":"Браузер не зміг зберегти прогрес. Після закриття цієї сторінки зміни можуть бути втрачені.",'Tres pasajes por día, organizados de enero a diciembre según el plan anual. Leé y marcá cada día al terminar. Podés avanzar a tu ritmo.':'Три уривки на день із січня до грудня за річним планом. Читайте й позначайте завершені дні. Рухайтеся у власному темпі.','Elegí un mes':'Оберіть місяць','Mes anterior':'Попередній місяць','Mes siguiente':'Наступний місяць','Los enlaces te llevan al primer versículo de cada lectura. Seguí los versículos indicados en el plan.':'Посилання ведуть до першого вірша кожного читання. Дотримуйтесь віршів, указаних у плані.','Ver plan original en PDF ↗':'Переглянути оригінальний план у PDF ↗','Capítulo':'Розділ'}
       };
       const audioLabels = {
         pt: {'Podés escuchar cada pasaje con la voz de tu dispositivo.':'Você pode ouvir cada passagem com a voz do seu dispositivo.','▶ Escuchar':'▶ Ouvir','⏸ Pausar':'⏸ Pausar','▶ Continuar':'▶ Continuar','■ Detener':'■ Parar'},
@@ -88,7 +89,7 @@
     })();
   </script>
   <script src="js/lectura-audio.js?v=34"></script>
-  <script src="js/lectura.js?v=36"></script>
+  <script src="js/lectura.js?v=37"></script>
   <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>

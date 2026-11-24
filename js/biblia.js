@@ -5,6 +5,9 @@
     ['Mateo',28],['Marcos',16],['Lucas',24],['Juan',21],['Hechos',28],['Romanos',16],['1 Corintios',16],['2 Corintios',13],['Gálatas',6],['Efesios',6],['Filipenses',4],['Colosenses',4],['1 Tesalonicenses',5],['2 Tesalonicenses',3],['1 Timoteo',6],['2 Timoteo',4],['Tito',3],['Filemón',1],['Hebreos',13],['Santiago',5],['1 Pedro',5],['2 Pedro',3],['1 Juan',5],['2 Juan',1],['3 Juan',1],['Judas',1],['Apocalipsis',22]
   ];
   const $ = id => document.getElementById(id);
+  const bibleUrl = 'datos/biblia-rv1960.json?v=23';
+  const offlineCache = 'conectados-a-cristo-biblia';
+  const referencePattern = /^(.+?)\s+(\d+)(?:\s*:\s*(\d+))?$/;
   const normalize = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   const localizedName = name => {
     let language = 'es';
@@ -13,11 +16,15 @@
     return extras[language]?.[name] || window.VOZ_TRANSLATIONS?.[language]?.[name] || name;
   };
   const matchesName = (name, query) => normalize(name).includes(query) || normalize(localizedName(name)).includes(query);
-  const params = new URLSearchParams(location.search);
-  const requestedBook = Number(params.get('libro'));
-  let book = Number.isInteger(requestedBook) && requestedBook >= 1 && requestedBook <= books.length ? requestedBook - 1 : 0;
-  const requestedChapter = Number(params.get('capitulo'));
-  let chapter = Number.isInteger(requestedChapter) ? Math.max(1, Math.min(books[book][1], requestedChapter)) : 1;
+  function readAddress() {
+    const params = new URLSearchParams(location.search);
+    const requestedBook = Number(params.get('libro')) - 1;
+    const book = Number.isInteger(requestedBook) && requestedBook >= 0 && requestedBook < books.length ? requestedBook : 0;
+    const requestedChapter = Number(params.get('capitulo'));
+    const chapter = Number.isInteger(requestedChapter) ? Math.max(1, Math.min(books[book][1], requestedChapter)) : 1;
+    return { book, chapter };
+  }
+  let { book, chapter } = readAddress();
   function targetVerse() {
     const verse = Number(new URLSearchParams(location.search).get('versiculo'));
     return Number.isInteger(verse) && verse > 0 ? verse : null;
@@ -44,18 +51,29 @@
     $('bible-copy-url').hidden = true;
   }
 
-  function select(nextBook, nextChapter, focusReader) {
+  function select(nextBook, nextChapter, focusReader, verse) {
     book = nextBook; chapter = nextChapter;
     openTestament = null; chaptersOpen = false;
     const url = new URL(location.href); url.searchParams.set('libro', String(book + 1)); url.searchParams.set('capitulo', String(chapter));
-    url.searchParams.delete('versiculo');
+    if (verse) url.searchParams.set('versiculo', String(verse));
+    else url.searchParams.delete('versiculo');
+    $('bible-search-status').textContent = '';
+    $('bible-verse-status').textContent = '';
     history.pushState(null, '', url);
     updateSharedAddress();
     render();
     if (focusReader) $('bible-title').focus({preventScroll:true});
   }
+  function revealPassage() {
+    const verse = targetVerse();
+    const row = verse && document.getElementById(`bible-verse-${verse}`);
+    $('bible-verse-status').textContent = verse && text && !row ? 'Ese versículo no existe en este capítulo.' : '';
+    (row || $('bible-title')).scrollIntoView({ block: row ? 'center' : 'start' });
+  }
   function renderBooks() {
-    const search = normalize($('bible-search').value).replace(/\s+\d+$/, '');
+    const query = normalize($('bible-search').value);
+    const reference = query.match(referencePattern);
+    const search = reference?.[1] || query;
     const list = $('bible-book-list'); list.replaceChildren();
     let matches = 0;
     function bookButton(index) {
@@ -65,7 +83,7 @@
       const title = document.createElement('span'); title.textContent = name;
       const detail = document.createElement('small'); detail.textContent = `${count} cap.`;
       button.append(title, detail);
-      button.addEventListener('click', () => { select(index, 1, false); $('bible-search').value = ''; renderBooks(); $('bible-title').scrollIntoView({behavior:'smooth',block:'start'}); });
+      button.addEventListener('click', () => openResult(index, reference));
       return button;
     }
     if (search) {
@@ -133,16 +151,29 @@
     $('bible-next').disabled = book === books.length - 1 && chapter === count;
     renderBooks(); renderPassage();
   }
-  $('bible-search').addEventListener('input', renderBooks);
-  $('bible-search').addEventListener('keydown', event => {
-    if (event.key !== 'Enter') return;
-    const query = normalize(event.currentTarget.value);
-    const match = query.match(/^(.+?)\s+(\d+)$/);
-    const target = books.findIndex(([name]) => normalize(name) === (match?.[1] || query) || normalize(localizedName(name)) === (match?.[1] || query));
-    if (target < 0) return;
+  function openResult(target, reference) {
+    const chapter = reference ? Number(reference[2]) : 1;
+    const verse = reference?.[3] ? Number(reference[3]) : undefined;
+    if (chapter < 1 || chapter > books[target][1] || verse === 0 || (verse !== undefined && !Number.isSafeInteger(verse))) {
+      $('bible-search-status').textContent = 'Revisá el número de capítulo o versículo.';
+      return;
+    }
+    $('bible-search').value = '';
+    select(target, chapter, true, verse);
+    revealPassage();
+  }
+  $('bible-search').addEventListener('input', () => {
+    $('bible-search-status').textContent = '';
+    renderBooks();
+  });
+  $('bible-search-form').addEventListener('submit', event => {
     event.preventDefault();
-    select(target, match ? Math.max(1, Math.min(books[target][1], Number(match[2]))) : 1, false);
-    event.currentTarget.value = ''; renderBooks(); $('bible-title').scrollIntoView({behavior:'smooth',block:'start'});
+    const query = normalize($('bible-search').value);
+    const reference = query.match(referencePattern);
+    const nameQuery = reference?.[1] || query;
+    const target = books.findIndex(([name]) => normalize(name) === nameQuery || normalize(localizedName(name)) === nameQuery);
+    if (target < 0) return;
+    openResult(target, reference);
   });
   $('bible-chapter-toggle').addEventListener('click', () => { chaptersOpen = !chaptersOpen; render(); });
   $('bible-copy').addEventListener('click', async () => {
@@ -166,16 +197,60 @@
   });
   $('bible-prev').addEventListener('click', () => select(chapter > 1 ? book : book - 1, chapter > 1 ? chapter - 1 : books[book - 1][1], true));
   $('bible-next').addEventListener('click', () => select(chapter < books[book][1] ? book : book + 1, chapter < books[book][1] ? chapter + 1 : 1, true));
-  window.addEventListener('popstate', () => { const current = new URLSearchParams(location.search); const requested = Number(current.get('libro')) - 1; book = Number.isInteger(requested) && requested >= 0 && requested < books.length ? requested : 0; chapter = Math.max(1, Math.min(books[book][1], Number(current.get('capitulo')) || 1)); chaptersOpen = false; openTestament = null; updateSharedAddress(); render(); });
+  window.addEventListener('popstate', () => {
+    ({ book, chapter } = readAddress());
+    chaptersOpen = false;
+    openTestament = null;
+    $('bible-search-status').textContent = '';
+    $('bible-verse-status').textContent = '';
+    updateSharedAddress();
+    render();
+    if (targetVerse()) revealPassage();
+  });
+
+  let bibleRequest;
+  function loadBible() {
+    bibleRequest ||= fetch(bibleUrl).then(async response => {
+      if (!response.ok) throw new Error('Texto no disponible');
+      const data = await response.clone().json();
+      if (data.edition !== 'RVR1960' || !Array.isArray(data.books) || data.books.length !== 66 ||
+          !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(reading => Array.isArray(reading.verses) && reading.verses.length > 0 && reading.verses.every(verse => typeof verse === 'string' && verse.trim().length > 0)))) throw new Error('Texto incompleto');
+      text = data;
+      loadError = false;
+      renderPassage();
+      if (targetVerse()) revealPassage();
+      return response;
+    }).catch(error => {
+      bibleRequest = null;
+      loadError = true;
+      renderPassage();
+      throw error;
+    });
+    return bibleRequest;
+  }
+
+  const offlineButton = $('bible-offline');
+  const offlineStatus = $('bible-offline-status');
+  function showSavedBible() {
+    offlineButton.disabled = true;
+    offlineStatus.textContent = 'La Biblia está guardada en este dispositivo.';
+  }
+  offlineButton.addEventListener('click', async () => {
+    offlineButton.disabled = true;
+    offlineStatus.textContent = 'Guardando la Biblia…';
+    try {
+      const response = await loadBible();
+      const cache = await caches.open(offlineCache);
+      await cache.put(bibleUrl, response.clone());
+      showSavedBible();
+    } catch (_) {
+      offlineButton.disabled = false;
+      offlineStatus.textContent = 'No se pudo guardar la Biblia. Revisá tu conexión y volvé a intentar.';
+    }
+  });
+
   render();
-  fetch('datos/biblia-rv1960.json?v=23').then(response => {
-    if (!response.ok) throw new Error('Texto no disponible');
-    return response.json();
-  }).then(data => {
-    if (data.edition !== 'RVR1960' || !Array.isArray(data.books) || data.books.length !== 66 ||
-        !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(reading => Array.isArray(reading.verses) && reading.verses.length > 0 && reading.verses.every(verse => typeof verse === 'string' && verse.trim().length > 0)))) throw new Error('Texto incompleto');
-    text = data; renderPassage();
-    const verse = targetVerse();
-    if (verse) document.getElementById(`bible-verse-${verse}`)?.scrollIntoView({behavior:'smooth', block:'center'});
-  }).catch(() => { loadError = true; renderPassage(); });
+  loadBible().then(async () => {
+    if (await caches.match(bibleUrl, { cacheName: offlineCache })) showSavedBible();
+  }).catch(() => {});
 })();

@@ -82,7 +82,13 @@
     return count;
   }
   function save() {
-    try { localStorage.setItem(key, JSON.stringify(completed)); } catch (_) { /* In private browsing, state lasts for this visit. */ }
+    const warning = $('lectura-guardado');
+    try {
+      localStorage.setItem(key, JSON.stringify(completed));
+      warning.hidden = true;
+    } catch (_) {
+      warning.hidden = false;
+    }
   }
   const selector = $('selector-bloque');
   for (let block = 0; block < blocks; block++) {
