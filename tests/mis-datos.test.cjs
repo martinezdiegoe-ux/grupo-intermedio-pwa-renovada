@@ -9,6 +9,12 @@ test('acepta una copia válida sin alterar sus datos', () => {
   assert.equal(validateBackup(data), data);
 });
 
+test('acepta notas largas ya guardadas y marcadores sin alterar la copia', () => {
+  const data = { version: 1, plan: {}, note: '🌱'.repeat(60000), playlist: [], bookmarks: ['43:3:16'] };
+  assert.equal(validateBackup(data), data);
+  assert.throws(() => validateBackup({ ...data, bookmarks: ['67:3:16'] }));
+});
+
 test('rechaza datos que podrían reemplazar el estado local con valores inválidos', () => {
   const base = { version: 1, plan: {}, note: '', playlist: [] };
   assert.throws(() => validateBackup({ ...base, plan: { 366: '2026-01-01' } }));

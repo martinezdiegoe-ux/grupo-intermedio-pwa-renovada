@@ -15,6 +15,11 @@
     .bible-reader-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:20px}.bible-overline{font-size:10px;color:var(--violet);font-weight:800;letter-spacing:.14em;margin:0 0 8px}.bible-reader h2{font-size:clamp(29px,4vw,39px);margin-bottom:4px}.bible-edition{color:var(--muted);font-size:13px;margin:0}.bible-reference{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.bible-reference button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}.bible-reference button[aria-expanded=true]{border-color:var(--violet);color:var(--violet)}.bible-chapters{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.bible-chapter{min-width:41px;min-height:41px;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-weight:700}.bible-chapter:hover,.bible-chapter[aria-current=true]{background:var(--violet);color:#fff;border-color:var(--violet)}.bible-passage{margin:26px 0;max-width:720px}.bible-intro{color:var(--muted);font-size:14px;font-style:italic;line-height:1.65;margin:0 0 12px}.bible-verse{display:grid;grid-template-columns:2rem minmax(0,1fr);gap:13px;align-items:start;padding:8px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 72%,transparent)}.bible-verse.is-target{background:color-mix(in srgb,var(--violet) 9%,transparent);border-radius:8px;padding-inline:8px;scroll-margin-top:100px}.bible-verse-number{color:var(--violet);font-size:12px;font-weight:800;line-height:1.8;text-align:right;padding-top:1px;font-variant-numeric:tabular-nums}.bible-verse-text{font-size:16.5px;line-height:1.8;margin:0!important}.bible-empty{border:1px solid var(--line);background:var(--bg);border-radius:15px;padding:25px;color:var(--muted);line-height:1.6;font-size:14px}.bible-empty strong{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}.bible-navigation{border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:12px}.bible-navigation button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:11px;padding:10px 14px;font-size:13px;font-weight:800}.bible-navigation button:disabled{opacity:.4;cursor:not-allowed}.bible-credit{color:var(--muted);font-size:11px;line-height:1.5;margin:24px 0 0}
     [data-theme=dark] .bible-search,[data-theme=dark] .bible-testament-button,[data-theme=dark] .bible-reference button,[data-theme=dark] .bible-chapter,[data-theme=dark] .bible-empty,[data-theme=dark] .bible-navigation button{background:var(--surface-raised,#20304c);border-color:var(--line);color:var(--ink)}[data-theme=dark] .bible-search input{background:transparent;border:0}[data-theme=dark] .bible-book:hover,[data-theme=dark] .bible-book[aria-current=true]{background:#393464;color:#ded6ff}[data-theme=dark] .bible-chapter[aria-current=true]{background:#6650c3;color:#fff;border-color:#6650c3}
     @media(max-width:820px){.bible-layout{grid-template-columns:1fr}.bible-library{position:static}.bible-reader{min-height:0}}@media(max-width:560px){.bible-page{padding:22px 15px 90px}.bible-hero{padding:34px 25px}.bible-library,.bible-reader{padding:22px}.bible-reader-head{display:block}.bible-reference{margin-top:17px}.bible-navigation button{max-width:48%;font-size:12px}.bible-verse{grid-template-columns:1.7rem minmax(0,1fr);gap:10px;padding:7px 0}.bible-verse-text{font-size:16px}}
+    .bible-bookmarks{margin-top:14px}.bible-bookmarks summary{cursor:pointer;font-weight:750}
+    .bible-bookmarks a{text-decoration:underline}
+    .bible-reader .bible-verse{grid-template-columns:auto minmax(0,1fr) auto}
+    .bible-bookmark-button{width:44px;height:44px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-size:20px}
+    .bible-bookmark-button[aria-pressed=true]{color:var(--violet);border-color:currentColor}
   </style>
 <link rel="stylesheet" href="css/section-thumbnails.css?v=1"></head>
 <body>
@@ -34,6 +39,12 @@
           <div class="bible-reference"><button id="bible-chapter-toggle" type="button" aria-controls="bible-chapters" aria-expanded="false">Capítulo 1 ▾</button></div></div>
         <button id="bible-copy" class="pill-button" type="button" style="margin-bottom:12px">Copiar enlace al pasaje</button>
         <button id="bible-offline" class="pill-button" type="button">Guardar Biblia sin conexión</button>
+        <details class="bible-bookmarks">
+          <summary>Mis marcadores</summary>
+          <p id="bible-bookmarks-empty" class="empty-note">Tocá la estrella junto a un versículo para guardarlo.</p>
+          <ul id="bible-bookmarks"></ul>
+        </details>
+        <p id="bible-bookmark-status" class="empty-note" role="status"></p>
         <p id="bible-offline-status" class="empty-note" role="status"></p>
         <p id="bible-copy-status" class="empty-note" role="status" hidden></p>
         <input id="bible-copy-url" class="field" type="url" aria-label="Enlace al pasaje" readonly hidden>
@@ -66,7 +77,7 @@
     });
     for (const code of Object.keys(bibleTranslations)) Object.assign(window.VOZ_TRANSLATIONS[code], bibleTranslations[code]);
   </script>
-  <script src="js/biblia.js?v=34"></script>
+  <script src="js/biblia.js?v=35"></script>
   <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>

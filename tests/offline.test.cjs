@@ -46,7 +46,7 @@ test('los enlaces con parámetros conservan su página al navegar sin conexión'
   assert.equal(await navigate('app.html?page=index.html'), resolve('app.html'));
   assert.equal(await navigate('biblia.html?libro=43&capitulo=3&versiculo=16'), resolve('biblia.html'));
   assert.equal(await navigate('lectura.html?dia=328'), resolve('lectura.html'));
-  assert.ok(entries.has(resolve('js/cronograma.js?v=32')));
+  assert.ok(entries.has(resolve('js/cronograma.js?v=33')));
   assert.ok(entries.has(resolve('js/comunicados.js?v=32')));
   assert.equal(await navigate('alabanza.html?id=1'), resolve('alabanza.html'));
   const song = readFileSync(path.join(__dirname, '..', 'alabanza.html'), 'utf8');

@@ -20,3 +20,17 @@ test('la portada enlaza el próximo día pendiente', () => {
   assert.equal(day.textContent, '321');
   assert.equal(link.href, 'lectura.html?dia=321');
 });
+
+test('la portada muestra el plan completado sin anunciar una próxima lectura', () => {
+  const elements = {
+    'home-reading-day': { textContent: '' },
+    'home-reading-prefix': { hidden: false }
+  };
+  vm.runInNewContext(readFileSync(require.resolve('../js/home.js'), 'utf8'), {
+    window: { PLAN_365: [{ day: 1, month: 1, date: 1 }] },
+    localStorage: { getItem: () => '{"1":"2026-01-01"}' },
+    document: { getElementById: id => elements[id] }
+  });
+  assert.equal(elements['home-reading-day'].textContent, 'Plan completado');
+  assert.equal(elements['home-reading-prefix'].hidden, true);
+});

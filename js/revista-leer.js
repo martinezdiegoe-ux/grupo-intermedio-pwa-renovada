@@ -52,8 +52,35 @@
   pageInput.max = String(issue.paginas);
   $('reader-pdf').href = issue.pdf;
 
-  function pageUrl(value) {
-    return `assets/revista/paginas/${issue.numero}/${String(value).padStart(2, '0')}.webp`;
+  const reading = window.VOZ_REVISTA_LECTURA;
+  const pagePaths = Array.from({ length: issue.paginas }, (_, index) => reading.pagePath(issue, index + 1));
+  const saveButton = $('reader-save');
+  const saveStatus = $('reader-save-status');
+
+  function showSaved() {
+    saveButton.disabled = true;
+    saveStatus.textContent = 'Edición disponible sin conexión.';
+  }
+
+  if ('caches' in window) {
+    $('reader-download').hidden = false;
+    if (issue.mb) $('reader-size').textContent = new Intl.NumberFormat('es-AR').format(issue.mb) + ' MB';
+    saveButton.disabled = true;
+    Promise.all(pagePaths.map(path => caches.match(path, { cacheName: reading.cacheName })))
+      .then(pages => { if (pages.every(Boolean)) showSaved(); else saveButton.disabled = false; })
+      .catch(() => { saveButton.disabled = false; });
+    saveButton.addEventListener('click', async () => {
+      saveButton.disabled = true;
+      saveStatus.textContent = 'Guardando la edición…';
+      try {
+        const cache = await caches.open(reading.cacheName);
+        await cache.addAll(pagePaths);
+        showSaved();
+      } catch (_) {
+        saveButton.disabled = false;
+        saveStatus.textContent = 'No se pudo guardar la edición. Revisá la conexión y el espacio disponible.';
+      }
+    });
   }
 
   function setZoom(value, focusX, focusY) {
@@ -111,16 +138,17 @@
       if (window.parent !== window) window.parent.history.replaceState(null, '', url);
     } catch (_) {}
     const currentLoad = ++loadVersion;
-    const source = pageUrl(page);
+    const source = pagePaths[page - 1];
     image.onload = () => {
       if (currentLoad !== loadVersion) return;
+      reading.savePage(issue, page);
       image.hidden = false;
       zoomButton.disabled = false;
       $('reader-status').hidden = true;
       fitPage();
       [page - 1, page + 1].filter(n => n >= 1 && n <= issue.paginas).forEach(n => {
         const adjacent = new Image();
-        adjacent.src = pageUrl(n);
+        adjacent.src = pagePaths[n - 1];
       });
     };
     image.onerror = () => {
@@ -172,5 +200,5 @@
     if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.2) showPage(page + (dx < 0 ? 1 : -1));
   }, { passive: true });
 
-  showPage(params.get('pagina'));
+  showPage(params.get('pagina') ?? reading.lastPage(issue));
 })();

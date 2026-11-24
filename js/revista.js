@@ -243,9 +243,10 @@
       topics.textContent = (item.temas || []).join(' · ');
       const link = document.createElement('a');
       link.className = 'action-link primary';
-      attachReaderLink(link, item.numero);
-      link.textContent = 'Leer revista →';
-      link.setAttribute('aria-label', 'Leer edición Nº ' + item.numero + ' dentro de la app');
+      const lastPage = window.VOZ_REVISTA_LECTURA.lastPage(item);
+      attachReaderLink(link, item.numero, lastPage);
+      link.textContent = lastPage > 1 ? 'Continuar en la página ' + lastPage + ' →' : 'Leer revista →';
+      link.setAttribute('aria-label', link.textContent + ' · Edición Nº ' + item.numero);
 
       copy.append(title, period, topics);
       copy.append(link);

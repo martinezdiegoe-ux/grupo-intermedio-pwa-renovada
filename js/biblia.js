@@ -7,6 +7,7 @@
   const $ = id => document.getElementById(id);
   const bibleUrl = 'datos/biblia-rv1960.json?v=23';
   const offlineCache = 'conectados-a-cristo-biblia';
+  const bookmarkKey = 'conectados-biblia-marcadores-v1';
   const referencePattern = /^(.+?)\s+(\d+)(?:\s*:\s*(\d+))?$/;
   const normalize = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   const localizedName = name => {
@@ -70,6 +71,39 @@
     $('bible-verse-status').textContent = verse && text && !row ? 'Ese versículo no existe en este capítulo.' : '';
     (row || $('bible-title')).scrollIntoView({ block: row ? 'center' : 'start' });
   }
+  function readBookmarks() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(bookmarkKey) || '[]');
+      return Array.isArray(saved) ? saved.filter(value => {
+        if (typeof value !== 'string' || !/^\d+:\d+:\d+$/.test(value)) return false;
+        const [number, chapter, verse] = value.split(':').map(Number);
+        const count = text?.books[number - 1]?.chapters[chapter - 1]?.verses.length ?? 999;
+        return chapter > 0 && chapter <= books[number - 1]?.[1] && verse > 0 && verse <= count;
+      }) : [];
+    } catch (_) { return []; }
+  }
+
+  function renderBookmarks(saved) {
+    const list = $('bible-bookmarks');
+    list.replaceChildren();
+    $('bible-bookmarks-empty').hidden = saved.length > 0;
+    for (const value of saved) {
+      const [number, chapter, verse] = value.split(':').map(Number);
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      const params = new URLSearchParams({ libro: number, capitulo: chapter, versiculo: verse });
+      link.href = 'biblia.html?' + params;
+      link.textContent = `${localizedName(books[number - 1][0])} ${chapter}:${verse}`;
+      link.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        select(number - 1, chapter, true, verse);
+        revealPassage();
+      });
+      item.append(link);
+      list.append(item);
+    }
+  }
   function renderBooks() {
     const query = normalize($('bible-search').value);
     const reference = query.match(referencePattern);
@@ -110,6 +144,8 @@
   }
   function renderPassage() {
     const passage = $('bible-passage'); passage.replaceChildren();
+    const saved = readBookmarks();
+    renderBookmarks(saved);
     const reading = text?.books?.[book]?.chapters?.[chapter - 1];
     if (!Array.isArray(reading?.verses) || !reading.verses.length) {
       const note = document.createElement('div'); note.className = 'bible-empty';
@@ -129,7 +165,33 @@
       const number = document.createElement('span'); number.className = 'bible-verse-number';
       number.textContent = String(index + 1); number.setAttribute('aria-label', `Versículo ${index + 1}`);
       const verse = document.createElement('p'); verse.className = 'bible-verse-text'; verse.textContent = content;
-      row.append(number, verse); passage.append(row);
+      const key = `${book + 1}:${chapter}:${index + 1}`;
+      const star = document.createElement('button');
+      star.type = 'button';
+      star.className = 'bible-bookmark-button';
+      star.setAttribute('aria-label', 'Marcar versículo ' + (index + 1));
+      function showBookmark(marked) {
+        star.setAttribute('aria-pressed', String(marked));
+        star.textContent = marked ? '★' : '☆';
+      }
+      showBookmark(saved.includes(key));
+      star.addEventListener('click', () => {
+        const current = readBookmarks();
+        const remove = current.includes(key);
+        const status = $('bible-bookmark-status');
+        if (!remove && current.length >= 1000) {
+          status.textContent = 'Llegaste al límite de marcadores.';
+          return;
+        }
+        const updated = remove ? current.filter(value => value !== key) : [key, ...current];
+        try {
+          localStorage.setItem(bookmarkKey, JSON.stringify(updated));
+          showBookmark(!remove);
+          renderBookmarks(updated);
+          status.textContent = remove ? 'Marcador quitado.' : 'Versículo guardado en Mis marcadores.';
+        } catch (_) { status.textContent = 'No se pudo guardar el cambio.'; }
+      });
+      row.append(number, verse, star); passage.append(row);
     });
   }
   function render() {
@@ -206,6 +268,9 @@
     updateSharedAddress();
     render();
     if (targetVerse()) revealPassage();
+  });
+  window.addEventListener('storage', event => {
+    if (event.key === bookmarkKey || event.key === null) renderPassage();
   });
 
   let bibleRequest;

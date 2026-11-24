@@ -9,4 +9,5 @@
   const next = days.find(day => day.day >= start && !completed[day.day]) || days.find(day => !completed[day.day]);
   document.getElementById('home-reading-day').textContent = next ? String(next.day) : 'Plan completado';
   if (next) document.getElementById('home-reading-link').href = `lectura.html?dia=${next.day}`;
+  else document.getElementById('home-reading-prefix').hidden = true;
 })();
