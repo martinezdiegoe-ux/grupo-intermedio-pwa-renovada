@@ -10,7 +10,7 @@
   right: 0;
   width: 50%;
   height: 100%;
-  background: url('../assets/hero-biblia-abierta.png') center / contain no-repeat;
+  background: url('../assets/hero-biblia-abierta.webp') center / contain no-repeat;
   opacity: .54;
   pointer-events: none;
 }

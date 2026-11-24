@@ -46,11 +46,13 @@
   const installDismissKey = 'voz-app-install-dismissed-until';
   const installDoneKey = 'voz-app-installed';
   const sourceButtons = [...document.querySelectorAll('[data-audio-source]')];
-  const meditation = (window.VOZ_MEDITACIONES || []).filter(item => item.audio)
-    .sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0];
+  const meditation = window.vozFeaturedMeditation?.().item;
   const sources = {
     radio: { title: 'Radio en vivo', url: 'https://servidor18-2.brlogic.com:7106/live' },
-    meditation: { title: meditation?.title || 'Meditación', url: meditation?.audio || '' }
+    meditation: {
+      title: meditation?.title || 'Meditación',
+      url: window.vozMeditationHasAudio?.(meditation) ? meditation.audio : ''
+    }
   };
   const labels = {
     es: { panel: 'Audio de Conectados a Cristo', close: 'Cerrar reproductor', radio: 'Radio en vivo', meditation: 'Audio de meditación', playlist: 'Mi playlist', worship: 'ALABANZA', previous: 'Alabanza anterior', next: 'Alabanza siguiente', live: 'EN VIVO', reflection: 'MEDITACIÓN', fab: 'Audio', open: 'Abrir reproductor de audio', pause: 'Pausar audio', resume: 'Reanudar audio', start: 'Tocá reproducir para comenzar.', error: 'No se pudo reproducir el audio. Intentá nuevamente.', reconnecting: 'Conexión inestable. Reconectando a la radio…', mseConnecting: 'Probando el reproductor experimental…', alternative: 'Reproductor alternativo ↗', choose: 'Elegir audio', liveNote: 'Transmisión en vivo. No se puede adelantar ni retroceder.' },

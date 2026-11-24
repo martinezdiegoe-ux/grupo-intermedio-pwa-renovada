@@ -18,12 +18,31 @@
   let book = Number.isInteger(requestedBook) && requestedBook >= 1 && requestedBook <= books.length ? requestedBook - 1 : 0;
   const requestedChapter = Number(params.get('capitulo'));
   let chapter = Number.isInteger(requestedChapter) ? Math.max(1, Math.min(books[book][1], requestedChapter)) : 1;
-  const requestedVerse = Number(new URLSearchParams(location.search).get('versiculo'));
-  const targetVerse = Number.isInteger(requestedVerse) && requestedVerse > 0 ? requestedVerse : null;
+  function targetVerse() {
+    const verse = Number(new URLSearchParams(location.search).get('versiculo'));
+    return Number.isInteger(verse) && verse > 0 ? verse : null;
+  }
   let text = null;
   let loadError = false;
   let openTestament = null;
   let chaptersOpen = false;
+
+  function passageUrl() {
+    const url = new URL('biblia.html', location.href);
+    url.searchParams.set('libro', String(book + 1));
+    url.searchParams.set('capitulo', String(chapter));
+    const verse = targetVerse();
+    if (verse) url.searchParams.set('versiculo', String(verse));
+    return url;
+  }
+
+  function updateSharedAddress() {
+    if (window.frameElement?.id === 'site-frame') {
+      window.parent.history.replaceState(null, '', passageUrl().href);
+    }
+    $('bible-copy-status').hidden = true;
+    $('bible-copy-url').hidden = true;
+  }
 
   function select(nextBook, nextChapter, focusReader) {
     book = nextBook; chapter = nextChapter;
@@ -31,6 +50,7 @@
     const url = new URL(location.href); url.searchParams.set('libro', String(book + 1)); url.searchParams.set('capitulo', String(chapter));
     url.searchParams.delete('versiculo');
     history.pushState(null, '', url);
+    updateSharedAddress();
     render();
     if (focusReader) $('bible-title').focus({preventScroll:true});
   }
@@ -83,10 +103,11 @@
       const intro = document.createElement('p'); intro.className = 'bible-intro';
       intro.textContent = reading.intro; passage.append(intro);
     }
+    const verseToHighlight = targetVerse();
     reading.verses.forEach((content, index) => {
       const row = document.createElement('div'); row.className = 'bible-verse';
       row.id = `bible-verse-${index + 1}`;
-      if (book === Number(new URLSearchParams(location.search).get('libro')) - 1 && chapter === Number(new URLSearchParams(location.search).get('capitulo')) && index + 1 === targetVerse) row.classList.add('is-target');
+      if (index + 1 === verseToHighlight) row.classList.add('is-target');
       const number = document.createElement('span'); number.className = 'bible-verse-number';
       number.textContent = String(index + 1); number.setAttribute('aria-label', `Versículo ${index + 1}`);
       const verse = document.createElement('p'); verse.className = 'bible-verse-text'; verse.textContent = content;
@@ -124,9 +145,28 @@
     event.currentTarget.value = ''; renderBooks(); $('bible-title').scrollIntoView({behavior:'smooth',block:'start'});
   });
   $('bible-chapter-toggle').addEventListener('click', () => { chaptersOpen = !chaptersOpen; render(); });
+  $('bible-copy').addEventListener('click', async () => {
+    const url = passageUrl().href;
+    const status = $('bible-copy-status');
+    const field = $('bible-copy-url');
+    try {
+      await navigator.clipboard.writeText(url);
+      if (url !== passageUrl().href) return;
+      status.textContent = 'Enlace copiado.';
+      field.hidden = true;
+    } catch (_) {
+      if (url !== passageUrl().href) return;
+      status.textContent = 'Copiá el enlace seleccionado.';
+      field.value = url;
+      field.hidden = false;
+      field.focus();
+      field.select();
+    }
+    status.hidden = false;
+  });
   $('bible-prev').addEventListener('click', () => select(chapter > 1 ? book : book - 1, chapter > 1 ? chapter - 1 : books[book - 1][1], true));
   $('bible-next').addEventListener('click', () => select(chapter < books[book][1] ? book : book + 1, chapter < books[book][1] ? chapter + 1 : 1, true));
-  window.addEventListener('popstate', () => { const current = new URLSearchParams(location.search); const requested = Number(current.get('libro')) - 1; book = Number.isInteger(requested) && requested >= 0 && requested < books.length ? requested : 0; chapter = Math.max(1, Math.min(books[book][1], Number(current.get('capitulo')) || 1)); chaptersOpen = false; openTestament = null; render(); });
+  window.addEventListener('popstate', () => { const current = new URLSearchParams(location.search); const requested = Number(current.get('libro')) - 1; book = Number.isInteger(requested) && requested >= 0 && requested < books.length ? requested : 0; chapter = Math.max(1, Math.min(books[book][1], Number(current.get('capitulo')) || 1)); chaptersOpen = false; openTestament = null; updateSharedAddress(); render(); });
   render();
   fetch('datos/biblia-rv1960.json?v=23').then(response => {
     if (!response.ok) throw new Error('Texto no disponible');
@@ -135,6 +175,7 @@
     if (data.edition !== 'RVR1960' || !Array.isArray(data.books) || data.books.length !== 66 ||
         !data.books.every((item, index) => item.name === books[index][0] && Array.isArray(item.chapters) && item.chapters.length === books[index][1] && item.chapters.every(reading => Array.isArray(reading.verses) && reading.verses.length > 0 && reading.verses.every(verse => typeof verse === 'string' && verse.trim().length > 0)))) throw new Error('Texto incompleto');
     text = data; renderPassage();
-    if (targetVerse && book === requestedBook - 1 && chapter === requestedChapter) document.getElementById(`bible-verse-${targetVerse}`)?.scrollIntoView({behavior:'smooth', block:'center'});
+    const verse = targetVerse();
+    if (verse) document.getElementById(`bible-verse-${verse}`)?.scrollIntoView({behavior:'smooth', block:'center'});
   }).catch(() => { loadError = true; renderPassage(); });
 })();

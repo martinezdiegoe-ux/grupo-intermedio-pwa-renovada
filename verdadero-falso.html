@@ -6,7 +6,7 @@
   <title>Verdadero o Falso – Biblia</title>
 
   <link rel="stylesheet" href="css/app.css?v=31">
-  <link rel="stylesheet" href="css/juegos.css?v=3">
+  <link rel="stylesheet" href="css/juegos.css?v=4">
 <link rel="stylesheet" href="css/section-thumbnails.css?v=1"></head>
 
 <body>
@@ -23,65 +23,115 @@
 
       <div class="pregunta">
         <p>1. Moisés guió al pueblo de Israel fuera de Egipto.</p>
-        <label><input type="radio" name="q1" value="V"> Verdadero</label>
+        <label><input type="radio" name="q1" value="V" data-correct> Verdadero</label>
         <label><input type="radio" name="q1" value="F"> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Dios envió a Moisés a sacar a Israel de Egipto.</p>
+          <a href="biblia.html?libro=2&amp;capitulo=3&amp;versiculo=10">Éxodo 3:10</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>2. David fue rey antes que Saúl.</p>
         <label><input type="radio" name="q2" value="V"> Verdadero</label>
-        <label><input type="radio" name="q2" value="F"> Falso</label>
+        <label><input type="radio" name="q2" value="F" data-correct> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Saúl ya era rey cuando Samuel ungió a David.</p>
+          <a href="biblia.html?libro=9&amp;capitulo=16&amp;versiculo=13">1 Samuel 16:13</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>3. Jesús nació en Belén.</p>
-        <label><input type="radio" name="q3" value="V"> Verdadero</label>
+        <label><input type="radio" name="q3" value="V" data-correct> Verdadero</label>
         <label><input type="radio" name="q3" value="F"> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Jesús nació en Belén de Judea.</p>
+          <a href="biblia.html?libro=40&amp;capitulo=2&amp;versiculo=1">Mateo 2:1</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>4. Pedro negó a Jesús cinco veces.</p>
         <label><input type="radio" name="q4" value="V"> Verdadero</label>
-        <label><input type="radio" name="q4" value="F"> Falso</label>
+        <label><input type="radio" name="q4" value="F" data-correct> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Pedro negó a Jesús tres veces.</p>
+          <a href="biblia.html?libro=40&amp;capitulo=26&amp;versiculo=75">Mateo 26:75</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>5. Noé construyó el arca.</p>
-        <label><input type="radio" name="q5" value="V"> Verdadero</label>
+        <label><input type="radio" name="q5" value="V" data-correct> Verdadero</label>
         <label><input type="radio" name="q5" value="F"> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Noé hizo el arca tal como Dios le había mandado.</p>
+          <a href="biblia.html?libro=1&amp;capitulo=6&amp;versiculo=22">Génesis 6:22</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>6. Sansón fue derrotado por Goliat.</p>
         <label><input type="radio" name="q6" value="V"> Verdadero</label>
-        <label><input type="radio" name="q6" value="F"> Falso</label>
+        <label><input type="radio" name="q6" value="F" data-correct> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>David venció a Goliat con una honda y una piedra.</p>
+          <a href="biblia.html?libro=9&amp;capitulo=17&amp;versiculo=50">1 Samuel 17:50</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>7. Pablo escribió varias cartas del Nuevo Testamento.</p>
-        <label><input type="radio" name="q7" value="V"> Verdadero</label>
+        <label><input type="radio" name="q7" value="V" data-correct> Verdadero</label>
         <label><input type="radio" name="q7" value="F"> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Romanos es una de las cartas que comienzan con el nombre de Pablo.</p>
+          <a href="biblia.html?libro=45&amp;capitulo=1&amp;versiculo=1">Romanos 1:1</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>8. Abraham fue el padre de Moisés.</p>
         <label><input type="radio" name="q8" value="V"> Verdadero</label>
-        <label><input type="radio" name="q8" value="F"> Falso</label>
+        <label><input type="radio" name="q8" value="F" data-correct> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Los padres de Moisés fueron Amram y Jocabed.</p>
+          <a href="biblia.html?libro=2&amp;capitulo=6&amp;versiculo=20">Éxodo 6:20</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>9. El libro de Salmos pertenece al Antiguo Testamento.</p>
-        <label><input type="radio" name="q9" value="V"> Verdadero</label>
+        <label><input type="radio" name="q9" value="V" data-correct> Verdadero</label>
         <label><input type="radio" name="q9" value="F"> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Jesús menciona los Salmos junto con la ley de Moisés y los profetas.</p>
+          <a href="biblia.html?libro=42&amp;capitulo=24&amp;versiculo=44">Lucas 24:44</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>10. Jesús eligió a doce discípulos.</p>
-        <label><input type="radio" name="q10" value="V"> Verdadero</label>
+        <label><input type="radio" name="q10" value="V" data-correct> Verdadero</label>
         <label><input type="radio" name="q10" value="F"> Falso</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Jesús eligió a doce de sus discípulos y los llamó apóstoles.</p>
+          <a href="biblia.html?libro=42&amp;capitulo=6&amp;versiculo=13">Lucas 6:13</a>
+        </div>
       </div>
 
-      <button type="button" class="btn-validar" onclick="validar()">
+      <button type="button" class="btn-validar" id="quiz-check">
         Validar respuestas
       </button>
 
@@ -97,7 +147,7 @@
 
   </main>
 
-  <script src="js/verdadero-falso.js"></script>
+  <script src="js/quiz.js"></script>
 <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>

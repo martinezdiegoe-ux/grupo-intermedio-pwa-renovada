@@ -13,3 +13,14 @@ window.VOZ_MEDITACIONES = [
     "audioStable": false
   }
 ];
+
+window.vozMeditationHasAudio = item => Boolean(item?.audio && item.audioStable !== false);
+
+window.vozFeaturedMeditation = () => {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' });
+  const items = window.VOZ_MEDITACIONES;
+  const dated = items.filter(item => item.date && item.date <= today)
+    .sort((a, b) => b.date.localeCompare(a.date));
+  const item = dated[0] || items.find(entry => !entry.date);
+  return { item, isToday: item?.date === today };
+};

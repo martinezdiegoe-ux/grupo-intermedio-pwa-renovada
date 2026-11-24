@@ -6,7 +6,7 @@
   <title>Opción Múltiple – Biblia</title>
 
   <link rel="stylesheet" href="css/app.css?v=31">
-  <link rel="stylesheet" href="css/juegos.css?v=3">
+  <link rel="stylesheet" href="css/juegos.css?v=4">
 <link rel="stylesheet" href="css/section-thumbnails.css?v=1"></head>
 
 <body>
@@ -25,83 +25,133 @@
         <p>1. ¿Quién construyó el arca?</p>
         <label><input type="radio" name="q1" value="A"> Moisés</label>
         <label><input type="radio" name="q1" value="B"> Abraham</label>
-        <label><input type="radio" name="q1" value="C"> Noé</label>
+        <label><input type="radio" name="q1" value="C" data-correct> Noé</label>
         <label><input type="radio" name="q1" value="D"> David</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Noé hizo el arca tal como Dios le había mandado.</p>
+          <a href="biblia.html?libro=1&amp;capitulo=6&amp;versiculo=22">Génesis 6:22</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>2. ¿Dónde nació Jesús?</p>
         <label><input type="radio" name="q2" value="A"> Nazaret</label>
         <label><input type="radio" name="q2" value="B"> Jerusalén</label>
-        <label><input type="radio" name="q2" value="C"> Belén</label>
+        <label><input type="radio" name="q2" value="C" data-correct> Belén</label>
         <label><input type="radio" name="q2" value="D"> Galilea</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Jesús nació en Belén de Judea.</p>
+          <a href="biblia.html?libro=40&amp;capitulo=2&amp;versiculo=1">Mateo 2:1</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>3. ¿Cuántos discípulos eligió Jesús?</p>
         <label><input type="radio" name="q3" value="A"> 10</label>
         <label><input type="radio" name="q3" value="B"> 11</label>
-        <label><input type="radio" name="q3" value="C"> 12</label>
+        <label><input type="radio" name="q3" value="C" data-correct> 12</label>
         <label><input type="radio" name="q3" value="D"> 13</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Jesús eligió a doce de sus discípulos y los llamó apóstoles.</p>
+          <a href="biblia.html?libro=42&amp;capitulo=6&amp;versiculo=13">Lucas 6:13</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>4. ¿Quién derrotó a Goliat?</p>
         <label><input type="radio" name="q4" value="A"> Saúl</label>
         <label><input type="radio" name="q4" value="B"> Sansón</label>
-        <label><input type="radio" name="q4" value="C"> David</label>
+        <label><input type="radio" name="q4" value="C" data-correct> David</label>
         <label><input type="radio" name="q4" value="D"> Samuel</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>David venció a Goliat con una honda y una piedra.</p>
+          <a href="biblia.html?libro=9&amp;capitulo=17&amp;versiculo=50">1 Samuel 17:50</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>5. ¿Qué mar se abrió para que Israel cruzara?</p>
         <label><input type="radio" name="q5" value="A"> Mar Muerto</label>
         <label><input type="radio" name="q5" value="B"> Mar Mediterráneo</label>
-        <label><input type="radio" name="q5" value="C"> Mar Rojo</label>
+        <label><input type="radio" name="q5" value="C" data-correct> Mar Rojo</label>
         <label><input type="radio" name="q5" value="D"> Río Jordán</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Moisés extendió su mano y Dios abrió el mar para que Israel cruzara.</p>
+          <a href="biblia.html?libro=2&amp;capitulo=14&amp;versiculo=21">Éxodo 14:21</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>6. ¿Quién fue tragado por un gran pez?</p>
         <label><input type="radio" name="q6" value="A"> Job</label>
-        <label><input type="radio" name="q6" value="B"> Jonás</label>
+        <label><input type="radio" name="q6" value="B" data-correct> Jonás</label>
         <label><input type="radio" name="q6" value="C"> Pedro</label>
         <label><input type="radio" name="q6" value="D"> Pablo</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Dios dispuso un gran pez que se tragó a Jonás.</p>
+          <a href="biblia.html?libro=32&amp;capitulo=1&amp;versiculo=17">Jonás 1:17</a>
+        </div>
       </div>
 
       <div class="pregunta">
-        <p>7. ¿Qué libro habla del amor?</p>
+        <p>7. ¿Qué libro celebra el amor en forma poética?</p>
         <label><input type="radio" name="q7" value="A"> Proverbios</label>
         <label><input type="radio" name="q7" value="B"> Eclesiastés</label>
-        <label><input type="radio" name="q7" value="C"> Cantares</label>
+        <label><input type="radio" name="q7" value="C" data-correct> Cantares</label>
         <label><input type="radio" name="q7" value="D"> Job</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Cantares celebra el amor en forma poética.</p>
+          <a href="biblia.html?libro=22&amp;capitulo=8&amp;versiculo=7">Cantares 8:7</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>8. ¿Quién escribió muchas cartas del NT?</p>
         <label><input type="radio" name="q8" value="A"> Pedro</label>
         <label><input type="radio" name="q8" value="B"> Juan</label>
-        <label><input type="radio" name="q8" value="C"> Pablo</label>
+        <label><input type="radio" name="q8" value="C" data-correct> Pablo</label>
         <label><input type="radio" name="q8" value="D"> Lucas</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Romanos es una de las cartas que comienzan con el nombre de Pablo.</p>
+          <a href="biblia.html?libro=45&amp;capitulo=1&amp;versiculo=1">Romanos 1:1</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>9. ¿Cuál es el primer libro de la Biblia?</p>
         <label><input type="radio" name="q9" value="A"> Éxodo</label>
-        <label><input type="radio" name="q9" value="B"> Génesis</label>
+        <label><input type="radio" name="q9" value="B" data-correct> Génesis</label>
         <label><input type="radio" name="q9" value="C"> Levítico</label>
         <label><input type="radio" name="q9" value="D"> Salmos</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Génesis abre la Biblia con el relato de la creación.</p>
+          <a href="biblia.html?libro=1&amp;capitulo=1&amp;versiculo=1">Génesis 1:1</a>
+        </div>
       </div>
 
       <div class="pregunta">
         <p>10. ¿Qué es Dios según 1 Juan 4:8?</p>
         <label><input type="radio" name="q10" value="A"> Juez</label>
         <label><input type="radio" name="q10" value="B"> Fuego</label>
-        <label><input type="radio" name="q10" value="C"> Amor</label>
+        <label><input type="radio" name="q10" value="C" data-correct> Amor</label>
         <label><input type="radio" name="q10" value="D"> Rey</label>
+        <div class="quiz-feedback" hidden>
+          <p><strong>Respuesta correcta</strong> <span></span></p>
+          <p>Juan enseña que Dios es amor.</p>
+          <a href="biblia.html?libro=62&amp;capitulo=4&amp;versiculo=8">1 Juan 4:8</a>
+        </div>
       </div>
 
-      <button type="button" class="btn-validar" onclick="validar()">
+      <button type="button" class="btn-validar" id="quiz-check">
         Validar respuestas
       </button>
 
@@ -117,7 +167,7 @@
 
   </main>
 
-  <script src="js/opcion-multiple.js"></script>
+  <script src="js/quiz.js"></script>
 <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>

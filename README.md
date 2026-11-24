@@ -16,9 +16,9 @@ PWA pública de contenidos de la Asamblea Cristiana. La identidad de la portada 
 
 ## Publicación de contenido
 
-Editar `js/comunicados.js` y `js/cronograma.js` para nuevas publicaciones con fecha ISO `YYYY-MM-DD` y filial. Para una actividad con mapa, agregar `direccion` o `mapUrl`; para filtro de 100 km, `lat` y `lon` verificadas. La app estática no tiene panel de administración.
+Editar `js/comunicados.js` y `js/cronograma.js` para nuevas publicaciones con fecha ISO `YYYY-MM-DD` y filial. Agregar las actividades confirmadas a `proximos`. Pasan al historial al día siguiente de la actividad, según la fecha de Argentina. Agregar los avisos a `comunicados` y usar `hasta` para indicar el último día de vigencia cuando corresponda. Para una actividad con mapa, agregar `direccion` o `mapUrl`. Para el filtro de 100 km, agregar `lat` y `lon` verificadas. La app estática no tiene panel de administración.
 
-Agregar meditaciones a `js/meditaciones-data.js` con `date`, `topics`, texto y audio estable. El criterio editorial del proyecto es audio de hasta 2 minutos y 30 segundos, grabado por jóvenes y sin exponer su identidad en la interfaz. Un audio existente no se modifica automáticamente.
+Agregar meditaciones a `js/meditaciones-data.js` con `date`, `topics`, texto y audio estable. La página muestra «Meditación del día» cuando hay una entrada con la fecha actual de Argentina. En los demás casos muestra la última meditación fechada disponible o una entrada sin fecha. Marcar `audioStable: false` para ocultar un audio provisorio en todos los reproductores. El criterio editorial del proyecto es audio de hasta 2 minutos y 30 segundos, grabado por jóvenes y sin exponer su identidad en la interfaz.
 
 Agregar los PDF propios de la revista en `pdf/revista/`, sus tapas WebP en `assets/revista/` y sus registros en `js/revista-data.js` (`numero`, `anio`, `periodo`, `temas`, `articulos`, `portada`, `pdf`). El texto OCR para la búsqueda está en `js/revista-ocr.js`, con una entrada por página. Los PDF de las ediciones 59 a 61 tienen 24 páginas cada uno. Las tapas livianas y el índice de búsqueda se guardan sin conexión; los PDF se descargan al abrir una edición. Verificar derechos de himnos, CD, PDF y video antes de sumar material nuevo.
 

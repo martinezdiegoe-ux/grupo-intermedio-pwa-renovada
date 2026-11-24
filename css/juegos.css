@@ -93,6 +93,14 @@
 .pregunta.error::after { grid-column:1/-1; font-weight:750; color:var(--ink) }
 .pregunta.ok::after { content:"✓"; }
 .pregunta.error::after { content:"✕"; }
+.quiz-feedback {
+  grid-column: 1 / -1;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.quiz-feedback p { margin: 0 0 5px; font-weight: 400 }
+.quiz-feedback a { text-decoration: underline; font-weight: 750 }
 .game-page button { font:inherit }
 .game-page :is(.game-quiz .btn-validar,.crossword-layout .pistas .pista button) {
   min-height:44px;

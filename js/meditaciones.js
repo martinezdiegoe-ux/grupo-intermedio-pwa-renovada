@@ -14,7 +14,7 @@
     $('meditation-verse').hidden = !active.verse;
     $('meditation-body').textContent = active.text;
     const audio = $('meditation-audio'); audio.pause(); audio.removeAttribute('src');
-    audio.hidden = !active.audio || active.audioStable === false;
+    audio.hidden = !window.vozMeditationHasAudio(active);
     if (!audio.hidden) audio.src = active.audio;
     const url = new URL(location.href); url.searchParams.set('id', active.id); history.replaceState(null,'',url);
   }

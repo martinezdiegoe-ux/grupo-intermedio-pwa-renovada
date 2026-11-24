@@ -32,6 +32,9 @@
       <section class="panel bible-reader" aria-labelledby="bible-title">
         <div class="bible-reader-head"><div><p class="bible-overline">LECTURA BÍBLICA</p><h2 id="bible-title">Génesis 1</h2><p class="bible-edition">Reina-Valera 1960</p></div>
           <div class="bible-reference"><button id="bible-chapter-toggle" type="button" aria-controls="bible-chapters" aria-expanded="false">Capítulo 1 ▾</button></div></div>
+        <button id="bible-copy" class="pill-button" type="button" style="margin-bottom:12px">Copiar enlace al pasaje</button>
+        <p id="bible-copy-status" class="empty-note" role="status" hidden></p>
+        <input id="bible-copy-url" class="field" type="url" aria-label="Enlace al pasaje" readonly hidden>
         <div id="bible-chapters" class="bible-chapters" aria-label="Capítulos del libro" hidden></div>
         <div id="bible-passage" class="bible-passage" aria-live="polite"></div>
         <div class="bible-navigation"><button id="bible-prev" type="button">← Capítulo anterior</button><button id="bible-next" type="button">Capítulo siguiente →</button></div>
@@ -48,7 +51,7 @@
     };
     for (const code of Object.keys(bibleTranslations)) Object.assign(window.VOZ_TRANSLATIONS[code], bibleTranslations[code]);
   </script>
-  <script src="js/biblia.js?v=32"></script>
+  <script src="js/biblia.js?v=33"></script>
   <script src="js/app-shell.js?v=42"></script>
 </body>
 </html>
